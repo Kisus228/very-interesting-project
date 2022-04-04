@@ -1,153 +1,145 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 // @ts-ignore
 import classes from "./Filter.less";
 import FilterCheckbox from "./FilterCheckbox";
 
-// TODO: Сергей Кашкин | Верстка, логика: Подумать, как реализовать фильтр
-
 export type FilterType = {
-    label: string;
-    payload: FilterType[];
-    isChecked: boolean;
+    category: string;
+    competencies: CompetenceType[];
 };
 
+export type CompetenceType = {
+    id: number,
+    name: string,
+}
+
+const onChangeFilter = (filters: number[], /*setFilters: React.Dispatch<React.SetStateAction<number[]>>, */checked: boolean, newId: number) => {
+    if (checked) {
+        //setFilters([...filters, newId]);
+        filters.push(newId);
+    } else {
+        //setFilters(filters.filter(id => id !== newId));
+        const index = filters.findIndex(id => id === newId);
+        filters.splice(index, 1);
+    }
+}
+
+const CompetenceItem = (props: { item: CompetenceType, filters: number[]/*, setFilters: React.Dispatch<React.SetStateAction<number[]>>*/}) => {
+    return (
+        <li>
+            <label>
+                <input type={"checkbox"} onChange={
+                    (e) => onChangeFilter(props.filters/*, props.setFilters*/, e.target.checked, props.item.id)
+                }/>{props.item.name}
+            </label>
+        </li>
+    );
+}
+
+const CategoryItem = (props: { item: FilterType, filters: number[]/*, setFilters: React.Dispatch<React.SetStateAction<number[]>>*/}) => {
+    return (
+        <li>
+            <h4>{props.item.category}</h4>
+            <ul>
+                {
+                    props.item.competencies.map(item => {
+                        return <CompetenceItem key={item.id} item={item} filters={props.filters}
+                                               /*setFilters={props.setFilters}*//>
+                    })
+                }
+            </ul>
+        </li>
+    );
+}
+
 const Filter = () => {
-    const defaultState: FilterType[] = [
+    const defaultState = [
         {
-            label: "Front-end",
-            payload: [
+            category: "Front-end",
+            competencies: [
                 {
-                    label: "JavaScript",
-                    payload: [
-                        {
-                            label: "Junior",
-                            payload: [],
-                            isChecked: false,
-                        },
-                        {
-                            label: "Middle",
-                            payload: [],
-                            isChecked: false,
-                        },
-                        {
-                            label: "Senior",
-                            payload: [],
-                            isChecked: false,
-                        },
-                    ],
-                    isChecked: false,
+                    id: 0,
+                    name: "JavaScript",
                 },
                 {
-                    label: "React",
-                    payload: [
-                        {
-                            label: "Junior",
-                            payload: [],
-                            isChecked: false,
-                        },
-                        {
-                            label: "Middle",
-                            payload: [],
-                            isChecked: false,
-                        },
-                        {
-                            label: "Senior",
-                            payload: [],
-                            isChecked: false,
-                        },
-                    ],
-                    isChecked: false,
+                    id: 1,
+                    name: "React",
                 },
                 {
-                    label: "Angular",
-                    payload: [
-                        {
-                            label: "Junior",
-                            payload: [],
-                            isChecked: false,
-                        },
-                        {
-                            label: "Middle",
-                            payload: [],
-                            isChecked: false,
-                        },
-                        {
-                            label: "Senior",
-                            payload: [],
-                            isChecked: false,
-                        },
-                    ],
-                    isChecked: false,
+                    id: 2,
+                    name: "Angular",
                 },
                 {
-                    label: "HTML",
-                    payload: [],
-                    isChecked: false,
+                    id: 3,
+                    name: "HTML",
                 },
                 {
-                    label: "CSS",
-                    payload: [],
-                    isChecked: false,
+                    id: 4,
+                    name: "CSS",
                 },
             ],
-            isChecked: false,
         },
         {
-            label: "Back-end",
-            payload: [],
-            isChecked: false,
-        },
-        {
-            label: "UI / UX",
-            payload: [],
-            isChecked: false,
-        },
-        {
-            label: "Аналитик",
-            payload: [
+            category: "Back-end",
+            competencies: [
                 {
-                    label: "Junior",
-                    payload: [],
-                    isChecked: false,
+                    id: 5,
+                    name: "C",
                 },
                 {
-                    label: "Middle",
-                    payload: [],
-                    isChecked: false,
+                    id: 6,
+                    name: "C#",
                 },
                 {
-                    label: "Senior",
-                    payload: [],
-                    isChecked: false,
+                    id: 7,
+                    name: "Java",
+                },
+                {
+                    id: 8,
+                    name: "Python",
+                },
+                {
+                    id: 9,
+                    name: "C++",
                 },
             ],
-            isChecked: false,
+        },
+        {
+            category: "Аналитика",
+            competencies: [
+                {
+                    id: 10,
+                    name: "Аналитик",
+                },
+            ],
+        },
+        {
+            category: "UI/UX",
+            competencies: [
+                {
+                    id: 11,
+                    name: "Дизайнер",
+                },
+            ],
         },
     ];
 
-    const [filterState, setFilterState] = useState<FilterType[]>(defaultState);
-
-    function onSubmitClick(): void {
-        console.log(JSON.stringify(filterChecked(filterState)));
-    }
-
-    function filterChecked(arrayToFilter: FilterType[]): FilterType[] {
-        return arrayToFilter
-            .filter((elem) => elem.isChecked)
-            .map((elem) => {
-                return { ...elem, ...{ payload: filterChecked(elem.payload) } };
-            });
-    }
-
+    const [state, setState] = useState<FilterType[]>(defaultState);
+    //const [filters, setFilters] = useState<number[]>([]);
+    // Решил пока оставить мутабельный фильтр
+    // TODO: Сергей Кашкин | Логика: убрать мусор из компонет.
+    const filters: number[] = [];
     return (
         <div className={classes.Filter}>
             <h3>Фильтр</h3>
-            <FilterCheckbox
-                items={filterState}
-                setFilterState={setFilterState}
-                labels={[]}
-            />
-            <button onClick={() => onSubmitClick()}>Ты пидор!</button>
+            <ul>
+                {
+                    state.map(item => <CategoryItem key={item.category} item={item} filters={filters}
+                                                    /*setFilters={setFilters}*//>)
+                }
+            </ul>
+
+            <button onClick={() => console.log(filters)}>Нет ты пидор!</button>
         </div>
     );
 };
