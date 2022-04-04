@@ -1,0 +1,71 @@
+@import "./../../App";
+
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    height: @header-height;
+    background-color: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.Logo {
+
+}
+
+.Menu {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.Button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    border: 0;
+    padding: 0 10px;
+    height: 100%;
+    background: none;
+    &:hover {
+        background: rgba(174, 183, 194, 0.12);;
+    }
+}
+
+.ProfileInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+    gap: 5px;
+    min-width: 200px;
+    & p {
+        margin: 0;
+    }
+}
+
+.Description {
+    color: #C9CED6;
+}
+
+.ProfileAvatar {
+    position: relative;
+    height: 50px;
+    width: 50px;
+    & img {
+        border-radius: 50%;
+    }
+}
+
+.Stroke {
+    width: 0;
+    height: 0;
+    margin: 0;
+    border: 25px solid #C9CED6;
+    border-right-width: 1px;
+    border-left-width: 1px;
+    border-radius: 2px;
+}
