@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 // @ts-ignore
 import classes from "./Filter.less";
-import FilterCheckbox from "./FilterCheckbox";
+import CategoryItem from "./CategoryItem";
 
 export type FilterType = {
     category: string;
@@ -13,44 +13,7 @@ export type CompetenceType = {
     name: string,
 }
 
-const onChangeFilter = (filters: number[], /*setFilters: React.Dispatch<React.SetStateAction<number[]>>, */checked: boolean, newId: number) => {
-    if (checked) {
-        //setFilters([...filters, newId]);
-        filters.push(newId);
-    } else {
-        //setFilters(filters.filter(id => id !== newId));
-        const index = filters.findIndex(id => id === newId);
-        filters.splice(index, 1);
-    }
-}
-
-const CompetenceItem = (props: { item: CompetenceType, filters: number[]/*, setFilters: React.Dispatch<React.SetStateAction<number[]>>*/}) => {
-    return (
-        <li>
-            <label>
-                <input type={"checkbox"} onChange={
-                    (e) => onChangeFilter(props.filters/*, props.setFilters*/, e.target.checked, props.item.id)
-                }/>{props.item.name}
-            </label>
-        </li>
-    );
-}
-
-const CategoryItem = (props: { item: FilterType, filters: number[]/*, setFilters: React.Dispatch<React.SetStateAction<number[]>>*/}) => {
-    return (
-        <li>
-            <h4>{props.item.category}</h4>
-            <ul>
-                {
-                    props.item.competencies.map(item => {
-                        return <CompetenceItem key={item.id} item={item} filters={props.filters}
-                                               /*setFilters={props.setFilters}*//>
-                    })
-                }
-            </ul>
-        </li>
-    );
-}
+export type onChangeFilterType = (checked: boolean, newId: number) => void;
 
 const Filter = () => {
     const defaultState = [
@@ -123,23 +86,27 @@ const Filter = () => {
             ],
         },
     ];
-
-    const [state, setState] = useState<FilterType[]>(defaultState);
-    //const [filters, setFilters] = useState<number[]>([]);
-    // Решил пока оставить мутабельный фильтр
-    // TODO: Сергей Кашкин | Логика: убрать мусор из компонет.
+    const [state] = useState<FilterType[]>(defaultState);
     const filters: number[] = [];
+
+    const onChangeFilter = (checked: boolean, newId: number) => {
+        if (checked) {
+            filters.push(newId);
+        } else {
+            const index = filters.findIndex(id => id === newId);
+            filters.splice(index, 1);
+        }
+    }
+
     return (
         <div className={classes.Filter}>
             <h3>Фильтр</h3>
             <ul>
                 {
-                    state.map(item => <CategoryItem key={item.category} item={item} filters={filters}
-                                                    /*setFilters={setFilters}*//>)
+                    state.map(item => <CategoryItem key={item.category} item={item} onChangeFilter={onChangeFilter}/>)
                 }
             </ul>
-
-            <button onClick={() => console.log(filters)}>Нет ты пидор!</button>
+            <button onClick={() => console.log(filters)}>Применить фильтр</button>
         </div>
     );
 };
