@@ -3,3 +3,42 @@
 .SearchWrapper {
     .ContentWrapperWithFilter();
 }
+
+.ProfileItemsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.ProfileItem {
+    display: grid;
+    grid-template-columns: 150px 1fr 200px;
+    gap: 5px;
+    min-height: 150px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: white;
+    list-style: none;
+}
+
+.ProfileAvatar {
+    margin: 25px;
+    height: 100px;
+    position: relative;
+    & img {
+        border-radius: 50%;
+    }
+}
+
+.ProfileInfo {
+
+}
+
+.ProfileName {
+    @indent: 0.8em;
+    padding-bottom: @indent;
+    margin: @indent 0;
+    border-bottom: 1px solid black;
+}
