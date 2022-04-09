@@ -15,7 +15,7 @@ class VacancyAdmin(admin.ModelAdmin):
 
 class SkillsAdmin(admin.ModelAdmin):
     model = Vacancy
-    list_display = ['id', 'name']
+    list_display = ['id', 'name', 'group']
 
 
 admin.site.register(HeadDepartment, HeadDepartmentAdmin)
