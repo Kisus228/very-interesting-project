@@ -14,18 +14,21 @@
 
 .ProfileItem {
     display: grid;
-    grid-template-columns: 150px 1fr 200px;
-    gap: 5px;
+    grid-template-columns: 125px 1fr 200px;
+    gap: 25px;
     min-height: 150px;
     width: 100%;
     border-radius: 10px;
+    padding: 25px;
+    box-sizing: border-box;
     background-color: white;
     list-style: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .ProfileAvatar {
-    margin: 25px;
-    height: 100px;
+    height: 125px;
+    width: 125px;
     position: relative;
     & img {
         border-radius: 50%;
@@ -39,6 +42,13 @@
 .ProfileName {
     @indent: 0.8em;
     padding-bottom: @indent;
-    margin: @indent 0;
+    margin: 0 0 @indent;
     border-bottom: 1px solid black;
+}
+
+.ProfileAction {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
 }
