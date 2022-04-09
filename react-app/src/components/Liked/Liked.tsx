@@ -1,4 +1,3 @@
-// @ts-ignore
 import classes from './Liked.less';
 import React from 'react';
 
