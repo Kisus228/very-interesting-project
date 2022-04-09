@@ -1,4 +1,3 @@
-// @ts-ignore
 import classes from './App.less';
 import React from 'react';
 import Header from "./components/Header/Header";

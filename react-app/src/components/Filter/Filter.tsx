@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-// @ts-ignore
 import classes from "./Filter.less";
 import CategoryItem from "./CategoryItem";
 

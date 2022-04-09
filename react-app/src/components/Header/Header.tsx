@@ -1,5 +1,4 @@
 import React from 'react';
-// @ts-ignore
 import classes from "./Header.less";
 import logo from './../../assets/logo.png';
 import avatar from './../../assets/avatar.png';
