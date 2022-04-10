@@ -86,7 +86,7 @@ class JobApplications(models.Model):
         return self.vacancy_id
 
 
-class Resume(models.Model):
+class Resume(models.Model):     # возможно ссылки передавать одним джейсон стетхэмом файлом вида: {'соцсеть': 'ссылка'}
     resume_id = models.IntegerField(verbose_name='ID резюме')
     vk_link = models.TextField(verbose_name='Ссылка на ВК')
     tg_link = models.TextField(verbose_name='Ссылка на Телеграм')
