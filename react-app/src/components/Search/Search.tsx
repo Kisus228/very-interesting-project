@@ -4,6 +4,7 @@ import Filter from "../Filter/Filter";
 import avatar from "./../../assets/avatar.png";
 import Button from "../Common/FormControl/Button";
 import LikeButton from "../Common/FormControl/LikeButton";
+import {useNavigate} from "react-router-dom";
 
 type StateType = {
     id: number,
@@ -24,7 +25,7 @@ const Search = () => {
             avatar: undefined,
             experience: 10,
             competence: ["Пить пиво", "Смотреть телик"],
-            liked: false,
+            liked: true,
         },
         {
             id: 1,
@@ -33,7 +34,7 @@ const Search = () => {
             avatar: undefined,
             experience: 70,
             competence: ["Убивать чудовищ", "Играть в гвинт"],
-            liked: true,
+            liked: false,
         },
         {
             id: 2,
@@ -48,7 +49,7 @@ const Search = () => {
     const [state] = useState<StateType[]>(defaultState)
 
     return (
-        <div className={classes.SearchWrapper}>
+        <div className={classes.ContentWrapperWithFilter}>
             <div>
                 <Filter/>
             </div>
@@ -65,8 +66,8 @@ const Search = () => {
 };
 
 const ProfileItem = (props: StateType) => {
-    const [liked, setLiked] = useState(false);
-
+    const [liked, setLiked] = useState(props.liked);
+    const navigate = useNavigate();
     return (
         <li className={classes.ProfileItem}>
             <div className={classes.ProfileAvatar}>
@@ -80,7 +81,7 @@ const ProfileItem = (props: StateType) => {
             </div>
             <div className={classes.ProfileAction}>
                 <LikeButton liked={liked} onClick={() => setLiked(!liked)}/>
-                <Button>Посмотреть профиль</Button>
+                <Button size={"large"} onClick={() => navigate(`/search/${props.id}`)}>Посмотреть профиль</Button>
             </div>
         </li>
     );
