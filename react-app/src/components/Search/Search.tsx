@@ -81,7 +81,8 @@ const ProfileItem = (props: StateType) => {
             </div>
             <div className={classes.ProfileAction}>
                 <LikeButton liked={liked} onClick={() => setLiked(!liked)}/>
-                <Button size={"large"} onClick={() => navigate(`/search/${props.id}`)}>Посмотреть профиль</Button>
+                <Button size={"large"} onClick={() => navigate(`/search/${props.id}`)}>Посмотреть
+                    профиль</Button>
             </div>
         </li>
     );
