@@ -1,0 +1,17 @@
+@header-height: 80px;
+@grid-fixed-width: 200px;
+
+.ContentWrapperWithFilter {
+    display: grid;
+    grid-template-columns: @grid-fixed-width 1fr;
+    gap: 10px;
+}
+
+.ProfileAvatar {
+    height: 125px;
+    width: 125px;
+
+    & img {
+        border-radius: 50%;
+    }
+}
