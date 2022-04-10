@@ -7,7 +7,11 @@
 
     & ul {
         margin: 0;
-        padding: 0 20px;
+        padding: 0 10px;
+    }
+
+    & li>ul {
+        padding-right: 0;
     }
 
     & li {
@@ -25,9 +29,26 @@
     & h4 {
         width: 100%;
         margin: 0;
+        cursor: pointer;
     }
 
-    & button {
-        margin: 20px;
+    & .ButtonWrapper {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
     }
+}
+
+.animation {
+    transition: height 0.5s, color 0.5s;
+    overflow: hidden;
+}
+
+.opened {
+    height: 1.35em;
+}
+
+.closed {
+    height: 0;
+    color: rgba(0, 0, 0, 0);
 }

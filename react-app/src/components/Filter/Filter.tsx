@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import classes from "./Filter.less";
 import CategoryItem from "./CategoryItem";
+import Button from "../Common/FormControl/Button";
 
 export type FilterType = {
     category: string;
@@ -105,7 +106,9 @@ const Filter = () => {
                     state.map(item => <CategoryItem key={item.category} item={item} onChangeFilter={onChangeFilter}/>)
                 }
             </ul>
-            <button onClick={() => console.log(filters)}>Применить фильтр</button>
+            <div className={classes.ButtonWrapper}>
+                <Button size={"small"} onClick={() => console.log(filters)}>Применить фильтр</Button>
+            </div>
         </div>
     );
 };
