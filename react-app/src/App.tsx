@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation/Navigation";
 import { Routes, Route } from 'react-router-dom';
 import Search from "./components/Search/Search";
 import Liked from "./components/Liked/Liked";
+import ProfileInfo from "./components/ProfileInfo/ProfileInfo";
 
 function App() {
     return (
@@ -15,7 +16,10 @@ function App() {
                 <div className={classes.AppContentContainer}>
                     <Routes>
                         <Route path="/">
-                            <Route index element={<Search />} />
+                            <Route path="search">
+                                <Route path=":profileId" element={<ProfileInfo />}/>
+                                <Route index element={<Search />}/>
+                            </Route>
                             <Route path="liked" element={<Liked />}/>
                         </Route>
                     </Routes>
