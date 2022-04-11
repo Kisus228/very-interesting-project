@@ -10,7 +10,7 @@ type PropsType = {
 
 const CompetenceItem: React.FC<PropsType> = (props) => {
     return (
-        <li className={`${classes.animation} ${props.dropdown ? classes.opened : classes.closed}`}>
+        <li className={`${classes.Animation} ${props.dropdown ? classes.Opened : classes.Closed}`}>
             <label>
                 <input type={"checkbox"} onChange={
                     (e) => props.onChangeFilter(e.target.checked, props.item.id)

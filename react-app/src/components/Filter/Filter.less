@@ -1,3 +1,5 @@
+@import "../../GlobalStyles";
+
 .Filter {
     display: flex;
     flex-direction: column;
@@ -27,9 +29,7 @@
     }
 
     & h4 {
-        width: 100%;
         margin: 0;
-        cursor: pointer;
     }
 
     & .ButtonWrapper {
@@ -39,16 +39,38 @@
     }
 }
 
-.animation {
+.DropdownButtonWrapper {
+    display: flex;
+}
+
+.DropdownButton {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    cursor: pointer;
+}
+
+.SvgContainer {
+    height: 8px;
+    width: 12px;
+    transition: transform 0.5s;
+}
+
+.DropdownOpened {
+    transform: scaleY(-1);
+}
+
+.Animation {
     transition: height 0.5s, color 0.5s;
     overflow: hidden;
 }
 
-.opened {
+.Opened {
     height: 1.35em;
 }
 
-.closed {
+.Closed {
     height: 0;
     color: rgba(0, 0, 0, 0);
 }
