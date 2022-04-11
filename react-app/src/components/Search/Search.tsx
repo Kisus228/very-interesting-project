@@ -1,20 +1,5 @@
-import classes from './Search.less';
 import React, {useState} from 'react';
-import Filter from "../Filter/Filter";
-import avatar from "./../../assets/avatar.png";
-import Button from "../Common/FormControl/Button";
-import LikeButton from "../Common/FormControl/LikeButton";
-import {useNavigate} from "react-router-dom";
-
-type StateType = {
-    id: number,
-    name: string,
-    speciality: string,
-    avatar: any,
-    experience: number,
-    competence: string[],
-    liked: boolean,
-}
+import ProfileList from "../ProfileList/ProfileList";
 
 const Search = () => {
     const defaultState = [
@@ -34,7 +19,7 @@ const Search = () => {
             avatar: undefined,
             experience: 70,
             competence: ["Убивать чудовищ", "Играть в гвинт"],
-            liked: false,
+            liked: true,
         },
         {
             id: 2,
@@ -46,46 +31,11 @@ const Search = () => {
             liked: false,
         },
     ]
-    const [state] = useState<StateType[]>(defaultState)
+    const [state] = useState(defaultState);
 
     return (
-        <div className={classes.ContentWrapperWithFilter}>
-            <div>
-                <Filter/>
-            </div>
-            <div>
-                <h2>Найдено людей по запросу: {state.length}</h2>
-                <ul className={classes.ProfileItemsWrapper}>
-                    {
-                        state.map(item => <ProfileItem key={item.id} {...item}/>)
-                    }
-                </ul>
-            </div>
-        </div>
+        <ProfileList state={state}/>
     );
 };
-
-const ProfileItem = (props: StateType) => {
-    const [liked, setLiked] = useState(props.liked);
-    const navigate = useNavigate();
-    return (
-        <li className={classes.ProfileItem}>
-            <div className={classes.ProfileAvatar}>
-                <img width={125} height={125} src={avatar} alt="avatar"/>
-            </div>
-            <div className={classes.ProfileInfo}>
-                <h3 className={classes.ProfileName}>{props.name}</h3>
-                <p>Специальность: {props.speciality}</p>
-                <p>Стаж: {props.experience} лет</p>
-                <p>Навыки: {props.competence.join(", ")}</p>
-            </div>
-            <div className={classes.ProfileAction}>
-                <LikeButton liked={liked} onClick={() => setLiked(!liked)}/>
-                <Button size={"large"} onClick={() => navigate(`/search/${props.id}`)}>Посмотреть
-                    профиль</Button>
-            </div>
-        </li>
-    );
-}
 
 export default Search;
