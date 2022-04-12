@@ -6,9 +6,26 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView
 
 from .models import CustomUser
-from .serilizer import LoginRequestSerializer
+from .serilizer import LoginRequestSerializer, RegisterSerializer
+from Users.models import CustomUser
+
+
+class RegisterUserView(CreateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'status': 'Success'}, status=status.HTTP_200_OK)
+        else:
+            data = serializer.errors
+            return Response(data)
 
 
 class LoginApiView(APIView):
