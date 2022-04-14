@@ -1,6 +1,8 @@
 from django.urls import path
-# from views import *
+from .views import get_filter, get_author_vacancy_list, get_vacancy_filter
 
 urlpatterns = [
-    # path('', admin.site.urls),
+    path('get_filter/', get_filter),
+    path('author/vacancy/', get_author_vacancy_list),
+    path('vacancy/', get_vacancy_filter)
 ]
