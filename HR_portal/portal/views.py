@@ -5,9 +5,9 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from .models import Vacancy
+from .models import Vacancy, HeadDepartment
 from .assistant import get_skills, get_vacancy_author, get_filter_vacancy
-from .serilizer import VacancySerializer
+from .serilizer import CreateVacancySerializer
 
 
 @api_view(['GET'])
@@ -30,8 +30,21 @@ def get_vacancy_filter(request: Request):
     return Response(get_filter_vacancy(skills))
 
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-@authentication_classes([SessionAuthentication])
-def create_vacancy(request: Request):
-    data = request.data
+class CreateVacancyView(CreateAPIView):
+    queryset = Vacancy.objects.all()
+    serializer_class = CreateVacancySerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication]
+
+    def post(self, request, *args, **kwargs):
+        author = HeadDepartment.objects.filter(user=request.user.id)
+        print(request.data)
+        if len(author) > 0 and int(request.data['author']) == author[0].pk:
+            serializer = CreateVacancySerializer(data=request.data)
+            if serializer.is_valid():
+                vacancy = serializer.save()
+                return Response(vacancy.id, status=200)
+            else:
+                return Response(serializer.errors, status=400)
+        else:
+            return Response('Не верный пользователь', status=400)
