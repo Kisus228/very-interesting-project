@@ -1,0 +1,24 @@
+@import "../../GlobalStyles";
+
+.Profile {
+    display: grid;
+    grid-template-columns: @grid-fixed-width 1fr;
+    gap: 25px;
+    padding: 25px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    & p {
+        margin-top: 0;
+    }
+}
+
+.ProfileAvatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: @grid-fixed-width;
+    width: @grid-fixed-width;
+    box-sizing: border-box;
+}
