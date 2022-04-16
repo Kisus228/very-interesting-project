@@ -3,7 +3,7 @@ import classes from "./Header.less";
 import cn from "classnames";
 import logo from './../../assets/logo.png';
 import avatar from './../../assets/avatar.png';
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 // TODO: Сергей Кашкин | Верстка: Сделать отцентровку изображения в квадрат без сжатия.
 // TODO: Сергей Кашкин | Верстка: Подумать над шрифтами.
