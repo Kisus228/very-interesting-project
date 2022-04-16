@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import get_filter, get_author_vacancy_list, get_vacancy_filter, CreateVacancyView
+from .views import get_filter, VacancyApiView, VacancyList
 
 urlpatterns = [
     path('get_filter/', get_filter),
-    path('author/vacancy/', get_author_vacancy_list),
-    path('vacancy/', get_vacancy_filter),
-    path('createvacancy/', CreateVacancyView.as_view()),
+    path('vacancy/', VacancyList.as_view()),
+    path('vacancy/<int:pk>/', VacancyList.as_view()),
+    path('authorvacancy/', VacancyApiView.as_view()),
+    path('authorvacancy/<int:pk>/', VacancyApiView.as_view()),
 ]

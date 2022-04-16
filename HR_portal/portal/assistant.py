@@ -1,6 +1,4 @@
-from rest_framework import status
-
-from .models import Skills, GroupSkills, Vacancy, HeadDepartment
+from .models import Skills, GroupSkills, Vacancy
 
 
 def get_skills():
@@ -13,18 +11,6 @@ def get_skills():
             category['skills'].append({'id': skill.pk, 'name': skill.name})
         filters.append(category)
     return filters
-
-
-def get_vacancy_author(user):
-    authors = HeadDepartment.objects.filter(user_id=user.pk)
-    if authors:
-        vacancies = Vacancy.objects.filter(author_id=authors[0])
-        answer = []
-        for vacancy in vacancies:
-            answer.append(vacancy.as_dict())
-        return answer
-    else:
-        return status.HTTP_400_BAD_REQUEST
 
 
 def get_filter_vacancy(param):
