@@ -30,7 +30,7 @@ const Navigation = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to={'/123'} className={({isActive}) => isActive ? classes.active : undefined}>
+                    <NavLink to={'/vacancies'} className={({isActive}) => isActive ? classes.active : undefined}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <path d="M10 1V10M10 10V19M10 10H1M10 10H19" strokeWidth="2"
                                   strokeLinecap="round"/>

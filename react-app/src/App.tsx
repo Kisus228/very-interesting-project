@@ -7,6 +7,7 @@ import Search from "./components/Search/Search";
 import Liked from "./components/Liked/Liked";
 import ProfileInfo from "./components/ProfileInfo/ProfileInfo";
 import MyProfile from "./components/MyProfile/MyProfile";
+import Vacancies from "./components/Vacancies/Vacancies";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                                 <Route index element={<Search/>}/>
                             </Route>
                             <Route path="liked" element={<Liked/>}/>
+                            <Route path="vacancies" element={<Vacancies/>}/>
                             <Route path="profile" element={<MyProfile/>}/>
                         </Route>
                     </Routes>
