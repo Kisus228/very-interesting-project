@@ -54,7 +54,7 @@ const ProfileItem = (props: ProfileItemType) => {
             </div>
             <div className={classes.ProfileAction}>
                 <LikeButton liked={liked} onClick={() => setLiked(!liked)}/>
-                <Button size={"large"} onClick={() => navigate(`/search/${props.id}`)}>Посмотреть
+                <Button size={"large"} to={`/search/${props.id}`}>Посмотреть
                     профиль</Button>
             </div>
         </li>
