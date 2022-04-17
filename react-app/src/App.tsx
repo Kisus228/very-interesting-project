@@ -10,6 +10,7 @@ import MyProfile from "./components/MyProfile/MyProfile";
 import Vacancies from "./components/Vacancies/Vacancies";
 import OpenedVacancies from "./components/Vacancies/OpenedVacancies";
 import HistoryVacancies from "./components/Vacancies/HistoryVacancies";
+import Vacancy from "./components/Vacancy/Vacancy";
 
 function App() {
     return (
@@ -25,9 +26,10 @@ function App() {
                                 <Route index element={<Search/>}/>
                             </Route>
                             <Route path="liked" element={<Liked/>}/>
-                            <Route path="vacancies" element={<Vacancies/>}>
-                                <Route index element={<OpenedVacancies/>} />
-                                <Route path="history" element={<HistoryVacancies/>} />
+                            <Route path="vacancies">
+                                <Route index element={<OpenedVacancies/>}/>
+                                <Route path="history" element={<HistoryVacancies/>}/>
+                                <Route path=":vacancyId" element={<Vacancy/>}/>
                             </Route>
                             <Route path="profile" element={<MyProfile/>}/>
                         </Route>
