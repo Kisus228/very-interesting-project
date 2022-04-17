@@ -8,6 +8,8 @@ import Liked from "./components/Liked/Liked";
 import ProfileInfo from "./components/ProfileInfo/ProfileInfo";
 import MyProfile from "./components/MyProfile/MyProfile";
 import Vacancies from "./components/Vacancies/Vacancies";
+import OpenedVacancies from "./components/Vacancies/OpenedVacancies";
+import HistoryVacancies from "./components/Vacancies/HistoryVacancies";
 
 function App() {
     return (
@@ -23,7 +25,10 @@ function App() {
                                 <Route index element={<Search/>}/>
                             </Route>
                             <Route path="liked" element={<Liked/>}/>
-                            <Route path="vacancies" element={<Vacancies/>}/>
+                            <Route path="vacancies" element={<Vacancies/>}>
+                                <Route index element={<OpenedVacancies/>} />
+                                <Route path="history" element={<HistoryVacancies/>} />
+                            </Route>
                             <Route path="profile" element={<MyProfile/>}/>
                         </Route>
                     </Routes>
