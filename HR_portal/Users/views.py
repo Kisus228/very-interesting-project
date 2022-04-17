@@ -8,16 +8,16 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import CustomUser
-from .serilizer import LoginRequestSerializer
+from .serilizer import LoginSerializer
 
 
 class LoginApiView(APIView):
     queryset = CustomUser.objects.all()
-    serializer_class = LoginRequestSerializer
+    serializer_class = LoginSerializer
     permission_classes = [AllowAny]
 
     def post(self, request: Request):
-        serializer = LoginRequestSerializer(data=request.data)
+        serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             authenticated_user = authenticate(**serializer.validated_data)
             if authenticated_user is not None:
