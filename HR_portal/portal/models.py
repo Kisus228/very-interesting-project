@@ -68,3 +68,37 @@ class Vacancy(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Resume(models.Model):     # возможно ссылки передавать одним джейсон стетхэмом файлом вида: {'соцсеть': 'ссылка'}
+    vk_link = models.TextField(verbose_name='Ссылка на ВК')
+    tg_link = models.TextField(verbose_name='Ссылка на Телеграм')
+    github_link = models.TextField(verbose_name='Ссылка на GitHub')
+    gitlab_link = models.TextField(verbose_name='Ссылка на GitLab')
+    resume_text = models.TextField(verbose_name='Текст резюме')
+    skills = models.ManyToManyField(Skills, verbose_name='Список навыков')
+
+    class Meta:
+        verbose_name = 'Резюме'
+        verbose_name_plural = 'Резюме'
+
+
+class Worker(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Работник', blank=True)
+    liked_apps = models.ManyToManyField(Vacancy, verbose_name='Понравившиеся заявки', blank=True)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, verbose_name='Резюме')
+
+    def __str__(self):
+        return str(self.user)
+
+
+class JobApplications(models.Model):
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, verbose_name='ID вакансии')
+    worker = models.ForeignKey(Worker, on_delete=models.CASCADE, verbose_name='ID работника')
+
+    class Meta:
+        verbose_name = 'Заявка на вакансию'
+        verbose_name_plural = 'Заявки на вакансии'
+
+    def __str__(self):
+        return self.vacancy
