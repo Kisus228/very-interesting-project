@@ -1,20 +1,13 @@
 import React, {useState} from 'react';
 import classes from './Vacancies.less';
 import Button from "../Common/FormControl/Button";
-import {Delete, Open} from "../Common/Icons/Icons";
-
-interface Props {
-    name: string,
-    count: number,
-    find: number,
-    total: number,
-    status: string,
-}
+import Vacancies from "./Vacancies";
 
 const HistoryVacancies = () => {
-    const [state] = useState<Props[]>([
+    const [state] = useState([
         {
             name: "Верстальщик для сайтов",
+            id: 4,
             count: 1,
             find: 0,
             total: 2,
@@ -22,6 +15,7 @@ const HistoryVacancies = () => {
         },
         {
             name: "SEO",
+            id: 5,
             count: 6,
             find: 3,
             total: 3,
@@ -29,6 +23,7 @@ const HistoryVacancies = () => {
         },
         {
             name: "Аналитик",
+            id: 6,
             count: 1,
             find: 1,
             total: 3,
@@ -37,26 +32,13 @@ const HistoryVacancies = () => {
     ])
 
     return (
-        <ul>
-            {state.map(item => <VacanciesItem key={item.name} {...item}/>)}
-        </ul>
+        <div>
+            <div className={classes.PageHeader}>
+                <h2>История вакансий</h2>
+            </div>
+            <Vacancies state={state}/>
+        </div>
     );
 };
-
-const VacanciesItem: React.FC<Props> = (props) => {
-    return (
-        <li className={classes.VacanciesTableWrapper}>
-            <div>{props.name}</div>
-            <div>{props.count}</div>
-            <div>{props.find} из {props.total}</div>
-            <div>{props.status}</div>
-            <div className={classes.VacanciesButtons}>
-                <Button size={"small"}>Страница вакансии</Button>
-                <Open/>
-                <Delete/>
-            </div>
-        </li>
-    );
-}
 
 export default HistoryVacancies;

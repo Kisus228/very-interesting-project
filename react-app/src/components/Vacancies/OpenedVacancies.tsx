@@ -1,20 +1,13 @@
 import React, {useState} from 'react';
 import classes from './Vacancies.less';
 import Button from "../Common/FormControl/Button";
-import {Close, Edit} from "../Common/Icons/Icons";
-
-interface Props {
-    name: string,
-    count: number,
-    find: number,
-    total: number,
-    status: string,
-}
+import Vacancies from "./Vacancies";
 
 const OpenedVacancies = () => {
-    const [state] = useState<Props[]>([
+    const [state] = useState([
         {
             name: "Back-end разработчик",
+            id: 0,
             count: 3,
             find: 1,
             total: 2,
@@ -22,6 +15,7 @@ const OpenedVacancies = () => {
         },
         {
             name: "Front-end разработчик",
+            id: 1,
             count: 6,
             find: 0,
             total: 2,
@@ -29,6 +23,7 @@ const OpenedVacancies = () => {
         },
         {
             name: "Аналитик",
+            id: 2,
             count: 1,
             find: 0,
             total: 2,
@@ -36,6 +31,7 @@ const OpenedVacancies = () => {
         },
         {
             name: "Дизайнер",
+            id: 3,
             count: 14,
             find: 1,
             total: 3,
@@ -44,26 +40,17 @@ const OpenedVacancies = () => {
     ])
 
     return (
-        <ul>
-            {state.map(item => <VacanciesItem key={item.name} {...item}/>)}
-        </ul>
+        <div>
+            <div className={classes.PageHeader}>
+                <h2>Мои вакансии</h2>
+                <div className={classes.HeaderButtons}>
+                    <Button size={"small"}>Новая вакансия</Button>
+                    <Button size={"small"} to={"history"}>История вакансий</Button>
+                </div>
+            </div>
+            <Vacancies state={state}/>
+        </div>
     );
 };
-
-const VacanciesItem: React.FC<Props> = (props) => {
-    return (
-        <li className={classes.VacanciesTableWrapper}>
-            <div>{props.name}</div>
-            <div>{props.count}</div>
-            <div>{props.find} из {props.total}</div>
-            <div>{props.status}</div>
-            <div className={classes.VacanciesButtons}>
-                <Button size={"small"}>Страница вакансии</Button>
-                <Edit/>
-                <Close/>
-            </div>
-        </li>
-    );
-}
 
 export default OpenedVacancies;
