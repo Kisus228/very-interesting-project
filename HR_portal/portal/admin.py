@@ -9,11 +9,11 @@ class HeadDepartmentAdmin(admin.ModelAdmin):
 
 class VacancyAdmin(admin.ModelAdmin):
     model = Vacancy
-    list_display = ['name', 'author', 'count', 'free', 'is_open', 'get_skills', 'description']
+    list_display = ['name', 'author', 'count', 'free', 'is_open', 'навыки', 'description']
     list_editable = ['is_open']
 
     @staticmethod
-    def get_skills(vacancies):
+    def навыки(vacancies):
         return '\n'.join([vacancy.name for vacancy in vacancies.skills.all()])
 
 
