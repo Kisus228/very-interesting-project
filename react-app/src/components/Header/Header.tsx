@@ -4,6 +4,7 @@ import cn from "classnames";
 import logo from './../../assets/logo.png';
 import avatar from './../../assets/avatar.png';
 import {useNavigate} from "react-router-dom";
+import {Arrow, Exit} from "../Common/Icons/Icons";
 
 // TODO: Сергей Кашкин | Верстка: Сделать отцентровку изображения в квадрат без сжатия.
 // TODO: Сергей Кашкин | Верстка: Подумать над шрифтами.
@@ -42,10 +43,7 @@ const Header = () => {
                         <img width={50} height={50} src={avatar} alt={"avatar"}/>
                     </div>
                     <div>
-                        <svg width="14" height="8" viewBox="0 0 14 8" fill="none">
-                            <path d="M1 1L7 7L13 1" stroke="#C9CED6" strokeWidth="2" strokeLinecap="round"
-                                  strokeLinejoin="round"/>
-                        </svg>
+                        <Arrow color={"#C9CED6"}/>
                     </div>
                     {
                         openedProfileMenu &&
@@ -63,15 +61,7 @@ const Header = () => {
                 </button>
                 <div className={classes.Stroke}/>
                 <button className={classes.Button}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path
-                            d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9"
-                            stroke="#C9CED6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M16 17L21 12L16 7" stroke="#C9CED6" strokeWidth="2" strokeLinecap="round"
-                              strokeLinejoin="round"/>
-                        <path d="M21 12H9" stroke="#C9CED6" strokeWidth="2" strokeLinecap="round"
-                              strokeLinejoin="round"/>
-                    </svg>
+                    <Exit/>
                 </button>
             </div>
         </header>
