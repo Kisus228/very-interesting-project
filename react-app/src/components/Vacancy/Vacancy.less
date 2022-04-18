@@ -38,6 +38,12 @@
         flex-direction: column;
     }
 
+    & .EmployeeWrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
     & .ButtonWrapper {
         justify-content: flex-end;
         align-self: flex-end;
@@ -49,7 +55,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 150px;
-    width: 150px;
     box-sizing: border-box;
+}
+
+.ProfileAvatarLarge {
+    .ProfileAvatar();
+    width: 150px;
+    height: 150px;
+}
+
+.ProfileAvatarSmall {
+    .ProfileAvatar();
+    width: 50px;
+    height: 50px;
 }
