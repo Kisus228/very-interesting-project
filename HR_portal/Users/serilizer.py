@@ -4,7 +4,7 @@ from rest_framework.serializers import Serializer
 from .models import CustomUser
 
 
-class LoginRequestSerializer(Serializer):
+class LoginSerializer(Serializer):
     model = CustomUser
 
     username = CharField(required=True)
