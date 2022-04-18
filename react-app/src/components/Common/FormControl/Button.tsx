@@ -6,7 +6,7 @@ import cn from "classnames";
 interface PropsType {
     onClick?: () => void;
     size?: "small" | "large";
-    color?: "red";
+    color?: "red" | "green";
     to?: string;
 }
 
@@ -15,6 +15,7 @@ const Button: React.FC<PropsType> = (props) => {
         [classes.small]: props.size === "small",
         [classes.large]: props.size === "large",
         [classes.redButton]: props.color === "red",
+        [classes.greenButton]: props.color === "green",
     });
 
     return (
