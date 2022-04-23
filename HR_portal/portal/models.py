@@ -86,6 +86,10 @@ class Worker(models.Model):
     def __str__(self):
         return str(self.user)
 
+    class Meta:
+        verbose_name = 'Работник'
+        verbose_name_plural = 'Работники'
+
 
 class JobApplications(models.Model):
     vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, verbose_name='ID вакансии')
