@@ -23,6 +23,15 @@ class SkillsAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'group']
 
 
+class ResumeAdmin(admin.ModelAdmin):
+    model = Resume
+    list_display = ['resume_text', 'навыки']
+
+    @staticmethod
+    def навыки(resume):
+        return '\n'.join([vacancy.name for vacancy in resume.skills.all()])
+
+
 admin.site.register(HeadDepartment, HeadDepartmentAdmin)
 admin.site.register(Department)
 admin.site.register(Skills, SkillsAdmin)
@@ -30,4 +39,4 @@ admin.site.register(Vacancy, VacancyAdmin)
 admin.site.register(GroupSkills)
 admin.site.register(Worker)
 admin.site.register(JobApplications)
-admin.site.register(Resume)
+admin.site.register(Resume, ResumeAdmin)

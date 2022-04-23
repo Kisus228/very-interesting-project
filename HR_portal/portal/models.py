@@ -66,6 +66,7 @@ class Vacancy(models.Model):
 
 
 class Resume(models.Model):     # возможно ссылки передавать одним джейсон стетхэмом файлом вида: {'соцсеть': 'ссылка'}
+    job = models.CharField(max_length=250, verbose_name='Резюме', blank=True)
     vk_link = models.TextField(verbose_name='Ссылка на ВК')
     tg_link = models.TextField(verbose_name='Ссылка на Телеграм')
     github_link = models.TextField(verbose_name='Ссылка на GitHub')
@@ -76,6 +77,9 @@ class Resume(models.Model):     # возможно ссылки передава
     class Meta:
         verbose_name = 'Резюме'
         verbose_name_plural = 'Резюме'
+
+    def __str__(self):
+        return self.job
 
 
 class Worker(models.Model):
@@ -100,7 +104,7 @@ class JobApplications(models.Model):
         verbose_name_plural = 'Заявки на вакансии'
 
     def __str__(self):
-        return self.vacancy
+        return str(self.vacancy)
 
     def as_dict(self):
         skills = [skill.name for skill in self.skills.all()]
