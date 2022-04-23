@@ -6,10 +6,10 @@ __pycache__/
 # dependencies
 .idea/modules.xml
 *.iml
-
+.idea
 # C extensions
 *.so
-
+.idea/
 # Distribution / packaging
 .Python
 build/
