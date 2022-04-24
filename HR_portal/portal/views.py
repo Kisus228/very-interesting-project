@@ -106,3 +106,7 @@ class VacancyApiView(CreateAPIView):
                 return Response('Объект не существует', status=400)
         else:
             return Response('Не верный пользователь', status=400)
+
+
+class HeadDepartmentApiView(CreateAPIView):
+    queryset = HeadDepartment.objects.all()
