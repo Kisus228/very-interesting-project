@@ -66,7 +66,7 @@ class Vacancy(models.Model):
 
 
 class Resume(models.Model):     # возможно ссылки передавать одним джейсон стетхэмом файлом вида: {'соцсеть': 'ссылка'}
-    job = models.CharField(max_length=250, verbose_name='Резюме', blank=True)
+    job = models.CharField(max_length=250, verbose_name='Резюме')
     vk_link = models.TextField(verbose_name='Ссылка на ВК')
     tg_link = models.TextField(verbose_name='Ссылка на Телеграм')
     github_link = models.TextField(verbose_name='Ссылка на GitHub')
