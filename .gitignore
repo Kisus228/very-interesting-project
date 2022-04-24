@@ -134,3 +134,5 @@ dmypy.json
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/misc.xml
 /.idea/inspectionProfiles/profiles_settings.xml
+HR_portal/portal/migrations
+HR_portal/Users/migrations
