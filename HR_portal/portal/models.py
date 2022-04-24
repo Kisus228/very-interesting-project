@@ -84,7 +84,7 @@ class Resume(models.Model):     # возможно ссылки передава
 
 class Worker(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Работник')
-    liked_apps = models.ManyToManyField(Vacancy, verbose_name='Понравившиеся заявки')
+    liked_apps = models.ManyToManyField(Vacancy, verbose_name='Понравившиеся заявки', blank=True, null=True)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, verbose_name='Резюме', blank=True, null=True)
 
     def __str__(self):
