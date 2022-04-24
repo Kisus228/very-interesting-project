@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
 
 from .models import CustomUser
-from .serilizer import LoginRequestSerializer, RegisterSerializer
+from .serilizer import LoginSerializer, RegisterSerializer
 from Users.models import CustomUser
 
 
@@ -30,11 +30,11 @@ class RegisterUserView(CreateAPIView):
 
 class LoginApiView(APIView):
     queryset = CustomUser.objects.all()
-    serializer_class = LoginRequestSerializer
+    serializer_class = LoginSerializer
     permission_classes = [AllowAny]
 
     def post(self, request: Request):
-        serializer = LoginRequestSerializer(data=request.data)
+        serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             authenticated_user = authenticate(**serializer.validated_data)
             if authenticated_user is not None:

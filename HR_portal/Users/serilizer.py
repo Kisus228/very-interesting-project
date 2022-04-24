@@ -25,7 +25,8 @@ class RegisterSerializer(ModelSerializer):
         return user
 
 
-class LoginRequestSerializer(Serializer):
+
+class LoginSerializer(Serializer):
     model = CustomUser
 
     username = CharField(required=True)
