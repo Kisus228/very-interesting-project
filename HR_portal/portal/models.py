@@ -67,10 +67,10 @@ class Vacancy(models.Model):
 
 class Resume(models.Model):     # возможно ссылки передавать одним джейсон стетхэмом файлом вида: {'соцсеть': 'ссылка'}
     job = models.CharField(max_length=250, verbose_name='Резюме')
-    vk_link = models.TextField(verbose_name='Ссылка на ВК')
-    tg_link = models.TextField(verbose_name='Ссылка на Телеграм')
-    github_link = models.TextField(verbose_name='Ссылка на GitHub')
-    gitlab_link = models.TextField(verbose_name='Ссылка на GitLab')
+    vk_link = models.TextField(verbose_name='Ссылка на ВК', blank=True, null=True)
+    tg_link = models.TextField(verbose_name='Ссылка на Телеграм', blank=True, null=True)
+    github_link = models.TextField(verbose_name='Ссылка на GitHub', blank=True, null=True)
+    gitlab_link = models.TextField(verbose_name='Ссылка на GitLab', blank=True, null=True)
     resume_text = models.TextField(verbose_name='Текст резюме')
     skills = models.ManyToManyField(Skills, verbose_name='Список навыков')
 
