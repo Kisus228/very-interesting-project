@@ -107,7 +107,7 @@ const Filter = () => {
                 }
             </ul>
             <div className={classes.ButtonWrapper}>
-                <Button size={"small"} onClick={() => console.log(filters)}>Применить фильтр</Button>
+                <Button type={"button"} size={"small"} onClick={() => console.log(filters)}>Применить фильтр</Button>
             </div>
         </div>
     );

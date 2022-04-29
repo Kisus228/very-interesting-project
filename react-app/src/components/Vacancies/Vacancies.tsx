@@ -39,7 +39,7 @@ const VacanciesItem: React.FC<Props> = (props) => {
             <div>{props.find} из {props.total}</div>
             <div>{props.status}</div>
             <div className={classes.VacanciesButtons}>
-                <Button size={"small"} to={`/vacancies/${props.id}`}>Страница вакансии</Button>
+                <Button type={"button"} size={"small"} to={`/vacancies/${props.id}`}>Страница вакансии</Button>
                 {
                     props.status === "Открыта" &&
                     <>

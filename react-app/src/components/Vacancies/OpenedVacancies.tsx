@@ -44,8 +44,8 @@ const OpenedVacancies = () => {
             <div className={classes.PageHeader}>
                 <h2>Мои вакансии</h2>
                 <div className={classes.HeaderButtons}>
-                    <Button size={"small"} color={"green"}>Новая вакансия</Button>
-                    <Button size={"small"} to={"history"}>История вакансий</Button>
+                    <Button type={"button"} size={"small"} color={"green"} to={"new"}>Новая вакансия</Button>
+                    <Button type={"button"} size={"small"} to={"history"}>История вакансий</Button>
                 </div>
             </div>
             <Vacancies state={state}/>

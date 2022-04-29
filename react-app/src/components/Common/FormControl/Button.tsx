@@ -8,6 +8,7 @@ interface PropsType {
     size?: "small" | "large";
     color?: "red" | "green";
     to?: string;
+    type: "submit" | "button";
 }
 
 const Button: React.FC<PropsType> = (props) => {
@@ -21,7 +22,7 @@ const Button: React.FC<PropsType> = (props) => {
     return (
         !!props.to
             ? <Link to={props.to} onClick={props.onClick} className={style}>{props.children}</Link>
-            : <button onClick={props.onClick} className={style}>{props.children}</button>
+            : <button type={props.type} onClick={props.onClick} className={style}>{props.children}</button>
     );
 };
 

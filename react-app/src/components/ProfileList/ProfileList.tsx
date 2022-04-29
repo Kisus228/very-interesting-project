@@ -20,7 +20,7 @@ type ProfileItemType = {
     liked: boolean,
 }
 
-const ProfileList:React.FC<PropsType> = (props) => {
+const ProfileList: React.FC<PropsType> = (props) => {
     return (
         <div className={classes.ContentWrapperWithFilter}>
             <div>
@@ -54,8 +54,9 @@ const ProfileItem = (props: ProfileItemType) => {
             </div>
             <div className={classes.ProfileAction}>
                 <LikeButton liked={liked} onClick={() => setLiked(!liked)}/>
-                <Button size={"large"} to={`/search/${props.id}`}>Посмотреть
-                    профиль</Button>
+                <Button type={"button"} size={"large"} to={`/search/${props.id}`}>
+                    Посмотреть профиль
+                </Button>
             </div>
         </li>
     );

@@ -7,10 +7,10 @@ import Search from "./components/Search/Search";
 import Liked from "./components/Liked/Liked";
 import ProfileInfo from "./components/ProfileInfo/ProfileInfo";
 import MyProfile from "./components/MyProfile/MyProfile";
-import Vacancies from "./components/Vacancies/Vacancies";
 import OpenedVacancies from "./components/Vacancies/OpenedVacancies";
 import HistoryVacancies from "./components/Vacancies/HistoryVacancies";
 import Vacancy from "./components/Vacancy/Vacancy";
+import NewVacancy from "./components/NewVacancy/NewVacancy";
 
 function App() {
     return (
@@ -29,6 +29,7 @@ function App() {
                             <Route path="vacancies">
                                 <Route index element={<OpenedVacancies/>}/>
                                 <Route path="history" element={<HistoryVacancies/>}/>
+                                <Route path="new" element={<NewVacancy/>}/>
                                 <Route path=":vacancyId" element={<Vacancy/>}/>
                             </Route>
                             <Route path="profile" element={<MyProfile/>}/>

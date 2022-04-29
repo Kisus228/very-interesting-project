@@ -34,8 +34,8 @@ const ProfileInfo = () => {
                 <div className={classes.ProfileAvatar}>
                     <img width={150} height={150} src={avatar} alt={"avatar"}/>
                 </div>
-                <Button color={"red"}>Связаться</Button>
-                <Button>Принять заявку</Button>
+                <Button type={"button"} color={"red"}>Связаться</Button>
+                <Button type={"button"}>Принять заявку</Button>
                 <div className={classes.ProfileContacts}>
                     <h4>Контактные данные:</h4>
                     {
@@ -60,7 +60,9 @@ const ProfileInfo = () => {
                     <h3>Желаемая вакансия:</h3>
                     <div className={classes.VacancyWrapper}>
                         <p>{state.desiredVacancyName}</p>
-                        <Button size={"small"} to={`/vacancies/${state.desiredVacancyId}`}>Страница вакансии</Button>
+                        <Button type={"button"} size={"small"} to={`/vacancies/${state.desiredVacancyId}`}>
+                            Страница вакансии
+                        </Button>
                     </div>
                 </div>
                 <div>

@@ -81,7 +81,7 @@ const Vacancy = () => {
                     }
                 </div>
                 <div className={classes.ButtonWrapper}>
-                    <Button color={"red"}>Закрыть вакансию</Button>
+                    <Button type={"button"} color={"red"}>Закрыть вакансию</Button>
                 </div>
             </section>
         </div>

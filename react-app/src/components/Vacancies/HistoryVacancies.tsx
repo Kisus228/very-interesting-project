@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import classes from './Vacancies.less';
-import Button from "../Common/FormControl/Button";
 import Vacancies from "./Vacancies";
 
 const HistoryVacancies = () => {
