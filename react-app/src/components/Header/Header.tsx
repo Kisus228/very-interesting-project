@@ -47,7 +47,7 @@ const Header = () => {
                     </div>
                     {
                         openedProfileMenu &&
-                        <div className={cn(classes.ProfileMenuWrapper)}>
+                        <div className={classes.ProfileMenuWrapper}>
                             <div onClick={onClickProfileMenu} className={classes.ProfileMenuContent}>
                                 <svg width="20" height="20" viewBox="0 0 25 30" fill="none">
                                     <path
