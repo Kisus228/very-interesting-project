@@ -1,8 +1,8 @@
 import classes from './App.less';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from "./components/Header/Header";
 import Navigation from "./components/Navigation/Navigation";
-import {Routes, Route, Outlet} from 'react-router-dom';
+import {Routes, Route, Outlet, useNavigate, useLocation} from 'react-router-dom';
 import Search from "./components/Search/Search";
 import Liked from "./components/Liked/Liked";
 import ProfileInfo from "./components/ProfileInfo/ProfileInfo";
@@ -28,6 +28,18 @@ const AppWrapper = () => {
 }
 
 function App() {
+    const navigate = useNavigate();
+    const location = useLocation().pathname;
+
+    const [isAuth, setAuth] = useState(false);
+
+    useEffect(() => {
+        if (!isAuth && location !== '/auth') {
+            navigate('/auth', {state: location});
+            setAuth(true);
+        }
+    }, [])
+
     return (
         <Routes>
             <Route path="/" element={<AppWrapper/>}>

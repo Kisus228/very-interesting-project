@@ -6,6 +6,7 @@ import Button from "../Common/FormControl/Button";
 import {Formik, Form} from "formik";
 import {validate} from "./Validate";
 import {LoginInput, PassInput} from "./AuthInput";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export interface ValuesType {
     email: string;
@@ -17,6 +18,9 @@ const Login = () => {
         email: "",
         password: ""
     }
+    const navigate = useNavigate();
+    const location = useLocation().state as string;
+    const prevLocation = location === "/" ? "/search" : location;
 
     return (
         <div className={classes.AuthWrapper}>
@@ -41,7 +45,7 @@ const Login = () => {
                                     <a href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"} target={"_blank"}>
                                         Forgot Password?
                                     </a>
-                                    <Button type={"submit"} to={'/search'}>Sign in</Button>
+                                    <Button type={"submit"} onClick={() => navigate(prevLocation)}>Sign in</Button>
                                     <div className={classes.RegisterArea}>
                                 <span>
                                     Don’t have an account yet?
