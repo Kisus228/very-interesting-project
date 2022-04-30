@@ -15,10 +15,10 @@ import Login from "./components/Auth/Login";
 import Auth from "./components/Auth/Auth";
 import Register from "./components/Auth/Register";
 
-const AppWrapper = () => {
+const AppWrapper = (props: {setAuth: (t: boolean) => void}) => {
     return (
         <div className={classes.AppWrapper}>
-            <Header/>
+            <Header setAuth={props.setAuth}/>
             <main className={classes.AppContentWrapper}>
                 <Navigation/>
                 <div className={classes.AppContentContainer}>
@@ -40,11 +40,11 @@ function App() {
             navigate('/auth', {state: location});
             setAuth(true);
         }
-    }, [])
+    }, [isAuth]);
 
     return (
         <Routes>
-            <Route path="/" element={<AppWrapper/>}>
+            <Route path="/" element={<AppWrapper setAuth={setAuth}/>}>
                 <Route path="search">
                     <Route path=":profileId" element={<ProfileInfo/>}/>
                     <Route index element={<Search/>}/>

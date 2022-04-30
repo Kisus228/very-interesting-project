@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import classes from "./Header.less";
-import cn from "classnames";
 import logo from './../../assets/logo.png';
 import avatar from './../../assets/avatar.png';
 import {useNavigate} from "react-router-dom";
@@ -10,7 +9,7 @@ import {Arrow, Exit} from "../Common/Icons/Icons";
 // TODO: Сергей Кашкин | Верстка: Подумать над шрифтами.
 // TODO: Сергей Кашкин | Верстка: Добавить медиа запросы для адаптива.
 
-const Header = () => {
+const Header = (props: {setAuth: (b: boolean) => void}) => {
     const [openedProfileMenu, setOpenedProfileMenu] = useState(false);
     const navigate = useNavigate();
 
@@ -60,7 +59,7 @@ const Header = () => {
                     }
                 </button>
                 <div className={classes.Stroke}/>
-                <button className={classes.Button}>
+                <button className={classes.Button} onClick={() => props.setAuth(false)}>
                     <Exit/>
                 </button>
             </div>
