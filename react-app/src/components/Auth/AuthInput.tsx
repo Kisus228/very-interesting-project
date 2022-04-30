@@ -18,7 +18,7 @@ export const LoginInput: React.FC<InputProps> = (props) => {
             <div className={classes.InputArea}>
                 <input
                     className={cn(classes.Input, {
-                        [classes.error]: meta.touched && meta.error
+                        [classes.Error]: meta.touched && meta.error
                     })}
                     type={"email"}
                     {...field}
@@ -40,7 +40,7 @@ export const PassInput: React.FC<InputProps> = (props) => {
             <div className={classes.InputArea}>
                 <input
                     className={cn(classes.Input, {
-                        [classes.error]: meta.touched && meta.error
+                        [classes.Error]: meta.touched && meta.error
                     })}
                     type={visible ? "text" : "password"}
                     {...field}
@@ -54,7 +54,6 @@ export const PassInput: React.FC<InputProps> = (props) => {
                     }
                 </div>
             </div>
-
             {meta.touched && meta.error ? <div className={classes.ErrorMessage}>{meta.error}</div> : null}
         </div>
     );
