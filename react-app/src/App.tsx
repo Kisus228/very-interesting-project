@@ -11,7 +11,9 @@ import OpenedVacancies from "./components/Vacancies/OpenedVacancies";
 import HistoryVacancies from "./components/Vacancies/HistoryVacancies";
 import Vacancy from "./components/Vacancy/Vacancy";
 import NewVacancy from "./components/NewVacancy/NewVacancy";
-import Login from "./components/Login/Login";
+import Login from "./components/Auth/Login";
+import Auth from "./components/Auth/Auth";
+import Register from "./components/Auth/Register";
 
 const AppWrapper = () => {
     return (
@@ -34,7 +36,7 @@ function App() {
     const [isAuth, setAuth] = useState(false);
 
     useEffect(() => {
-        if (!isAuth && location !== '/auth') {
+        if (!isAuth && !(location === '/auth' || location === '/register')) {
             navigate('/auth', {state: location});
             setAuth(true);
         }
@@ -56,7 +58,10 @@ function App() {
                 </Route>
                 <Route path="profile" element={<MyProfile/>}/>
             </Route>
-            <Route path="auth" element={<Login/>}/>
+            <Route element={<Auth/>}>
+                <Route path="auth" element={<Login/>}/>
+                <Route path="register" element={<Register/>}/>
+            </Route>
         </Routes>
     );
 }

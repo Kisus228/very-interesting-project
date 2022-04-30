@@ -1,6 +1,6 @@
 import React, {InputHTMLAttributes, useState} from "react";
 import {useField} from "formik";
-import classes from "./Login.less";
+import classes from "./Auth.less";
 import cn from "classnames";
 import {CloseEye, OpenEye} from "../Common/Icons/Icons";
 
