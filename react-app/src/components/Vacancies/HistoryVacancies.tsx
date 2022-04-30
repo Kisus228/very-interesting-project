@@ -31,11 +31,13 @@ const HistoryVacancies = () => {
     ])
 
     return (
-        <div>
-            <div className={classes.PageHeader}>
-                <h2>История вакансий</h2>
+        <div className={classes.PageContentWrapper}>
+            <div className={classes.PageContainer}>
+                <div className={classes.PageHeader}>
+                    <h2>История вакансий</h2>
+                </div>
+                <Vacancies state={state}/>
             </div>
-            <Vacancies state={state}/>
         </div>
     );
 };

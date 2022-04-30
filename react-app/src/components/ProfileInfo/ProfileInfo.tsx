@@ -29,47 +29,49 @@ const ProfileInfo = () => {
 
     const params = useParams(); // Number(params.profileId)
     return (
-        <div className={classes.ContentWrapperWithFilter}>
-            <div className={classes.ProfileMenu}>
-                <div className={classes.ProfileAvatar}>
-                    <img width={150} height={150} src={avatar} alt={"avatar"}/>
-                </div>
-                <Button type={"button"} color={"red"}>Связаться</Button>
-                <Button type={"button"}>Принять заявку</Button>
-                <div className={classes.ProfileContacts}>
-                    <h4>Контактные данные:</h4>
-                    {
-                        Object.keys(state.contacts).map(key =>
-                            <LinkParagraph linkName={key} key={key}
-                                           link={state.contacts[key as keyof typeof state.contacts]}/>
-                        )
-                    }
-                </div>
-            </div>
-            <div className={classes.ProfileInfo}>
-                <div>
-                    <div className={classes.ProfileInfoHeader}>
-                        <h2>{state.name}</h2>
-                        <LikeButton liked={liked} onClick={() => setLiked(!liked)}/>
+        <div className={classes.PageContentWrapper}>
+            <div className={classes.PageContainer}>
+                <div className={classes.ProfileMenu}>
+                    <div className={classes.ProfileAvatar}>
+                        <img width={150} height={150} src={avatar} alt={"avatar"}/>
                     </div>
-                    <p>Специальность: {state.speciality}</p>
-                    <p>Стаж: {state.experience} лет</p>
-                    <p>Навыки: {state.competence.join(", ")}</p>
-                </div>
-                <div>
-                    <h3>Желаемая вакансия:</h3>
-                    <div className={classes.VacancyWrapper}>
-                        <p>{state.desiredVacancyName}</p>
-                        <Button type={"button"} size={"small"} to={`/vacancies/${state.desiredVacancyId}`}>
-                            Страница вакансии
-                        </Button>
+                    <Button type={"button"} color={"red"}>Связаться</Button>
+                    <Button type={"button"}>Принять заявку</Button>
+                    <div className={classes.ProfileContacts}>
+                        <h4>Контактные данные:</h4>
+                        {
+                            Object.keys(state.contacts).map(key =>
+                                <LinkParagraph linkName={key} key={key}
+                                               link={state.contacts[key as keyof typeof state.contacts]}/>
+                            )
+                        }
                     </div>
                 </div>
-                <div>
-                    <h3>Резюме:</h3>
-                    <p>{state.resume}</p>
-                    <h3>О себе:</h3>
-                    <p>{state.aboutMe}</p>
+                <div className={classes.ProfileInfo}>
+                    <div>
+                        <div className={classes.ProfileInfoHeader}>
+                            <h2>{state.name}</h2>
+                            <LikeButton liked={liked} onClick={() => setLiked(!liked)}/>
+                        </div>
+                        <p>Специальность: {state.speciality}</p>
+                        <p>Стаж: {state.experience} лет</p>
+                        <p>Навыки: {state.competence.join(", ")}</p>
+                    </div>
+                    <div>
+                        <h3>Желаемая вакансия:</h3>
+                        <div className={classes.VacancyWrapper}>
+                            <p>{state.desiredVacancyName}</p>
+                            <Button type={"button"} size={"small"} to={`/vacancies/${state.desiredVacancyId}`}>
+                                Страница вакансии
+                            </Button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Резюме:</h3>
+                        <p>{state.resume}</p>
+                        <h3>О себе:</h3>
+                        <p>{state.aboutMe}</p>
+                    </div>
                 </div>
             </div>
         </div>

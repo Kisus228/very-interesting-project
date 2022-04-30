@@ -1,6 +1,10 @@
 @import "../../GlobalStyles";
 
-.ContentWrapperWithFilter {
+.PageContainer {
+    display: grid;
+    grid-template-columns: @grid-fixed-width 1fr;
+    gap: 10px;
+
     & h4 {
         margin-top: 0;
     }

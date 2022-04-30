@@ -22,17 +22,19 @@ type ProfileItemType = {
 
 const ProfileList: React.FC<PropsType> = (props) => {
     return (
-        <div className={classes.ContentWrapperWithFilter}>
-            <div>
-                <Filter/>
-            </div>
-            <div>
-                <h2>Найдено людей по запросу: {props.state.length}</h2>
-                <ul className={classes.ProfileItemsWrapper}>
-                    {
-                        props.state.map(item => <ProfileItem key={item.id} {...item}/>)
-                    }
-                </ul>
+        <div className={classes.PageContentWrapper}>
+            <div className={classes.PageContainer}>
+                <div>
+                    <Filter/>
+                </div>
+                <div>
+                    <h2>Найдено людей по запросу: {props.state.length}</h2>
+                    <ul className={classes.ProfileItemsWrapper}>
+                        {
+                            props.state.map(item => <ProfileItem key={item.id} {...item}/>)
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
     );

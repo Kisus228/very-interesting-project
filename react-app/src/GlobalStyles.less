@@ -1,10 +1,15 @@
 @header-height: 80px;
 @grid-fixed-width: 200px;
 
-.ContentWrapperWithFilter {
-    display: grid;
-    grid-template-columns: @grid-fixed-width 1fr;
-    gap: 10px;
+.PageContentWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.PageContainer {
+    width: 100%;
+    max-width: 1500px;
 }
 
 .ProfileAvatar {

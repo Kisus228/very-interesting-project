@@ -40,15 +40,17 @@ const OpenedVacancies = () => {
     ])
 
     return (
-        <div>
-            <div className={classes.PageHeader}>
-                <h2>Мои вакансии</h2>
-                <div className={classes.HeaderButtons}>
-                    <Button type={"button"} size={"small"} color={"green"} to={"new"}>Новая вакансия</Button>
-                    <Button type={"button"} size={"small"} to={"history"}>История вакансий</Button>
+        <div className={classes.PageContentWrapper}>
+            <div className={classes.PageContainer}>
+                <div className={classes.PageHeader}>
+                    <h2>Мои вакансии</h2>
+                    <div className={classes.HeaderButtons}>
+                        <Button type={"button"} size={"small"} color={"green"} to={"/vacancies/new"}>Новая вакансия</Button>
+                        <Button type={"button"} size={"small"} to={"/vacancies/history"}>История вакансий</Button>
+                    </div>
                 </div>
+                <Vacancies state={state}/>
             </div>
-            <Vacancies state={state}/>
         </div>
     );
 };

@@ -16,18 +16,18 @@ interface Props {
 
 const Vacancies: React.FC<{ state: Props[] }> = (props) => {
     return (
-        <div className={classes.Vacancies}>
-            <div className={cn(classes.VacanciesWrapper, classes.VacanciesTableHeader,
-                classes.VacanciesTableWrapper)}>
-                <div>Название</div>
-                <div>Кол-во откликов</div>
-                <div>Найдено</div>
-                <div>Статус</div>
+            <div className={classes.Vacancies}>
+                <div className={cn(classes.VacanciesWrapper, classes.VacanciesTableHeader,
+                    classes.VacanciesTableWrapper)}>
+                    <div>Название</div>
+                    <div>Кол-во откликов</div>
+                    <div>Найдено</div>
+                    <div>Статус</div>
+                </div>
+                <ul>
+                    {props.state.map(item => <VacanciesItem key={item.id} {...item}/>)}
+                </ul>
             </div>
-            <ul>
-                {props.state.map(item => <VacanciesItem key={item.id} {...item}/>)}
-            </ul>
-        </div>
     );
 };
 

@@ -53,47 +53,50 @@ const NewVacancy = () => {
     );
 
     return (
-        <Formik initialValues={initialValues} onSubmit={values => console.log(values)}>
-            <Form>
-                <h2>История вакансий</h2>
-                <div className={classes.NewVacancy}>
-                    <section className={classes.VacancySection}>
-                        <FormInput label={"Название вакансии"} type="text" name="vacancyName"
-                                   placeholder={"Напишите название вакансии"}/>
-                        <FormSelect name={"speciality"} label={"Специальность"} options={speciality}
-                                    placeholder={"Выберите специальность"}/>
-                        <FormInput label={"Департамент"} type="text" name="department"
-                                   placeholder={"Напишите название департамента"}/>
-                        <FormInput label={"Описание вакансии"} type="text" name="vacancyDescription"
-                                   placeholder={"Напишите описание вакансии"}/>
-                        <FormInput label={"Тип занятости"} type="text" name="employmentType"
-                                   placeholder={"Напишите тип занятости"}/>
-                        <FormInput label={"График работы"} type="text" name="schedule"
-                                   placeholder={"Напишите график работы"}/>
-                        <FormInput label={"Условия"} type="text" name="conditions"
-                                   placeholder={"Напишите условия вакансии"}/>
-                    </section>
-                    <section className={classes.VacancySection}>
-                        <FormSelect name={"skills"} label={"Навыки"} options={skills}
-                                    placeholder={"Выберите необходимые навыки"} isMulti/>
-                        <FormInput label={"Требования"} type="text" name="requirements"
-                                   placeholder={"Напишите требования вакансии"}/>
-                        <FormInput label={"Обязанности"} type="text" name="responsibilities"
-                                   placeholder={"Напишите обязанности сотрудника"}/>
-                        <FormInput label={"Заработная плата"} type="text" name="responsibilities"
-                                   placeholder={"Напишите сумму заработной платы"}/>
-                        <FormInput label={"Количество сотрудников"} type="number" name="count"
-                                   placeholder={"Напишите кол-во сотрудников на вакансию"}/>
-                        <FormInput label={"Дополнительно"} type="text" name="additionally"
-                                   placeholder={"Дополнительная информация"}/>
-                        <div className={classes.ButtonWrapper}>
-                            <Button type={"submit"} color={"green"}>Опубликовать</Button>
+        <div className={classes.PageContentWrapper}>
+            <div className={classes.PageContainer}>
+                <Formik initialValues={initialValues} onSubmit={values => console.log(values)}>
+                    <Form>
+                        <h2>Новая вакансия</h2>
+                        <div className={classes.NewVacancy}>
+                            <section className={classes.VacancySection}>
+                                <FormInput label={"Название вакансии"} type="text" name="vacancyName"
+                                           placeholder={"Напишите название вакансии"}/>
+                                <FormSelect name={"speciality"} label={"Специальность"} options={speciality}
+                                            placeholder={"Выберите специальность"}/>
+                                <FormInput label={"Департамент"} type="text" name="department"
+                                           placeholder={"Напишите название департамента"}/>
+                                <FormInput label={"Описание вакансии"} type="text" name="vacancyDescription"
+                                           placeholder={"Напишите описание вакансии"}/>
+                                <FormInput label={"Тип занятости"} type="text" name="employmentType"
+                                           placeholder={"Напишите тип занятости"}/>
+                                <FormInput label={"График работы"} type="text" name="schedule"
+                                           placeholder={"Напишите график работы"}/>
+                                <FormInput label={"Условия"} type="text" name="conditions"
+                                           placeholder={"Напишите условия вакансии"}/>
+                            </section>
+                            <section className={classes.VacancySection}>
+                                <FormSelect name={"skills"} label={"Навыки"} options={skills}
+                                            placeholder={"Выберите необходимые навыки"} isMulti/>
+                                <FormInput label={"Требования"} type="text" name="requirements"
+                                           placeholder={"Напишите требования вакансии"}/>
+                                <FormInput label={"Обязанности"} type="text" name="responsibilities"
+                                           placeholder={"Напишите обязанности сотрудника"}/>
+                                <FormInput label={"Заработная плата"} type="text" name="responsibilities"
+                                           placeholder={"Напишите сумму заработной платы"}/>
+                                <FormInput label={"Количество сотрудников"} type="number" name="count"
+                                           placeholder={"Напишите кол-во сотрудников на вакансию"}/>
+                                <FormInput label={"Дополнительно"} type="text" name="additionally"
+                                           placeholder={"Дополнительная информация"}/>
+                                <div className={classes.ButtonWrapper}>
+                                    <Button type={"submit"} color={"green"}>Опубликовать</Button>
+                                </div>
+                            </section>
                         </div>
-                    </section>
-                </div>
-            </Form>
-        </Formik>
-
+                    </Form>
+                </Formik>
+            </div>
+        </div>
     );
 };
 

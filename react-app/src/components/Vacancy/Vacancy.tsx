@@ -36,54 +36,58 @@ const Vacancy = () => {
     })
 
     return (
-        <div className={classes.Vacancy}>
-            <section className={classes.VacancySection}>
-                <div>
-                    <h3>{state.vacancyName}</h3>
-                    <p className={classes.Description}>{state.salary}</p>
+        <div className={classes.PageContentWrapper}>
+            <div className={classes.PageContainer}>
+                <div className={classes.Vacancy}>
+                    <section className={classes.VacancySection}>
+                        <div>
+                            <h3>{state.vacancyName}</h3>
+                            <p className={classes.Description}>{state.salary}</p>
+                        </div>
+                        <div>
+                            <h4>Специальность: {state.speciality}</h4>
+                            <p className={classes.Description}>Количество мест: {state.count}</p>
+                        </div>
+                        <div>
+                            <h4>Описание вакансии:</h4>
+                            <p>{state.vacancyDescription}</p>
+                            <p><b>Тип занятости: </b>{state.employmentType}</p>
+                            <p><b>График работы: </b>{state.schedule}</p>
+                            <h4>Условия:</h4>
+                            <p>{state.conditions}</p>
+                            <h4>Требования:</h4>
+                            <p>{state.requirements}</p>
+                            <h4>Обязанности:</h4>
+                            <p>{state.responsibilities}</p>
+                        </div>
+                    </section>
+                    <section className={classes.VacancySection}>
+                        <div className={classes.ProfileAvatarWrapper}>
+                            <div className={classes.ProfileAvatarLarge}>
+                                <img width={150} height={150} src={avatar} alt={"avatar"}/>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 className={classes.Name}>{state.employerName}</h4>
+                            <p className={classes.Description}>{state.employerPosition}</p>
+                            <p>{state.department}</p>
+                        </div>
+                        <div>
+                            <h4>Навыки для вакансии:</h4>
+                            <div>{state.skills.join(", ")}</div>
+                        </div>
+                        <div>
+                            <h4>Найденные сотрудники:</h4>
+                            {
+                                state.foundEmployees.map(employee => <EmployeeItem key={employee.name} {...employee}/>)
+                            }
+                        </div>
+                        <div className={classes.ButtonWrapper}>
+                            <Button type={"button"} color={"red"}>Закрыть вакансию</Button>
+                        </div>
+                    </section>
                 </div>
-                <div>
-                    <h4>Специальность: {state.speciality}</h4>
-                    <p className={classes.Description}>Количество мест: {state.count}</p>
-                </div>
-                <div>
-                    <h4>Описание вакансии:</h4>
-                    <p>{state.vacancyDescription}</p>
-                    <p><b>Тип занятости: </b>{state.employmentType}</p>
-                    <p><b>График работы: </b>{state.schedule}</p>
-                    <h4>Условия:</h4>
-                    <p>{state.conditions}</p>
-                    <h4>Требования:</h4>
-                    <p>{state.requirements}</p>
-                    <h4>Обязанности:</h4>
-                    <p>{state.responsibilities}</p>
-                </div>
-            </section>
-            <section className={classes.VacancySection}>
-                <div className={classes.ProfileAvatarWrapper}>
-                    <div className={classes.ProfileAvatarLarge}>
-                        <img width={150} height={150} src={avatar} alt={"avatar"}/>
-                    </div>
-                </div>
-                <div>
-                    <h4 className={classes.Name}>{state.employerName}</h4>
-                    <p className={classes.Description}>{state.employerPosition}</p>
-                    <p>{state.department}</p>
-                </div>
-                <div>
-                    <h4>Навыки для вакансии:</h4>
-                    <div>{state.skills.join(", ")}</div>
-                </div>
-                <div>
-                    <h4>Найденные сотрудники:</h4>
-                    {
-                        state.foundEmployees.map(employee => <EmployeeItem key={employee.name} {...employee}/>)
-                    }
-                </div>
-                <div className={classes.ButtonWrapper}>
-                    <Button type={"button"} color={"red"}>Закрыть вакансию</Button>
-                </div>
-            </section>
+            </div>
         </div>
     );
 };
