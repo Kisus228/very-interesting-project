@@ -4,6 +4,11 @@
     display: grid;
     grid-template-columns: @grid-fixed-width 1fr;
     gap: 10px;
+
+    @media (max-width: 750px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
 }
 
 .ProfileItemsWrapper {
@@ -26,6 +31,14 @@
     background-color: white;
     list-style: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    @media (max-width: 950px) {
+        grid-template-columns: 1fr 200px;
+
+        & .ProfileAvatar {
+            display: none;
+        }
+    }
 }
 
 .ProfileInfo {
