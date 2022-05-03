@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import {FilterType, onChangeFilterType} from "./Filter";
+import {onChangeFilterType} from "./Filter";
 import CompetenceItem from "./CompetenceItem";
 import classes from './Filter.less';
 import {Arrow} from "../Common/Icons/Icons";
 import cn from "classnames";
+import {FilterType} from "../../types/types";
 
 type PropsType = {
     item: FilterType,
@@ -25,7 +26,7 @@ const CategoryItem: React.FC<PropsType> = (props) => {
             </div>
             <ul>
                 {
-                    props.item.competencies.map(item => {
+                    props.item.skills.map(item => {
                         return <CompetenceItem key={item.id} item={item} dropdown={dropdown}
                                                onChangeFilter={props.onChangeFilter}/>
                     })

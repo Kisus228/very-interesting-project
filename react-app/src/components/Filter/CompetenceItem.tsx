@@ -1,6 +1,7 @@
 import React from "react";
-import {CompetenceType, onChangeFilterType} from "./Filter";
+import {onChangeFilterType} from "./Filter";
 import classes from './Filter.less';
+import {CompetenceType} from "../../types/types";
 
 type PropsType = {
     item: CompetenceType,

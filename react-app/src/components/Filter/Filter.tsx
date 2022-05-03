@@ -1,93 +1,20 @@
-import React, {useState} from "react";
+import React, {useEffect} from "react";
 import classes from "./Filter.less";
 import CategoryItem from "./CategoryItem";
 import Button from "../Common/FormControl/Button";
-
-export type FilterType = {
-    category: string;
-    competencies: CompetenceType[];
-};
-
-export type CompetenceType = {
-    id: number,
-    name: string,
-}
+import {connect} from "react-redux";
+import {compose} from "redux";
+import {getFilterTC} from "../../redux/FilterReducer";
+import {AppStateType} from "../../redux/ReduxStore";
 
 export type onChangeFilterType = (checked: boolean, newId: number) => void;
 
-const Filter = () => {
-    const defaultState = [
-        {
-            category: "Front-end",
-            competencies: [
-                {
-                    id: 0,
-                    name: "JavaScript",
-                },
-                {
-                    id: 1,
-                    name: "React",
-                },
-                {
-                    id: 2,
-                    name: "Angular",
-                },
-                {
-                    id: 3,
-                    name: "HTML",
-                },
-                {
-                    id: 4,
-                    name: "CSS",
-                },
-            ],
-        },
-        {
-            category: "Back-end",
-            competencies: [
-                {
-                    id: 5,
-                    name: "C",
-                },
-                {
-                    id: 6,
-                    name: "C#",
-                },
-                {
-                    id: 7,
-                    name: "Java",
-                },
-                {
-                    id: 8,
-                    name: "Python",
-                },
-                {
-                    id: 9,
-                    name: "C++",
-                },
-            ],
-        },
-        {
-            category: "Аналитика",
-            competencies: [
-                {
-                    id: 10,
-                    name: "Аналитик",
-                },
-            ],
-        },
-        {
-            category: "UI/UX",
-            competencies: [
-                {
-                    id: 11,
-                    name: "Дизайнер",
-                },
-            ],
-        },
-    ];
-    const [state] = useState<FilterType[]>(defaultState);
+const Filter: React.FC<Props> = (props) => {
     const filters: number[] = [];
+
+    useEffect(() => {
+        props.getFilterTC();
+    }, [])
 
     const onChangeFilter = (checked: boolean, newId: number) => {
         if (checked) {
@@ -103,7 +30,7 @@ const Filter = () => {
             <h3>Фильтр</h3>
             <ul>
                 {
-                    state.map(item => <CategoryItem key={item.category} item={item} onChangeFilter={onChangeFilter}/>)
+                    !!props.filter && props.filter.map((item: any) => <CategoryItem key={item.category} item={item} onChangeFilter={onChangeFilter}/>)
                 }
             </ul>
             <div className={classes.ButtonWrapper}>
@@ -113,4 +40,18 @@ const Filter = () => {
     );
 };
 
-export default Filter;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        filter: state.filterData.filter,
+    }
+}
+
+type MapStatePropsType = ReturnType<typeof mapStateToProps>
+
+type MapDispatchPropsType = {
+    getFilterTC: () => void
+}
+
+type Props = MapStatePropsType & MapDispatchPropsType;
+
+export default compose<React.ComponentType>(connect(mapStateToProps, {getFilterTC}))(Filter);
