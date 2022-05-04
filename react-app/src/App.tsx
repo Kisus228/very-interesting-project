@@ -1,5 +1,5 @@
 import classes from './App.less';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Header from "./components/Header/Header";
 import Navigation from "./components/Navigation/Navigation";
 import {Routes, Route, Outlet, useNavigate, useLocation} from 'react-router-dom';
@@ -11,14 +11,17 @@ import OpenedVacancies from "./components/Vacancies/OpenedVacancies";
 import HistoryVacancies from "./components/Vacancies/HistoryVacancies";
 import Vacancy from "./components/Vacancy/Vacancy";
 import NewVacancy from "./components/NewVacancy/NewVacancy";
-import Login from "./components/Auth/Login";
+import Login, {LoginType} from "./components/Auth/Login";
 import Auth from "./components/Auth/Auth";
 import Register from "./components/Auth/Register";
+import {AppStateType} from "./redux/ReduxStore";
+import {compose} from "redux";
+import {connect} from "react-redux";
 
-const AppWrapper = (props: {setAuth: (t: boolean) => void}) => {
+const AppWrapper = () => {
     return (
         <div className={classes.AppWrapper}>
-            <Header setAuth={props.setAuth}/>
+            <Header/>
             <main className={classes.AppContentWrapper}>
                 <Navigation/>
                 <div className={classes.AppContentContainer}>
@@ -29,22 +32,22 @@ const AppWrapper = (props: {setAuth: (t: boolean) => void}) => {
     );
 }
 
-function App() {
+const App: React.FC<Props> = (props) => {
     const navigate = useNavigate();
     const location = useLocation().pathname;
 
-    const [isAuth, setAuth] = useState(false);
-
     useEffect(() => {
-        if (!isAuth && !(location === '/auth' || location === '/register')) {
+        if (!props.auth && !(location === '/auth' || location === '/register')) {
             navigate('/auth', {state: location});
-            setAuth(true);
         }
-    }, [isAuth]);
+        if (props.auth && (location === '/auth' || location === '/register')) {
+            navigate('/search');
+        }
+    }, [props.auth]);
 
     return (
         <Routes>
-            <Route path="/" element={<AppWrapper setAuth={setAuth}/>}>
+            <Route path="/" element={<AppWrapper/>}>
                 <Route path="search">
                     <Route path=":profileId" element={<ProfileInfo/>}/>
                     <Route index element={<Search/>}/>
@@ -66,4 +69,16 @@ function App() {
     );
 }
 
-export default App;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        auth: state.authData.auth,
+    }
+}
+
+type MapStatePropsType = ReturnType<typeof mapStateToProps>
+
+type MapDispatchPropsType = {}
+
+type Props = MapStatePropsType & MapDispatchPropsType;
+
+export default compose<React.ComponentType>(connect(mapStateToProps, {}))(App);

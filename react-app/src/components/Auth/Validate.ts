@@ -6,10 +6,8 @@ const email = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
 export const validateLogin = (values: LoginType) => {
     const errors: Partial<LoginType> = {};
 
-    if (!values.email) {
-        errors.email = 'Заполните поле';
-    } else if (!email.test(values.email)) {
-        errors.email = 'Не валидное';
+    if (!values.username) {
+        errors.username = 'Заполните поле';
     }
 
     if (!values.password) {
@@ -28,6 +26,10 @@ export const validateRegister = (values: RegisterType) => {
         errors.email = 'Заполните поле';
     } else if (!email.test(values.email)) {
         errors.email = 'Не валидное';
+    }
+
+    if (!values.username) {
+        errors.username = 'Заполните поле';
     }
 
     if (!values.password) {

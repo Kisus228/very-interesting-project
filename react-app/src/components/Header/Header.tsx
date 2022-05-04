@@ -4,12 +4,17 @@ import logo from './../../assets/logo.png';
 import avatar from './../../assets/avatar.png';
 import {useNavigate} from "react-router-dom";
 import {Arrow, Exit} from "../Common/Icons/Icons";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {deleteAuthLoginTC} from "../../redux/AuthReducer";
+import {AppStateType} from "../../redux/ReduxStore";
+import {LoginType} from "../Auth/Login";
 
 // TODO: Сергей Кашкин | Верстка: Сделать отцентровку изображения в квадрат без сжатия.
 // TODO: Сергей Кашкин | Верстка: Подумать над шрифтами.
 // TODO: Сергей Кашкин | Верстка: Добавить медиа запросы для адаптива.
 
-const Header = (props: {setAuth: (b: boolean) => void}) => {
+const Header: React.FC<Props> = (props) => {
     const [openedProfileMenu, setOpenedProfileMenu] = useState(false);
     const navigate = useNavigate();
 
@@ -59,7 +64,7 @@ const Header = (props: {setAuth: (b: boolean) => void}) => {
                     }
                 </button>
                 <div className={classes.Stroke}/>
-                <button className={classes.Button} onClick={() => props.setAuth(false)}>
+                <button className={classes.Button} onClick={() => props.deleteAuthLoginTC()}>
                     <Exit/>
                 </button>
             </div>
@@ -67,4 +72,18 @@ const Header = (props: {setAuth: (b: boolean) => void}) => {
     );
 };
 
-export default Header;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        auth: state.authData.auth,
+    }
+}
+
+type MapStatePropsType = ReturnType<typeof mapStateToProps>
+
+type MapDispatchPropsType = {
+    deleteAuthLoginTC: () => void
+}
+
+type Props = MapStatePropsType & MapDispatchPropsType;
+
+export default compose<React.ComponentType>(connect(mapStateToProps, {deleteAuthLoginTC}))(Header);

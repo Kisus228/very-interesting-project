@@ -9,7 +9,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     name: string;
 }
 
-export const LoginInput: React.FC<InputProps> = (props) => {
+export const Input: React.FC<InputProps> = (props) => {
     const [field, meta] = useField(props);
 
     return (
@@ -20,7 +20,6 @@ export const LoginInput: React.FC<InputProps> = (props) => {
                     className={cn(classes.Input, {
                         [classes.Error]: meta.touched && meta.error
                     })}
-                    type={"email"}
                     {...field}
                     {...props}
                 />

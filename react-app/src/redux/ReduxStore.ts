@@ -1,9 +1,11 @@
 import FilterReducer from "./FilterReducer";
 import thunkMiddleware, {ThunkAction} from "redux-thunk";
 import {Action, applyMiddleware, combineReducers, compose, createStore} from "redux";
+import AuthReducer from "./AuthReducer";
 
 const reducers = combineReducers({
     filterData: FilterReducer,
+    authData: AuthReducer,
 });
 
 export type AppStateType = ReturnType<typeof reducers>

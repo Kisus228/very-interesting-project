@@ -4,17 +4,19 @@ import logo from "../../assets/logo.png";
 import {ReactComponent as AuthImage} from "../../assets/AuthImage.svg";
 import {Form, Formik} from "formik";
 import {validateRegister} from "./Validate";
-import {LoginInput, PassInput} from "./AuthInput";
+import {Input, PassInput} from "./AuthInput";
 import Button from "../Common/FormControl/Button";
 import {LoginType} from "./Login";
 import {useLocation, useNavigate} from "react-router-dom";
 
-export interface RegisterType extends LoginType{
-    retryPassword: string
+export interface RegisterType extends LoginType {
+    email: string;
+    retryPassword: string,
 }
 
 const Register = () => {
     const initialValues = {
+        username: "",
         email: "",
         password: "",
         retryPassword: ""
@@ -33,7 +35,8 @@ const Register = () => {
                 validate={values => validateRegister(values)}>
             <Form className={classes.FormWrapper}>
                 <h1>Register</h1>
-                <LoginInput name={"email"} label={"Email"}/>
+                <Input name={"email"} label={"Email"} type={"email"}/>
+                <Input name={"username"} label={"Username"} type={"text"}/>
                 <PassInput name={"password"} label={"Password"}/>
                 <PassInput name={"retryPassword"} label={"Retry password"}/>
                 <Button type={"submit"}>Sign up</Button>

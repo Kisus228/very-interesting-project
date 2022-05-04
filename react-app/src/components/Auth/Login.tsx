@@ -1,19 +1,23 @@
 import classes from './Auth.less';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Button from "../Common/FormControl/Button";
 import {Formik, Form} from "formik";
-import {LoginInput, PassInput} from "./AuthInput";
+import {Input, PassInput} from "./AuthInput";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {validateLogin} from "./Validate";
+import {AppStateType} from "../../redux/ReduxStore";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {postAuthLoginTC} from "../../redux/AuthReducer";
 
 export interface LoginType {
-    email: string;
+    username: string;
     password: string;
 }
 
-const Login = () => {
+const Login: React.FC<Props> = (props) => {
     const initialValues = {
-        email: "",
+        username: "",
         password: ""
     }
     const navigate = useNavigate();
@@ -21,16 +25,21 @@ const Login = () => {
     const prevLocation = (location === "/" || location === null) ? "/search" : location;
 
     const onSubmit = (values: LoginType) => {
-        console.log(values);
-        navigate(prevLocation);
+        props.postAuthLoginTC(values);
     }
+
+    useEffect(() => {
+        if (props.auth) {
+            navigate(prevLocation);
+        }
+    }, [props.auth])
 
     return (
         <Formik initialValues={initialValues} onSubmit={onSubmit}
                 validate={values => validateLogin(values)}>
             <Form className={classes.FormWrapper}>
                 <h1>Login</h1>
-                <LoginInput name={"email"} label={"Email"}/>
+                <Input name={"username"} label={"Username"} type={"text"}/>
                 <PassInput name={"password"} label={"Password"}/>
                 <a href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"} target={"_blank"}>
                     Forgot Password?
@@ -49,4 +58,18 @@ const Login = () => {
     );
 };
 
-export default Login;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        auth: state.authData.auth,
+    }
+}
+
+type MapStatePropsType = ReturnType<typeof mapStateToProps>
+
+type MapDispatchPropsType = {
+    postAuthLoginTC: (data: LoginType) => void
+}
+
+type Props = MapStatePropsType & MapDispatchPropsType;
+
+export default compose<React.ComponentType>(connect(mapStateToProps, {postAuthLoginTC}))(Login);
