@@ -8,7 +8,6 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {deleteAuthLoginTC} from "../../redux/AuthReducer";
 import {AppStateType} from "../../redux/ReduxStore";
-import {LoginType} from "../Auth/Login";
 
 // TODO: Сергей Кашкин | Верстка: Сделать отцентровку изображения в квадрат без сжатия.
 // TODO: Сергей Кашкин | Верстка: Подумать над шрифтами.

@@ -1,5 +1,6 @@
 import {authAPI} from "../api/Api";
 import {BaseThunkType, InferActionsTypes} from './ReduxStore';
+import {LoginType, RegisterType} from "../types/types";
 
 const initialState = {
     auth: false,
@@ -18,7 +19,7 @@ export const actions = {
     authLogin: (auth: boolean) => ({type: "AUTH/SET_AUTH", auth} as const),
 }
 
-export const postAuthLoginTC = (data: {username: string, password: string}): ThunkType => async (dispatch) => {
+export const postAuthLoginTC = (data: LoginType): ThunkType => async (dispatch) => {
     await authAPI.postAuthLogin(data)
         .then(() => dispatch(actions.authLogin(true)))
 }
@@ -26,6 +27,11 @@ export const postAuthLoginTC = (data: {username: string, password: string}): Thu
 export const deleteAuthLoginTC = (): ThunkType => async (dispatch) => {
     await authAPI.deleteAuthLogin()
         .then(() => dispatch(actions.authLogin(false)))
+}
+
+export const postAuthRegisterTC = (data: RegisterType): ThunkType => async (dispatch) => {
+    await authAPI.postAuthRegister(data)
+        .then(() => dispatch(postAuthLoginTC(data)))
 }
 
 type InitialState = typeof initialState;

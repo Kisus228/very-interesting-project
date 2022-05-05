@@ -3,36 +3,25 @@ import React, {useEffect} from 'react';
 import Button from "../Common/FormControl/Button";
 import {Formik, Form} from "formik";
 import {Input, PassInput} from "./AuthInput";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate, useOutletContext} from "react-router-dom";
 import {validateLogin} from "./Validate";
 import {AppStateType} from "../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {postAuthLoginTC} from "../../redux/AuthReducer";
+import {LoginType} from "../../types/types";
 
-export interface LoginType {
-    username: string;
-    password: string;
-}
+const Login = () => {
+    const {postAuthLoginTC} = useOutletContext<{postAuthLoginTC: (data: LoginType) => void}>();
 
-const Login: React.FC<Props> = (props) => {
     const initialValues = {
         username: "",
         password: ""
     }
-    const navigate = useNavigate();
-    const location = useLocation().state as string;
-    const prevLocation = (location === "/" || location === null) ? "/search" : location;
 
     const onSubmit = (values: LoginType) => {
-        props.postAuthLoginTC(values);
+        postAuthLoginTC(values);
     }
-
-    useEffect(() => {
-        if (props.auth) {
-            navigate(prevLocation);
-        }
-    }, [props.auth])
 
     return (
         <Formik initialValues={initialValues} onSubmit={onSubmit}
@@ -49,7 +38,7 @@ const Login: React.FC<Props> = (props) => {
                     <span>
                         Don’t have an account yet?
                     </span>
-                    <Link to={"/register"} state={prevLocation}>
+                    <Link to={"/register"}>
                         Register for free
                     </Link>
                 </div>
@@ -58,18 +47,4 @@ const Login: React.FC<Props> = (props) => {
     );
 };
 
-const mapStateToProps = (state: AppStateType) => {
-    return {
-        auth: state.authData.auth,
-    }
-}
-
-type MapStatePropsType = ReturnType<typeof mapStateToProps>
-
-type MapDispatchPropsType = {
-    postAuthLoginTC: (data: LoginType) => void
-}
-
-type Props = MapStatePropsType & MapDispatchPropsType;
-
-export default compose<React.ComponentType>(connect(mapStateToProps, {postAuthLoginTC}))(Login);
+export default Login;

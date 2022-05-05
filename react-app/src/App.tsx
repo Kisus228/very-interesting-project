@@ -11,7 +11,7 @@ import OpenedVacancies from "./components/Vacancies/OpenedVacancies";
 import HistoryVacancies from "./components/Vacancies/HistoryVacancies";
 import Vacancy from "./components/Vacancy/Vacancy";
 import NewVacancy from "./components/NewVacancy/NewVacancy";
-import Login, {LoginType} from "./components/Auth/Login";
+import Login from "./components/Auth/Login";
 import Auth from "./components/Auth/Auth";
 import Register from "./components/Auth/Register";
 import {AppStateType} from "./redux/ReduxStore";

@@ -43,22 +43,18 @@
 
 .Content {
     display: flex;
-    align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 50px;
     height: 100%;
-    min-height: 550px;
-
-    & > div {
-        height: 100%;
-        max-height: 800px;
-        border-radius: 20px;
-    }
 }
 
 .AuthImage {
+    height: 100%;
+    max-height: 800px;
     overflow: hidden;
     flex-shrink: 0;
+    border-radius: 20px;
 
     svg {
         height: 100%;
@@ -74,10 +70,15 @@
     flex-grow: 1;
     min-width: 300px;
     max-width: 400px;
+    padding-bottom: 50px;
+}
+
+.AuthContent {
     padding: 50px;
     box-sizing: border-box;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
 
     & h1 {
         align-self: center;

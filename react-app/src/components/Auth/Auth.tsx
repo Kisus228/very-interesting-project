@@ -1,10 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import classes from "./Auth.less";
 import logo from "../../assets/logo.png";
 import {ReactComponent as AuthImage} from "../../assets/AuthImage.svg";
-import {Outlet} from "react-router-dom";
+import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import {AppStateType} from "../../redux/ReduxStore";
+import {LoginType, RegisterType} from "../../types/types";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {postAuthLoginTC, postAuthRegisterTC} from "../../redux/AuthReducer";
 
-const Auth = () => {
+const Auth: React.FC<Props> = (props) => {
+    const navigate = useNavigate();
+    const location = useLocation().state as string;
+    const prevLocation = (location === "/" || location === null) ? "/search" : location;
+
+    useEffect(() => {
+        if (props.auth) {
+            navigate(prevLocation);
+        }
+    }, [props.auth])
+
     return (
         <div className={classes.AuthWrapper}>
             <header className={classes.Header}>
@@ -19,7 +34,12 @@ const Auth = () => {
                             <AuthImage/>
                         </div>
                         <div className={classes.AuthContainer}>
-                            <Outlet/>
+                        <div className={classes.AuthContent}>
+                            <Outlet context={{
+                                postAuthLoginTC: props.postAuthLoginTC,
+                                postAuthRegisterTC: props.postAuthRegisterTC
+                            }}/>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -27,5 +47,19 @@ const Auth = () => {
         </div>
     );
 };
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        auth: state.authData.auth,
+    }
+}
 
-export default Auth;
+type MapStatePropsType = ReturnType<typeof mapStateToProps>
+
+type MapDispatchPropsType = {
+    postAuthLoginTC: (data: LoginType) => void
+    postAuthRegisterTC: (data: RegisterType) => void
+}
+
+type Props = MapStatePropsType & MapDispatchPropsType;
+
+export default compose<React.ComponentType>(connect(mapStateToProps, {postAuthLoginTC, postAuthRegisterTC}))(Auth);

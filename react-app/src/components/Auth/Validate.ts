@@ -1,5 +1,5 @@
-import {LoginType} from "./Login";
-import {RegisterType} from "./Register";
+import {LoginType, RegisterType} from "../../types/types";
+import {RegisterTypeWithRetryPass} from "./Register";
 
 const email = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
 
@@ -19,8 +19,8 @@ export const validateLogin = (values: LoginType) => {
     return errors;
 };
 
-export const validateRegister = (values: RegisterType) => {
-    const errors: Partial<RegisterType> = {};
+export const validateRegister = (values: RegisterTypeWithRetryPass) => {
+    const errors: Partial<RegisterTypeWithRetryPass> = {};
 
     if (!values.email) {
         errors.email = 'Заполните поле';
@@ -30,6 +30,14 @@ export const validateRegister = (values: RegisterType) => {
 
     if (!values.username) {
         errors.username = 'Заполните поле';
+    }
+
+    if (!values.firstname) {
+        errors.firstname = 'Заполните поле';
+    }
+
+    if (!values.lastname) {
+        errors.lastname = 'Заполните поле';
     }
 
     if (!values.password) {

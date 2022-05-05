@@ -1,7 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ProfileList from "../ProfileList/ProfileList";
+import {getVacancyTC} from "../../redux/VacansyReducer";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {getFilterTC} from "../../redux/FilterReducer";
+import {AppStateType} from "../../redux/ReduxStore";
 
-const Search = () => {
+const Search: React.FC<Props> = (props) => {
     const defaultState = [
         {
             id: 0,
@@ -33,9 +38,27 @@ const Search = () => {
     ]
     const [state] = useState(defaultState);
 
+    /*useEffect(() => {
+        props.getVacancyTC()
+    })*/
+
     return (
-        <ProfileList state={state}/>
+        <ProfileList state={props.vacancy}/>
     );
 };
 
-export default Search;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        vacancy: state.vacancyData.vacancy,
+    }
+}
+
+type MapStatePropsType = ReturnType<typeof mapStateToProps>
+
+type MapDispatchPropsType = {
+    getVacancyTC: () => void
+}
+
+type Props = MapStatePropsType & MapDispatchPropsType;
+
+export default compose<React.ComponentType>(connect(mapStateToProps, {getVacancyTC}))(Search);

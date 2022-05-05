@@ -2,9 +2,11 @@ import FilterReducer from "./FilterReducer";
 import thunkMiddleware, {ThunkAction} from "redux-thunk";
 import {Action, applyMiddleware, combineReducers, compose, createStore} from "redux";
 import AuthReducer from "./AuthReducer";
+import VacancyReducer from "./VacansyReducer";
 
 const reducers = combineReducers({
     filterData: FilterReducer,
+    vacancyData: VacancyReducer,
     authData: AuthReducer,
 });
 
