@@ -66,10 +66,11 @@ class Vacancy(models.Model):
 
 
 class Resume(models.Model):     # возможно ссылки передавать одним джейсон стетхэмом файлом вида: {'соцсеть': 'ссылка'}
-    vk_link = models.TextField(verbose_name='Ссылка на ВК')
-    tg_link = models.TextField(verbose_name='Ссылка на Телеграм')
-    github_link = models.TextField(verbose_name='Ссылка на GitHub')
-    gitlab_link = models.TextField(verbose_name='Ссылка на GitLab')
+    job = models.CharField(max_length=250, verbose_name='Резюме')
+    vk_link = models.TextField(verbose_name='Ссылка на ВК', blank=True, null=True)
+    tg_link = models.TextField(verbose_name='Ссылка на Телеграм', blank=True, null=True)
+    github_link = models.TextField(verbose_name='Ссылка на GitHub', blank=True, null=True)
+    gitlab_link = models.TextField(verbose_name='Ссылка на GitLab', blank=True, null=True)
     resume_text = models.TextField(verbose_name='Текст резюме')
     skills = models.ManyToManyField(Skills, verbose_name='Список навыков')
 
@@ -77,14 +78,21 @@ class Resume(models.Model):     # возможно ссылки передава
         verbose_name = 'Резюме'
         verbose_name_plural = 'Резюме'
 
+    def __str__(self):
+        return self.job
+
 
 class Worker(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Работник', blank=True)
-    liked_apps = models.ManyToManyField(Vacancy, verbose_name='Понравившиеся заявки', blank=True)
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, verbose_name='Резюме')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Работник')
+    liked_apps = models.ManyToManyField(Vacancy, verbose_name='Понравившиеся заявки', blank=True, null=True)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, verbose_name='Резюме', blank=True, null=True)
 
     def __str__(self):
         return str(self.user)
+
+    class Meta:
+        verbose_name = 'Работник'
+        verbose_name_plural = 'Работники'
 
 
 class JobApplications(models.Model):
@@ -96,7 +104,7 @@ class JobApplications(models.Model):
         verbose_name_plural = 'Заявки на вакансии'
 
     def __str__(self):
-        return self.vacancy
+        return str(self.vacancy)
 
     def as_dict(self):
         skills = [skill.name for skill in self.skills.all()]

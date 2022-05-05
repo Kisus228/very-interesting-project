@@ -133,4 +133,6 @@ dmypy.json
 .pyre/
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/misc.xml
-/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/pgit rm --cachedrofiles_settings.xml
+HR_portal/portal/migrations
+HR_portal/Users/migrations
