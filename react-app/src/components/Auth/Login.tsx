@@ -7,18 +7,14 @@ import {Link, useOutletContext} from "react-router-dom";
 import {validateLogin} from "./Validate";
 import {LoginType} from "../../types/types";
 
-type Context = { loginError: string, postAuthLoginTC: (data: LoginType) => void }
-
-const Login = () => {
-    const {postAuthLoginTC, loginError} = useOutletContext<Context>();
-
+const Login: React.FC<Props> = (props) => {
     const initialValues = {
         username: "",
         password: ""
     }
 
     const onSubmit = (values: LoginType) => {
-        postAuthLoginTC(values);
+        props.postAuthLoginTC(values);
     }
 
     return (
@@ -34,12 +30,12 @@ const Login = () => {
                     Forgot Password?
                 </a>
                 <Button type={"submit"}>Sign in</Button>
-                {!!loginError && <div className={classes.ErrorMessage}>{loginError}</div>}
+                {!!props.loginError && <div className={classes.ErrorMessage}>{props.loginError}</div>}
                 <div className={classes.RegisterArea}>
                     <span>
                         Don’t have an account yet?
                     </span>
-                    <Link to={"/register"}>
+                    <Link to={""} onClick={props.setLoginForm}>
                         Register for free
                     </Link>
                 </div>
@@ -47,5 +43,11 @@ const Login = () => {
         </Formik>
     );
 };
+
+interface Props {
+    loginError: string,
+    postAuthLoginTC: (data: LoginType) => void,
+    setLoginForm: () => void
+}
 
 export default Login;

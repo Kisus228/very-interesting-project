@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import classes from "./Auth.less";
 import logo from "../../assets/logo.png";
 import {ReactComponent as AuthImage} from "../../assets/AuthImage.svg";
@@ -8,15 +8,18 @@ import {LoginType, RegisterType} from "../../types/types";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {postAuthLoginTC, postAuthRegisterTC} from "../../redux/AuthReducer";
+import Login from "./Login";
+import Register from "./Register";
 
 const Auth: React.FC<Props> = (props) => {
     const navigate = useNavigate();
     const location = useLocation().state as string;
     const prevLocation = (location === "/" || location === null) ? "/search" : location;
+    const [loginForm, setLoginForm] = useState(true);
 
     useEffect(() => {
         if (props.auth) {
-            navigate(prevLocation);
+            navigate(prevLocation, {replace: true});
         }
     }, [props.auth])
 
@@ -35,12 +38,16 @@ const Auth: React.FC<Props> = (props) => {
                         </div>
                         <div className={classes.AuthContainer}>
                             <div className={classes.AuthContent}>
-                                <Outlet context={{
-                                    postAuthLoginTC: props.postAuthLoginTC,
-                                    postAuthRegisterTC: props.postAuthRegisterTC,
-                                    loginError: props.loginError,
-                                    registerError: props.registerError
-                                }}/>
+                                {
+                                    loginForm && <Login loginError={props.loginError}
+                                                        setLoginForm={() => setLoginForm(false)}
+                                                        postAuthLoginTC={props.postAuthLoginTC}/>
+                                }
+                                {
+                                    !loginForm && <Register setLoginForm={() => setLoginForm(true)}
+                                                            registerError={props.registerError}
+                                                            postAuthRegisterTC={props.postAuthRegisterTC}/>
+                                }
                             </div>
                         </div>
                     </div>

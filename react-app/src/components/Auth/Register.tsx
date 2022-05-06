@@ -5,18 +5,14 @@ import {validateRegister} from "./Validate";
 import {Input, PassInput} from "./AuthInput";
 import Button from "../Common/FormControl/Button";
 import {Link, useNavigate, useOutletContext} from "react-router-dom";
-import {RegisterType} from "../../types/types";
+import {LoginType, RegisterType} from "../../types/types";
 import {Back} from "../Common/Icons/Icons";
 
 export interface RegisterTypeWithRetryPass extends RegisterType {
     retryPassword: string
 }
 
-type Context = { registerError: [string, string][], postAuthRegisterTC: (data: RegisterType) => void }
-
-const Register = () => {
-    const {registerError, postAuthRegisterTC} = useOutletContext<Context>();
-    const navigate = useNavigate();
+const Register: React.FC<Props> = (props) => {
     const initialValues = {
         username: "",
         firstname: "",
@@ -27,7 +23,7 @@ const Register = () => {
     }
 
     const onSubmit = (values: RegisterTypeWithRetryPass) => {
-        postAuthRegisterTC({
+        props.postAuthRegisterTC({
             username: values.username,
             firstname: values.firstname,
             lastname: values.lastname,
@@ -41,9 +37,9 @@ const Register = () => {
                 validate={values => validateRegister(values)}>
             <Form className={classes.FormWrapper}>
                 <div className={classes.FormWrapperHeader}>
-                    <Link to={"/auth"} className={classes.BackButton}>
+                    <div onClick={props.setLoginForm} className={classes.BackButton}>
                         <Back/>
-                    </Link>
+                    </div>
                     <h1>Register</h1>
                 </div>
                 <Input name={"username"} label={"Username"} type={"text"}/>
@@ -54,12 +50,18 @@ const Register = () => {
                 <PassInput name={"retryPassword"} label={"Retry password"}/>
                 <Button type={"submit"}>Sign up</Button>
                 {
-                    !!registerError && registerError.map(([k, v]) =>
+                    !!props.registerError && props.registerError.map(([k, v]) =>
                         <div className={classes.ErrorMessage} key={k}>{v}</div>)
                 }
             </Form>
         </Formik>
     );
 };
+
+interface Props {
+    registerError: [string, string][],
+    postAuthRegisterTC: (data: RegisterType) => void,
+    setLoginForm: () => void
+}
 
 export default Register;

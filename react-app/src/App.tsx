@@ -37,11 +37,8 @@ const App: React.FC<Props> = (props) => {
     const location = useLocation().pathname;
 
     useEffect(() => {
-        if (!props.auth && !(location === '/auth' || location === '/register')) {
-            navigate('/auth', {state: location});
-        }
-        if (props.auth && (location === '/auth' || location === '/register')) {
-            navigate('/search');
+        if (!props.auth && !(location === '/auth')) {
+            navigate('/auth', {state: location, replace: true});
         }
     }, [props.auth]);
 
@@ -62,10 +59,7 @@ const App: React.FC<Props> = (props) => {
                 </Route>
                 <Route path="profile" element={<MyProfile/>}/>
             </Route>
-            <Route element={<Auth/>}>
-                <Route path="auth" element={<Login/>}/>
-                <Route path="register" element={<Register/>}/>
-            </Route>
+            <Route path="auth" element={<Auth/>}/>
         </Routes>
     );
 }
