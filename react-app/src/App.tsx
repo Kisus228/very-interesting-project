@@ -58,6 +58,7 @@ const App: React.FC<Props> = (props) => {
                     <Route path="history" element={<HistoryVacancies/>}/>
                     <Route path="new" element={<NewVacancy/>}/>
                     <Route path=":vacancyId" element={<Vacancy/>}/>
+                    <Route path=":vacancyId/edit" element={<NewVacancy/>}/>
                 </Route>
                 <Route path="profile" element={<MyProfile/>}/>
             </Route>

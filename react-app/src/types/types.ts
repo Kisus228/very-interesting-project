@@ -8,6 +8,11 @@ export type CompetenceType = {
     name: string,
 }
 
+export type SkillType = {
+    value: number,
+    label: string,
+}
+
 export interface LoginType {
     username: string;
     password: string;

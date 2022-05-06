@@ -2,8 +2,8 @@ import React from 'react';
 import classes from './Vacancies.less';
 import Button from "../Common/FormControl/Button";
 import cn from "classnames";
-import {Outlet, useLocation} from 'react-router-dom';
 import {Close, Delete, Edit, Open} from "../Common/Icons/Icons";
+import {useNavigate} from "react-router-dom";
 
 interface Props {
     name: string,
@@ -32,6 +32,8 @@ const Vacancies: React.FC<{ state: Props[] }> = (props) => {
 };
 
 const VacanciesItem: React.FC<Props> = (props) => {
+    const navigate = useNavigate();
+
     return (
         <li className={classes.VacanciesTableWrapper}>
             <div>{props.name}</div>
@@ -43,15 +45,15 @@ const VacanciesItem: React.FC<Props> = (props) => {
                 {
                     props.status === "Открыта" &&
                     <>
-                        <Edit/>
-                        <Close/>
+                        <Edit onClick={() => navigate(`/vacancies/${props.id}/edit`)}/>
+                        <Close onClick={() => console.log('Close')}/>
                     </>
                 }
                 {
                     props.status === "Закрыта" &&
                     <>
-                        <Open/>
-                        <Delete/>
+                        <Open onClick={() => console.log('Open')}/>
+                        <Delete onClick={() => console.log('Delete')}/>
                     </>
                 }
             </div>

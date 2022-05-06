@@ -1,18 +1,16 @@
 import classes from './Auth.less';
-import React, {useEffect} from 'react';
+import React from 'react';
 import Button from "../Common/FormControl/Button";
-import {Formik, Form} from "formik";
+import {Form, Formik} from "formik";
 import {Input, PassInput} from "./AuthInput";
-import {Link, useLocation, useNavigate, useOutletContext} from "react-router-dom";
+import {Link, useOutletContext} from "react-router-dom";
 import {validateLogin} from "./Validate";
-import {AppStateType} from "../../redux/ReduxStore";
-import {compose} from "redux";
-import {connect} from "react-redux";
-import {postAuthLoginTC} from "../../redux/AuthReducer";
 import {LoginType} from "../../types/types";
 
+type Context = { loginError: string, postAuthLoginTC: (data: LoginType) => void }
+
 const Login = () => {
-    const {postAuthLoginTC} = useOutletContext<{postAuthLoginTC: (data: LoginType) => void}>();
+    const {postAuthLoginTC, loginError} = useOutletContext<Context>();
 
     const initialValues = {
         username: "",
@@ -27,13 +25,16 @@ const Login = () => {
         <Formik initialValues={initialValues} onSubmit={onSubmit}
                 validate={values => validateLogin(values)}>
             <Form className={classes.FormWrapper}>
-                <h1>Login</h1>
+                <div className={classes.FormWrapperHeader}>
+                    <h1>Login</h1>
+                </div>
                 <Input name={"username"} label={"Username"} type={"text"}/>
                 <PassInput name={"password"} label={"Password"}/>
                 <a href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"} target={"_blank"}>
                     Forgot Password?
                 </a>
                 <Button type={"submit"}>Sign in</Button>
+                {!!loginError && <div className={classes.ErrorMessage}>{loginError}</div>}
                 <div className={classes.RegisterArea}>
                     <span>
                         Don’t have an account yet?

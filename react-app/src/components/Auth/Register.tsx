@@ -1,22 +1,21 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import classes from "./Auth.less";
 import {Form, Formik} from "formik";
 import {validateRegister} from "./Validate";
 import {Input, PassInput} from "./AuthInput";
 import Button from "../Common/FormControl/Button";
-import {useLocation, useNavigate, useOutletContext} from "react-router-dom";
-import {LoginType, RegisterType} from "../../types/types";
-import {compose} from "redux";
-import {connect} from "react-redux";
-import {postAuthLoginTC} from "../../redux/AuthReducer";
-import {AppStateType} from "../../redux/ReduxStore";
+import {Link, useNavigate, useOutletContext} from "react-router-dom";
+import {RegisterType} from "../../types/types";
+import {Back} from "../Common/Icons/Icons";
 
-export interface RegisterTypeWithRetryPass extends RegisterType{
+export interface RegisterTypeWithRetryPass extends RegisterType {
     retryPassword: string
 }
 
+type Context = { registerError: [string, string][], postAuthRegisterTC: (data: RegisterType) => void }
+
 const Register = () => {
-    const {postAuthRegisterTC} = useOutletContext<{postAuthRegisterTC: (data: RegisterType) => void}>();
+    const {registerError, postAuthRegisterTC} = useOutletContext<Context>();
     const navigate = useNavigate();
     const initialValues = {
         username: "",
@@ -41,7 +40,12 @@ const Register = () => {
         <Formik initialValues={initialValues} onSubmit={onSubmit}
                 validate={values => validateRegister(values)}>
             <Form className={classes.FormWrapper}>
-                <h1>Register</h1>
+                <div className={classes.FormWrapperHeader}>
+                    <Link to={"/auth"} className={classes.BackButton}>
+                        <Back/>
+                    </Link>
+                    <h1>Register</h1>
+                </div>
                 <Input name={"username"} label={"Username"} type={"text"}/>
                 <Input name={"firstname"} label={"Firstname"} type={"text"}/>
                 <Input name={"lastname"} label={"Lastname"} type={"text"}/>
@@ -49,6 +53,10 @@ const Register = () => {
                 <PassInput name={"password"} label={"Password"}/>
                 <PassInput name={"retryPassword"} label={"Retry password"}/>
                 <Button type={"submit"}>Sign up</Button>
+                {
+                    !!registerError && registerError.map(([k, v]) =>
+                        <div className={classes.ErrorMessage} key={k}>{v}</div>)
+                }
             </Form>
         </Formik>
     );

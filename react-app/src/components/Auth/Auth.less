@@ -79,17 +79,40 @@
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
-
-    & h1 {
-        align-self: center;
-        margin-top: 0;
-    }
 }
 
 .FormWrapper {
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+
+.FormWrapperHeader {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    & h1 {
+        margin: 0;
+    }
+}
+
+.BackButton {
+    cursor: pointer;
+    align-self: flex-end;
+    height: 1.85em;
+
+    & svg {
+        position: absolute;
+        left: 0;
+        stroke: black;
+
+        &:hover {
+            filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.7));
+        }
+    }
 }
 
 .InputWrapper {
@@ -119,7 +142,7 @@
     }
 
     &:focus {
-        box-shadow: 0 0 0 2px #015ccb!important;
+        box-shadow: 0 0 0 2px #015ccb !important;
     }
 }
 

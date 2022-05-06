@@ -34,12 +34,14 @@ const Auth: React.FC<Props> = (props) => {
                             <AuthImage/>
                         </div>
                         <div className={classes.AuthContainer}>
-                        <div className={classes.AuthContent}>
-                            <Outlet context={{
-                                postAuthLoginTC: props.postAuthLoginTC,
-                                postAuthRegisterTC: props.postAuthRegisterTC
-                            }}/>
-                        </div>
+                            <div className={classes.AuthContent}>
+                                <Outlet context={{
+                                    postAuthLoginTC: props.postAuthLoginTC,
+                                    postAuthRegisterTC: props.postAuthRegisterTC,
+                                    loginError: props.loginError,
+                                    registerError: props.registerError
+                                }}/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -50,6 +52,8 @@ const Auth: React.FC<Props> = (props) => {
 const mapStateToProps = (state: AppStateType) => {
     return {
         auth: state.authData.auth,
+        loginError: state.authData.loginError,
+        registerError: state.authData.registerError,
     }
 }
 

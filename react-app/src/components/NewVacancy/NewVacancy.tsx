@@ -1,9 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import classes from './NewVacancy.less';
 import Button from "../Common/FormControl/Button";
-import {Formik, Form, Field} from "formik";
+import {Form, Formik} from "formik";
 import {FormSelect} from "../Common/FormControl/FormSelect";
 import FormInput from "../Common/FormControl/FormInput";
+import {useParams} from "react-router-dom";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {getFilterTC} from "../../redux/FilterReducer"
+import {AppStateType} from "../../redux/ReduxStore";
 
 interface ValuesType {
     vacancyName: string,
@@ -21,29 +26,44 @@ interface ValuesType {
     additionally: string
 }
 
-const NewVacancy = () => {
-    const initialValues = {
-        vacancyName: "",
-        speciality: "",
-        department: "",
-        vacancyDescription: "",
-        employmentType: "",
-        schedule: "",
-        conditions: "",
-        skills: [],
-        requirements: "",
-        responsibilities: "",
-        salary: "",
-        count: "",
-        additionally: ""
-    }
+const NewVacancy: React.FC<Props> = (props) => {
+    const vacancyId = Number(useParams().vacancyId);
 
-    const [skills] = useState(
-        [
-            {value: 0, label: 'JavaScript'},
-            {value: 1, label: 'Python'},
-        ]
-    );
+    const initialValues = isNaN(vacancyId)
+        ? {
+            vacancyName: "",
+            speciality: "",
+            department: "",
+            vacancyDescription: "",
+            employmentType: "",
+            schedule: "",
+            conditions: "",
+            skills: [],
+            requirements: "",
+            responsibilities: "",
+            salary: "",
+            count: "",
+            additionally: ""
+        }
+        : {
+            vacancyName: "тут будет запрос на бэк",
+            speciality: "",
+            department: "",
+            vacancyDescription: "",
+            employmentType: "",
+            schedule: "",
+            conditions: "",
+            skills: [],
+            requirements: "",
+            responsibilities: "",
+            salary: "",
+            count: "",
+            additionally: ""
+        }
+
+    useEffect(() => {
+        props.getFilterTC()
+    }, [])
 
     const [speciality] = useState(
         [
@@ -52,10 +72,17 @@ const NewVacancy = () => {
         ]
     );
 
+    const onSubmit = (values: ValuesType) => {
+        if (isNaN(vacancyId))
+            console.log("добавить", values)
+        else
+            console.log("изменить", values)
+    }
+
     return (
         <div className={classes.PageContentWrapper}>
             <div className={classes.PageContainer}>
-                <Formik initialValues={initialValues} onSubmit={values => console.log(values)}>
+                <Formik initialValues={initialValues} onSubmit={onSubmit}>
                     <Form>
                         <h2>Новая вакансия</h2>
                         <div className={classes.NewVacancy}>
@@ -76,7 +103,7 @@ const NewVacancy = () => {
                                            placeholder={"Напишите условия вакансии"}/>
                             </section>
                             <section className={classes.VacancySection}>
-                                <FormSelect name={"skills"} label={"Навыки"} options={skills}
+                                <FormSelect name={"skills"} label={"Навыки"} options={props.skills}
                                             placeholder={"Выберите необходимые навыки"} isMulti/>
                                 <FormInput label={"Требования"} type="text" name="requirements"
                                            placeholder={"Напишите требования вакансии"}/>
@@ -89,7 +116,9 @@ const NewVacancy = () => {
                                 <FormInput label={"Дополнительно"} type="text" name="additionally"
                                            placeholder={"Дополнительная информация"}/>
                                 <div className={classes.ButtonWrapper}>
-                                    <Button type={"submit"} color={"green"}>Опубликовать</Button>
+                                    <Button type={"submit"} color={"green"}>
+                                        {isNaN(vacancyId) ? "Опубликовать" : "Сохранить"}
+                                    </Button>
                                 </div>
                             </section>
                         </div>
@@ -100,4 +129,18 @@ const NewVacancy = () => {
     );
 };
 
-export default NewVacancy;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        skills: state.filterData.skills,
+    }
+}
+
+type MapStatePropsType = ReturnType<typeof mapStateToProps>
+
+type MapDispatchPropsType = {
+    getFilterTC: () => void
+}
+
+type Props = MapStatePropsType & MapDispatchPropsType;
+
+export default compose<React.ComponentType>(connect(mapStateToProps, {getFilterTC}))(NewVacancy);

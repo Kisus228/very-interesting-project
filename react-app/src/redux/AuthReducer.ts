@@ -4,12 +4,18 @@ import {LoginType, RegisterType} from "../types/types";
 
 const initialState = {
     auth: false,
+    loginError: "",
+    registerError: [] as [string, string][],
 }
 
 const AuthReducer = (state = initialState, action: ActionsTypes): InitialState => {
     switch (action.type) {
         case "AUTH/SET_AUTH":
-            return {...state, auth: action.auth};
+            return {...state, auth: action.auth, loginError: "", registerError: []};
+        case "AUTH/SET_LOGIN_ERROR":
+            return {...state, loginError: action.error};
+        case "AUTH/SET_REGISTER_ERROR":
+            return {...state, registerError: action.error};
         default:
             return state;
     }
@@ -17,11 +23,18 @@ const AuthReducer = (state = initialState, action: ActionsTypes): InitialState =
 
 export const actions = {
     authLogin: (auth: boolean) => ({type: "AUTH/SET_AUTH", auth} as const),
+    loginError: (error: string) => ({type: "AUTH/SET_LOGIN_ERROR", error} as const),
+    registerError: (error: [string, string][]) => ({type: "AUTH/SET_REGISTER_ERROR", error} as const),
 }
 
 export const postAuthLoginTC = (data: LoginType): ThunkType => async (dispatch) => {
     await authAPI.postAuthLogin(data)
-        .then(() => dispatch(actions.authLogin(true)))
+        .then(response => {
+            if (response.status === "Success")
+                dispatch(actions.authLogin(true))
+            else
+                dispatch(actions.loginError("Неверный логин или пароль (или ты не вышел с аккаунта, нажми f12, приложение, файлы cookie и удаляй sessionid)"))
+        })
 }
 
 export const deleteAuthLoginTC = (): ThunkType => async (dispatch) => {
@@ -31,7 +44,12 @@ export const deleteAuthLoginTC = (): ThunkType => async (dispatch) => {
 
 export const postAuthRegisterTC = (data: RegisterType): ThunkType => async (dispatch) => {
     await authAPI.postAuthRegister(data)
-        .then(() => dispatch(postAuthLoginTC(data)))
+        .then(response => {
+            if (response.status === "Success")
+                dispatch(postAuthLoginTC(data))
+            else
+                dispatch(actions.registerError(Object.entries(response)))
+        })
 }
 
 type InitialState = typeof initialState;
