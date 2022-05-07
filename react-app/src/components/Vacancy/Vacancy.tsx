@@ -88,7 +88,7 @@ const Vacancy: React.FC<Props> = (props) => {
                         </div>
                         <div>
                             <h4>Навыки для вакансии:</h4>
-                            <div>{props.vacancy.skills.join(", ")}</div>
+                            <div>{props.vacancy?.skills?.join(", ")}</div>
                         </div>
                         <div>
                             <h4>Найденные сотрудники:</h4>
