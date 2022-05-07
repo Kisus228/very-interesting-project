@@ -4,7 +4,7 @@ export const authAPI = {
     async postAuthLogin(data: LoginType) {
         return await fetch(`/login/`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json; charset=utf-8' },
+            headers: {'Content-Type': 'application/json; charset=utf-8'},
             body: JSON.stringify(data),
         })
             .then(response => response.json())
@@ -17,7 +17,7 @@ export const authAPI = {
     async postAuthRegister(data: RegisterType) {
         return await fetch(`/registration/`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json; charset=utf-8' },
+            headers: {'Content-Type': 'application/json; charset=utf-8'},
             body: JSON.stringify(data),
         })
             .then(response => response.json())
@@ -41,10 +41,14 @@ export const filterAPI = {
 }
 
 export const vacancyAPI = {
-    async getVacancy() {
-        return await fetch('/vacancy/')
+    async getVacancies() {
+        return await fetch('/authorvacancy/')
             .then(response => response.json())
-            .then(response => console.log(response))
+            .catch(error => console.error(error))
+    },
+    async getVacancy(id: number) {
+        return await fetch('/authorvacancy/' + id)
+            .then(response => response.json())
             .catch(error => console.error(error))
     },
 }

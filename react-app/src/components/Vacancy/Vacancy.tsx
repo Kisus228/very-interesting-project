@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import classes from './Vacancy.less';
 import avatar from "../../assets/avatar.png";
 import Button from "../Common/FormControl/Button";
-import cn from "classnames";
+import {AppStateType} from "../../redux/ReduxStore";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {getVacancyTC} from "../../redux/VacansyReducer";
+import {useParams} from "react-router-dom";
 
-const Vacancy = () => {
+const Vacancy: React.FC<Props> = (props) => {
     const [state] = useState({
         vacancyName: "Имитатор программиста",
         salary: "От 30 тысяч раблей в месяц",
@@ -27,6 +31,7 @@ const Vacancy = () => {
             "фрэймворке делать!\", \"о май гад, нет!, уф, я же сделал бэкап...\", \"что за кретин писал этот " +
             "код?!\" и т.д. полный список дадим, обязательно выучить его наизусть, будем спрашивать, раз в " +
             "месяц список будет пополняться.",
+        additionally: "Дополнительная информация вставить текст",
         employerName: "Сергей Сергеевич",
         employerAvatar: "",
         employerPosition: "Проводник, фронтовик, сосочка",
@@ -35,13 +40,20 @@ const Vacancy = () => {
         foundEmployees: [{avatar: "", name: "Клим Саныч"}, {avatar: "", name: "Дим Юрич"}]
     })
 
+    const vacancyId = Number(useParams().vacancyId)
+    console.log(props.vacancy)
+    useEffect(() => {
+        if (!isNaN(vacancyId))
+            props.getVacancyTC(vacancyId);
+    }, [])
+
     return (
         <div className={classes.PageContentWrapper}>
             <div className={classes.PageContainer}>
                 <div className={classes.Vacancy}>
                     <section className={classes.VacancySection}>
                         <div>
-                            <h3>{state.vacancyName}</h3>
+                            <h3>{props.vacancy.name}</h3>
                             <p className={classes.Description}>{state.salary}</p>
                         </div>
                         <div>
@@ -50,7 +62,7 @@ const Vacancy = () => {
                         </div>
                         <div>
                             <h4>Описание вакансии:</h4>
-                            <p>{state.vacancyDescription}</p>
+                            <p>{props.vacancy.description}</p>
                             <p><b>Тип занятости: </b>{state.employmentType}</p>
                             <p><b>График работы: </b>{state.schedule}</p>
                             <h4>Условия:</h4>
@@ -59,6 +71,8 @@ const Vacancy = () => {
                             <p>{state.requirements}</p>
                             <h4>Обязанности:</h4>
                             <p>{state.responsibilities}</p>
+                            <h4>Дополнительно:</h4>
+                            <p>{state.additionally}</p>
                         </div>
                     </section>
                     <section className={classes.VacancySection}>
@@ -68,13 +82,13 @@ const Vacancy = () => {
                             </div>
                         </div>
                         <div>
-                            <h4 className={classes.Name}>{state.employerName}</h4>
+                            <h4 className={classes.Name}>{props.vacancy.author}</h4>
                             <p className={classes.Description}>{state.employerPosition}</p>
                             <p>{state.department}</p>
                         </div>
                         <div>
                             <h4>Навыки для вакансии:</h4>
-                            <div>{state.skills.join(", ")}</div>
+                            <div>{props.vacancy.skills.join(", ")}</div>
                         </div>
                         <div>
                             <h4>Найденные сотрудники:</h4>
@@ -83,7 +97,12 @@ const Vacancy = () => {
                             }
                         </div>
                         <div className={classes.ButtonWrapper}>
-                            <Button type={"button"} color={"red"}>Закрыть вакансию</Button>
+                            {
+                                props.vacancy.is_open
+                                    ? <Button type={"button"} color={"red"}>Закрыть вакансию</Button>
+                                    : <Button type={"button"} color={"green"}>Открыть вакансию</Button>
+                            }
+
                         </div>
                     </section>
                 </div>
@@ -103,4 +122,18 @@ const EmployeeItem = (props: { avatar: any, name: string }) => {
     );
 }
 
-export default Vacancy;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        vacancy: state.vacancyData.vacancy,
+    }
+}
+
+type MapStatePropsType = ReturnType<typeof mapStateToProps>
+
+type MapDispatchPropsType = {
+    getVacancyTC: (id: number) => void
+}
+
+type Props = MapStatePropsType & MapDispatchPropsType;
+
+export default compose<React.ComponentType>(connect(mapStateToProps, {getVacancyTC}))(Vacancy);

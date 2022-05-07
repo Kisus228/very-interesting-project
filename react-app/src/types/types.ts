@@ -23,3 +23,13 @@ export interface RegisterType extends LoginType {
     firstname: string;
     lastname: string;
 }
+
+export type VacancyType = {
+    name: string,
+    author: string,
+    count: number,
+    free: number,
+    skills: string[],
+    description: string,
+    is_open: boolean
+}
