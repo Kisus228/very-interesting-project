@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from .models import Vacancy, HeadDepartment
 from .assistant import get_skills, get_filter_vacancy
-from .serilizer import CreateVacancySerializer
+from .serilizer import CreateVacancySerializer, CreateHeadDepartmentSerializer
 
 
 @api_view(['GET'])
@@ -110,3 +110,18 @@ class VacancyApiView(CreateAPIView):
 
 class HeadDepartmentApiView(CreateAPIView):
     queryset = HeadDepartment.objects.all()
+    serializer_class = CreateHeadDepartmentSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication]
+
+    @staticmethod
+    def get(request, *args, **kwargs):
+        users = HeadDepartment.objects.filter(user=request.user.id)
+        user = users[0] if users else None
+        pk = kwargs.get('pk', None)
+        try:
+            head_department = HeadDepartment.objects.get(pk=pk)
+            return Response(head_department.as_dict())
+        except:
+            head_departments = HeadDepartment.objects.filter(user_id=user)
+            return Response([head_department.as_dict() for head_department in head_departments])
