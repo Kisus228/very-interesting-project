@@ -13,18 +13,6 @@ class Department(models.Model):
         return self.name
 
 
-class HeadDepartment(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Руководитель')
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name='Департамент')
-
-    class Meta:
-        verbose_name = 'Руководитель депортамента'
-        verbose_name_plural = 'Руководители депортаментов'
-
-    def __str__(self):
-        return str(self.user)
-
-
 class GroupSkills(models.Model):
     group = models.CharField(max_length=256, verbose_name='Группа')
 
@@ -48,14 +36,71 @@ class Skills(models.Model):
         return self.name
 
 
+class Resume(models.Model):     # возможно ссылки передавать одним джейсон стетхэмом файлом вида: {'соцсеть': 'ссылка'}
+    vk_link = models.TextField(verbose_name='Ссылка на ВК', blank=True, null=True)
+    tg_link = models.TextField(verbose_name='Ссылка на Телеграм', blank=True, null=True)
+    github_link = models.TextField(verbose_name='Ссылка на GitHub', blank=True, null=True)
+    gitlab_link = models.TextField(verbose_name='Ссылка на GitLab', blank=True, null=True)
+    resume_text = models.TextField(verbose_name='Текст резюме', null=True)
+    skills = models.ManyToManyField(Skills, verbose_name='Список навыков', null=True)
+    experience = models.IntegerField(verbose_name='Лет стажа', blank=True, null=True)
+    about_me = models.TextField(verbose_name='О себе', blank=True, null=True)
+    specialization = models.TextField(verbose_name='Специальность', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Резюме'
+        verbose_name_plural = 'Резюме'
+
+    def as_dict_short(self):
+        skills = [skill.name for skill in self.skills.all()]
+        return {
+            'id': self.pk,
+            'specialization': self.specialization,
+            'experience': self.experience,
+            'skills': skills
+        }
+
+    def as_dict_full(self):
+        resume_short = self.as_dict_short()
+        resume_full = {
+            'vk': self.vk_link,
+            'tg': self.tg_link,
+            'gitlab': self.gitlab_link,
+            'github': self.github_link,
+            'resume_text': self.resume_text,
+            'about_me': self.about_me,
+        }
+        resume_full.update(resume_short)
+        return resume_full
+
+
+class HeadDepartment(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Руководитель')
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name='Департамент')
+    liked_resume = models.ManyToManyField(Resume, verbose_name='Понравившиеся заявки', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Руководитель депортамента'
+        verbose_name_plural = 'Руководители депортаментов'
+
+    def __str__(self):
+        return str(self.user)
+
+
 class Vacancy(models.Model):
     name = models.CharField(max_length=250, verbose_name='Название Вакансии')
+    salary = models.IntegerField(blank=True, verbose_name='Зарплата')
     author = models.ForeignKey(HeadDepartment, on_delete=models.CASCADE, verbose_name='Автор вакансии')
     count = models.IntegerField(verbose_name='Нужное количество человек', default=1)
     free = models.IntegerField(verbose_name='Свободное количество мест', default=1)
     is_open = models.BooleanField(default=True, verbose_name='Открытая ли вакансия?')
     skills = models.ManyToManyField(Skills, related_name='records')
     description = models.TextField(verbose_name='Описание вакансии')
+    type_employment = models.TextField(verbose_name='Тип занятости')
+    specialization = models.TextField(verbose_name='Специализация')
+    work_schedule = models.TextField(verbose_name='График работы')
+    conditions = models.TextField(verbose_name='Условия')
+    duties = models.TextField(verbose_name='Обязанности')
 
     class Meta:
         verbose_name = 'Вакансия'
@@ -64,42 +109,10 @@ class Vacancy(models.Model):
     def __str__(self):
         return self.name
 
-    def as_dict(self):
-        skills = [skill.name for skill in self.skills.all()]
-        return {'id': self.pk, 'name': self.name, 'count': self.count, 'free': self.free,
-                'is_open': self.is_open, 'skills': skills, 'description': self.description}
-
-
-class Resume(models.Model):     # возможно ссылки передавать одним джейсон стетхэмом файлом вида: {'соцсеть': 'ссылка'}
-    job = models.CharField(max_length=250, verbose_name='Резюме')
-    vk_link = models.TextField(verbose_name='Ссылка на ВК', blank=True, null=True)
-    tg_link = models.TextField(verbose_name='Ссылка на Телеграм', blank=True, null=True)
-    github_link = models.TextField(verbose_name='Ссылка на GitHub', blank=True, null=True)
-    gitlab_link = models.TextField(verbose_name='Ссылка на GitLab', blank=True, null=True)
-    resume_text = models.TextField(verbose_name='Текст резюме')
-    skills = models.ManyToManyField(Skills, verbose_name='Список навыков')
-
-    class Meta:
-        verbose_name = 'Резюме'
-        verbose_name_plural = 'Резюме'
-
-    def __str__(self):
-        return self.job
-
-    def brief_information(self):
-        skills = [skill.name for skill in self.skills.all()]
-        return {'id': self.pk, 'skills': skills, 'text': self.resume_text, 'job': self.job}
-
-    def as_dict(self):
-        brief_information = self.brief_information()
-        links = {'vk': self.vk_link, 'tg': self.tg_link, 'github': self.github_link, 'gitlab': self.gitlab_link}
-        brief_information.update(links)
-        return brief_information
-
 
 class Worker(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Работник')
-    liked_apps = models.ManyToManyField(Vacancy, verbose_name='Понравившиеся заявки', blank=True, null=True)
+    liked_apps = models.ManyToManyField(Vacancy, verbose_name='Понравившиеся вакансии', blank=True, null=True)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, verbose_name='Резюме', blank=True, null=True)
 
     def __str__(self):
@@ -109,14 +122,17 @@ class Worker(models.Model):
         verbose_name = 'Работник'
         verbose_name_plural = 'Работники'
 
-    def brief_information(self):
-        return {'resume': self.resume.brief_information(), 'id': self.pk, 'name': str(self.user)}
+    def as_dict(self):
+        return {
+            'name': str(self.user),
+            'email': self.user.email,
+            'birthday': self.user.birthday
+        }
 
 
 class JobApplications(models.Model):
     vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, verbose_name='ID вакансии')
     worker = models.ForeignKey(Worker, on_delete=models.CASCADE, verbose_name='ID работника')
-    is_liked = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Заявка на вакансию'
@@ -125,5 +141,12 @@ class JobApplications(models.Model):
     def __str__(self):
         return str(self.vacancy)
 
-    def brief_information(self):
-        return {'vacancy': self.vacancy.as_dict(), 'worker': self.worker.brief_information()}
+
+class AcceptedEmployees(models.Model):
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, verbose_name='ID вакансии')
+    worker = models.ForeignKey(Worker, on_delete=models.CASCADE, verbose_name='ID работника')
+
+    class Meta:
+        verbose_name = 'Принятый работник'
+        verbose_name_plural = 'Принятые работники'
+

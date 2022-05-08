@@ -5,9 +5,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from .models import Vacancy, HeadDepartment, JobApplications, Resume
+from .models import Vacancy, HeadDepartment, JobApplications, Resume, Worker
 from .serilizer import CreateVacancySerializer
-from .assistant import get_filter_resume
+from .assistant import get_liked_resume
 
 
 class VacancyApiView(CreateAPIView):
@@ -101,45 +101,39 @@ class VacancyApiView(CreateAPIView):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 @authentication_classes([SessionAuthentication])
-def get_job_applications(request: Request):
-    """
-    Заявки на работу
-    Args:
-        request:
+def get_resume_responding_worker(request: Request, **kwargs):
+    resume_id = kwargs.get('pk')
+    head_depart = HeadDepartment.objects.get(user_id=request.user.id)
+    liked_resume = get_liked_resume(head_depart.pk)
+    vacancies = Vacancy.objects.filter(author_id=head_depart.pk)
 
-    Returns:
-
-    """
-    vacancy_id = request.GET.get('vacancy')
-    job_applications = JobApplications.objects.filter(vacancy_id=vacancy_id)
-    return Response([job.brief_information() for job in job_applications])
-
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-@authentication_classes([SessionAuthentication])
-def get_favorites_job_app(request: Request):
-    user_id = request.user.id
-    try:
-        author = HeadDepartment.objects.get(user_id=user_id)
-    except:
-        return Response({'Куда полез хохол?'}, status=400)
-    job_applications = JobApplications.objects.filter(author_id=author.pk)
-    return Response([j_a.brief_information() for j_a in job_applications if j_a.is_liked])
-
-
-@api_view(['GET'])
-def get_resume(request: Request, *args, **kwargs):
-    id = kwargs.get('pk')
-    if id:
+    if resume_id:
         try:
-            resume = Resume.objects.get(id=id)
+            worker = Worker.objects.get(resume_id=int(resume_id))
+            job_app_worker = JobApplications.objects.filter(worker_id=worker.pk)
+            intersection = list(filter(lambda x: x.vacancy in vacancies, job_app_worker))
+            answer = {
+                'name': str(worker.user),
+                'is_liked': worker.resume in liked_resume,
+            }
+            answer.update(worker.resume.as_dict_full())
+            answer.update({'desired_vacancies': [
+                {'name': j_a.vacancy.name, 'id_vacancy': j_a.vacancy.pk, 'id_job_app': j_a.pk}
+                for j_a in intersection]})
+            return Response(answer)
         except:
             return Response(status=400)
-        return Response(resume.as_dict())
-    try:
-        answer = get_filter_resume(request.GET.get('skills'))
+    else:
+        job_apps = [JobApplications.objects.filter(vacancy_id=vacancy.pk) for vacancy in vacancies]
+        workers_id = set()
+        answer = []
+        for job_app in job_apps:
+            for j_a in job_app:
+                if j_a.worker.pk not in workers_id:
+                    record = {
+                            'name': str(j_a.worker.user),
+                            'is_liked': j_a.worker.resume in liked_resume,
+                        }
+                    record.update(j_a.worker.resume.as_dict_short())
+                    answer.append(record)
         return Response(answer)
-    except Exception as ex:
-        print(ex)
-        return Response('Не правильно переданны аргументы', status=400)

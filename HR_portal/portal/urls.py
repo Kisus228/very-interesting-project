@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import get_filter, VacancyApiView, get_vacancy, get_job_applications, get_resume
+from .views_worker import get_filter, VacancyApiView, get_vacancy, get_resume_responding_worker
 
 urlpatterns = [
     path('get_filter/', get_filter),
@@ -7,7 +7,6 @@ urlpatterns = [
     path('vacancy/<int:pk>/', get_vacancy),
     path('authorvacancy/', VacancyApiView.as_view()),
     path('authorvacancy/<int:pk>/', VacancyApiView.as_view()),
-    path('job_application/', get_job_applications),
-    path('resume/<int:pk>/', get_resume),
-    path('resume/', get_resume),
+    path('resume/<int:pk>/', get_resume_responding_worker),
+    path('resume/', get_resume_responding_worker),
 ]

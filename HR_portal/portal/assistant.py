@@ -1,4 +1,4 @@
-from .models import Skills, GroupSkills, Vacancy, JobApplications, Resume
+from .models import Skills, GroupSkills, Vacancy, JobApplications, Resume, HeadDepartment
 
 
 def get_skills():
@@ -45,3 +45,8 @@ def get_filter_resume(param):
     else:
         answer = [resume.as_dict() for resume in Resume.objects.all()]
     return answer
+
+
+def get_liked_resume(head_depart_id):
+    head_department: HeadDepartment = HeadDepartment.objects.get(pk=head_depart_id)
+    return head_department.liked_resume.all()
