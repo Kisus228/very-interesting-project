@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import classes from './ProfileInfo.less';
 import {useParams} from "react-router-dom";
-import Button from "../Common/FormControl/Button";
-import avatar from "../../assets/avatar.png";
-import LikeButton from "../Common/FormControl/LikeButton";
+import Button from "../../Common/FormControl/Button";
+import avatar from "../../../assets/avatar.png";
+import LikeButton from "../../Common/FormControl/LikeButton";
 
 const ProfileInfo = () => {
     const defaultState = {

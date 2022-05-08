@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import classes from './Vacancies.less';
-import Button from "../Common/FormControl/Button";
+import Button from "../../Common/FormControl/Button";
 import Vacancies from "./Vacancies";
-import {AppStateType} from "../../redux/ReduxStore";
+import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {getVacanciesTC} from "../../redux/VacansyReducer";
+import {getVacanciesTC} from "../../../redux/VacansyReducer";
 
 const OpenedVacancies: React.FC<Props> = (props) => {
     const [state] = useState([

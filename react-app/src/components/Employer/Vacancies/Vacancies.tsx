@@ -1,10 +1,10 @@
 import React from 'react';
 import classes from './Vacancies.less';
-import Button from "../Common/FormControl/Button";
+import Button from "../../Common/FormControl/Button";
 import cn from "classnames";
-import {Close, Delete, Edit, Open} from "../Common/Icons/Icons";
+import {Close, Delete, Edit, Open} from "../../Common/Icons/Icons";
 import {useNavigate} from "react-router-dom";
-import {VacancyType} from "../../types/types";
+import {VacancyType} from "../../../types/types";
 
 interface Props {
     vacancies: VacancyType[],

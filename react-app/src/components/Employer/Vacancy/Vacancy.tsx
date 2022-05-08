@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import classes from './Vacancy.less';
-import avatar from "../../assets/avatar.png";
-import Button from "../Common/FormControl/Button";
-import {AppStateType} from "../../redux/ReduxStore";
+import avatar from "../../../assets/avatar.png";
+import Button from "../../Common/FormControl/Button";
+import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {getVacancyTC} from "../../redux/VacansyReducer";
+import {getVacancyTC} from "../../../redux/VacansyReducer";
 import {useParams} from "react-router-dom";
 
 const Vacancy: React.FC<Props> = (props) => {

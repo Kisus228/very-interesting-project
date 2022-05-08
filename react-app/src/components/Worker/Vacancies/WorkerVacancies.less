@@ -1,0 +1,60 @@
+@import "../../../GlobalStyles";
+
+.PageContainer {
+    display: grid;
+    grid-template-columns: @grid-fixed-width 1fr;
+    gap: 10px;
+
+    @media (max-width: 750px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+}
+
+.ProfileItemsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.ProfileItem {
+    display: grid;
+    grid-template-columns: 125px 1fr 200px;
+    gap: 25px;
+    min-height: 150px;
+    width: 100%;
+    border-radius: 10px;
+    padding: 25px;
+    box-sizing: border-box;
+    background-color: white;
+    list-style: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    @media (max-width: 950px) {
+        grid-template-columns: 1fr 200px;
+
+        & .ProfileAvatar {
+            display: none;
+        }
+    }
+}
+
+.ProfileInfo {
+
+}
+
+.ProfileName {
+    @indent: 0.8em;
+    padding-bottom: @indent;
+    margin: 0 0 @indent;
+    border-bottom: 1px solid black;
+}
+
+.ProfileAction {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+}
