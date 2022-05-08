@@ -1,4 +1,4 @@
-from .models import Skills, GroupSkills, Vacancy, JobApplications
+from .models import Skills, GroupSkills, Vacancy, JobApplications, Resume
 
 
 def get_skills():
@@ -26,5 +26,22 @@ def get_filter_vacancy(param):
                         vacancies_id.add(vacancy.pk)
                         answer.append(vacancy.as_dict())
     else:
-        answer = {vacancy.as_dict() for vacancy in Vacancy.objects.all() if vacancy.is_open}
+        answer = [vacancy.as_dict() for vacancy in Vacancy.objects.all() if vacancy.is_open]
+    return answer
+
+
+def get_filter_resume(param):
+    """Возвращает список резюме по фильтрам"""
+    if param:
+        resume_id = set()
+        answer = []
+        skills = param.split(',')
+        for resume in Resume.objects.all():
+            for skill in skills:
+                if int(skill) in [vac.pk for vac in resume.skills.all()]:
+                    if resume.pk not in resume_id:
+                        resume_id.add(resume.pk)
+                        answer.append(resume.as_dict())
+    else:
+        answer = [resume.as_dict() for resume in Resume.objects.all()]
     return answer
