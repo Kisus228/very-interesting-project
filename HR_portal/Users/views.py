@@ -34,6 +34,14 @@ class LoginApiView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request: Request):
+        """
+        Авторизация по username и password
+        Args:
+            request:
+
+        Returns:
+
+        """
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             authenticated_user = authenticate(**serializer.validated_data)
@@ -58,3 +66,8 @@ def user_logout(request):
     """
     logout(request)
     return Response(status=status.HTTP_200_OK)
+
+
+@api_view()
+def is_authenticate(request):
+    return Response({'is_authenticated': request.user.is_authenticated})

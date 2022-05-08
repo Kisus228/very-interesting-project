@@ -1,4 +1,4 @@
-from .models import Skills, GroupSkills, Vacancy
+from .models import Skills, GroupSkills, Vacancy, JobApplications
 
 
 def get_skills():
@@ -16,12 +16,15 @@ def get_skills():
 def get_filter_vacancy(param):
     """Возвращает список вакансий по фильтрам"""
     if param:
+        vacancies_id = set()
         answer = []
-        skills = param[0].split(',')
+        skills = param.split(',')
         for vacancy in Vacancy.objects.all():
             for skill in skills:
                 if int(skill) in [vac.pk for vac in vacancy.skills.all()] and vacancy.is_open:
-                    answer.append(vacancy.as_dict())
+                    if vacancy.pk not in vacancies_id:
+                        vacancies_id.add(vacancy.pk)
+                        answer.append(vacancy.as_dict())
     else:
-        answer = [vacancy.as_dict() for vacancy in Vacancy.objects.all() if vacancy.is_open]
+        answer = {vacancy.as_dict() for vacancy in Vacancy.objects.all() if vacancy.is_open}
     return answer
