@@ -91,8 +91,6 @@ const NewVacancy: React.FC<Props> = (props) => {
                                            placeholder={"Напишите название вакансии"}/>
                                 <FormSelect name={"speciality"} label={"Специальность"} options={speciality}
                                             placeholder={"Выберите специальность"}/>
-                                <FormInput label={"Департамент"} type="text" name="department"
-                                           placeholder={"Напишите название департамента"}/>
                                 <FormInput label={"Описание вакансии"} type="text" name="vacancyDescription"
                                            placeholder={"Напишите описание вакансии"}/>
                                 <FormInput label={"Тип занятости"} type="text" name="employmentType"

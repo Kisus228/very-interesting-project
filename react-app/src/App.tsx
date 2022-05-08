@@ -42,6 +42,9 @@ const App: React.FC<Props> = (props) => {
         if (props.initialized && !props.auth && !(location === '/auth')) {
             navigate('/auth', {state: location, replace: true});
         }
+        if (props.initialized && props.auth && location === '/') {
+            navigate('/search', {replace: true});
+        }
     }, [props.auth, props.initialized]);
 
     return (

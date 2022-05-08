@@ -50,3 +50,4 @@ export const vacancyAPI = {
             .catch(error => console.error(error))
     },
 }
+// TODO: Сергей Кашкин: Передавать фильтры в запросы
