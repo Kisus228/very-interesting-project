@@ -64,6 +64,11 @@ class Vacancy(models.Model):
     def __str__(self):
         return self.name
 
+    def as_dict(self):
+        skills = [skill.name for skill in self.skills.all()]
+        return {'id': self.pk, 'name': self.name, 'count': self.count, 'free': self.free,
+                'is_open': self.is_open, 'skills': skills, 'description': self.description}
+
 
 class Resume(models.Model):     # возможно ссылки передавать одним джейсон стетхэмом файлом вида: {'соцсеть': 'ссылка'}
     job = models.CharField(max_length=250, verbose_name='Резюме')
@@ -81,6 +86,16 @@ class Resume(models.Model):     # возможно ссылки передава
     def __str__(self):
         return self.job
 
+    def brief_information(self):
+        skills = [skill.name for skill in self.skills.all()]
+        return {'id': self.pk, 'skills': skills, 'text': self.resume_text, 'job': self.job}
+
+    def as_dict(self):
+        brief_information = self.brief_information()
+        links = {'vk': self.vk_link, 'tg': self.tg_link, 'github': self.github_link, 'gitlab': self.gitlab_link}
+        brief_information.update(links)
+        return brief_information
+
 
 class Worker(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Работник')
@@ -94,10 +109,14 @@ class Worker(models.Model):
         verbose_name = 'Работник'
         verbose_name_plural = 'Работники'
 
+    def brief_information(self):
+        return {'resume': self.resume.brief_information(), 'id': self.pk, 'name': str(self.user)}
+
 
 class JobApplications(models.Model):
     vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, verbose_name='ID вакансии')
     worker = models.ForeignKey(Worker, on_delete=models.CASCADE, verbose_name='ID работника')
+    is_liked = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Заявка на вакансию'
@@ -106,7 +125,5 @@ class JobApplications(models.Model):
     def __str__(self):
         return str(self.vacancy)
 
-    def as_dict(self):
-        skills = [skill.name for skill in self.skills.all()]
-        return {'pk': self.pk, 'name': self.name, 'count': self.count, 'free': self.free,
-                'is_open': self.is_open, 'skills': skills, 'description': self.description}
+    def brief_information(self):
+        return {'vacancy': self.vacancy.as_dict(), 'worker': self.worker.brief_information()}
