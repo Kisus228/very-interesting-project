@@ -7,6 +7,7 @@ from rest_framework.response import Response
 
 from .models import Vacancy, HeadDepartment, JobApplications, Resume
 from .serilizer import CreateVacancySerializer
+from .assistant import get_filter_resume
 
 
 class VacancyApiView(CreateAPIView):
@@ -136,5 +137,9 @@ def get_resume(request: Request, *args, **kwargs):
         except:
             return Response(status=400)
         return Response(resume.as_dict())
-    else:
-        return Response([resume.as_dict() for resume in Resume.objects.all()])
+    try:
+        answer = get_filter_resume(request.GET.get('skills'))
+        return Response(answer)
+    except Exception as ex:
+        print(ex)
+        return Response('Не правильно переданны аргументы', status=400)
