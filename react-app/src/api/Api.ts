@@ -22,14 +22,12 @@ export const authAPI = {
         })
             .then(response => response.json())
             .catch(error => console.error(error))
-    }
-    /*async getAuthMe() {
-        return await fetch('/account/user/')
+    },
+    async getAuthMe() {
+        return await fetch('/is_authenticate/')
             .then(response => response.json())
-            .then(data => data)
             .catch(error => console.error(error))
     },
-    */
 }
 
 export const filterAPI = {
@@ -41,8 +39,8 @@ export const filterAPI = {
 }
 
 export const vacancyAPI = {
-    async getVacancies() {
-        return await fetch('/authorvacancy/')
+    async getVacancies(isOpen: boolean) {
+        return await fetch(`/authorvacancy${isOpen ? "?is_open=True" : ""}`)
             .then(response => response.json())
             .catch(error => console.error(error))
     },

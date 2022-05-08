@@ -41,7 +41,6 @@ const Vacancy: React.FC<Props> = (props) => {
     })
 
     const vacancyId = Number(useParams().vacancyId)
-    console.log(props.vacancy)
     useEffect(() => {
         if (!isNaN(vacancyId))
             props.getVacancyTC(vacancyId);

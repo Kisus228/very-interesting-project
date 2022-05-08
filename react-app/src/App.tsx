@@ -14,6 +14,7 @@ import Auth from "./components/Auth/Auth";
 import {AppStateType} from "./redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
+import {initializeApp} from "./redux/AppReducer";
 
 const AppWrapper = () => {
     return (
@@ -34,10 +35,14 @@ const App: React.FC<Props> = (props) => {
     const location = useLocation().pathname;
 
     useEffect(() => {
-        if (!props.auth && !(location === '/auth')) {
+        props.initializeApp()
+    }, []);
+
+    useEffect(() => {
+        if (props.initialized && !props.auth && !(location === '/auth')) {
             navigate('/auth', {state: location, replace: true});
         }
-    }, [props.auth]);
+    }, [props.auth, props.initialized]);
 
     return (
         <Routes>
@@ -64,13 +69,16 @@ const App: React.FC<Props> = (props) => {
 const mapStateToProps = (state: AppStateType) => {
     return {
         auth: state.authData.auth,
+        initialized: state.appData.initialized
     }
 }
 
 type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
-type MapDispatchPropsType = {}
+type MapDispatchPropsType = {
+    initializeApp: () => void,
+}
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {}))(App);
+export default compose<React.ComponentType>(connect(mapStateToProps, {initializeApp}))(App);

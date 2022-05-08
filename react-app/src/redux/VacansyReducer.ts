@@ -23,8 +23,8 @@ export const actions = {
     setVacancy: (vacancy: VacancyType) => ({type: "VACANCY/SET_VACANCY", vacancy} as const),
 }
 
-export const getVacanciesTC = (): ThunkType => async (dispatch) => {
-    await vacancyAPI.getVacancies()
+export const getVacanciesTC = (isOpen: boolean): ThunkType => async (dispatch) => {
+    await vacancyAPI.getVacancies(isOpen)
         .then(result => dispatch(actions.setVacancies(result)))
 }
 

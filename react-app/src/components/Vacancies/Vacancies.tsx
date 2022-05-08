@@ -12,8 +12,6 @@ interface Props {
 }
 
 const Vacancies: React.FC<Props> = (props) => {
-    const vacancies = props.vacancies.filter(vacancy => vacancy.is_open === props.openedVacancies);
-
     return (
         <div className={classes.Vacancies}>
             <div className={cn(classes.VacanciesWrapper, classes.VacanciesTableHeader,
@@ -24,8 +22,7 @@ const Vacancies: React.FC<Props> = (props) => {
                 <div>Статус</div>
             </div>
             <ul>
-                {/*{props.map(item => <VacanciesItem key={item.id} {...item}/>)}*/}
-                {vacancies.map((item, index) => <VacanciesItem key={index} {...item}/>)}
+                {props.vacancies.map(item => <VacanciesItem key={item.id} {...item}/>)}
             </ul>
         </div>
     );
@@ -41,13 +38,11 @@ const VacanciesItem: React.FC<VacancyType> = (props) => {
             <div>{props.count - props.free} из {props.count}</div>
             <div>{props.is_open ? "Открыта" : "Закрыта"}</div>
             <div className={classes.VacanciesButtons}>
-                {/*<Button type={"button"} size={"small"} to={`/vacancies/${props.id}`}>Страница вакансии</Button>*/}
-                <Button type={"button"} size={"small"} to={`/vacancies/1`}>Страница вакансии</Button>
+                <Button type={"button"} size={"small"} to={`/vacancies/${props.id}`}>Страница вакансии</Button>
                 {
                     props.is_open &&
                     <>
-                        {/*<Edit onClick={() => navigate(`/vacancies/${props.id}/edit`)}/>*/}
-                        <Edit onClick={() => navigate(`/vacancies/1/edit`)}/>
+                        <Edit onClick={() => navigate(`/vacancies/${props.id}/edit`)}/>
                         <Close onClick={() => console.log('Close')}/>
                     </>
                 }

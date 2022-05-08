@@ -6,7 +6,6 @@ import {AppStateType} from "../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {getVacanciesTC} from "../../redux/VacansyReducer";
-import {useLocation} from "react-router-dom";
 
 const OpenedVacancies: React.FC<Props> = (props) => {
     const [state] = useState([
@@ -45,8 +44,8 @@ const OpenedVacancies: React.FC<Props> = (props) => {
     ])
 
     useEffect(() => {
-        props.getVacanciesTC();
-    }, [])
+        props.getVacanciesTC(props.openedVacancies);
+    }, [props.openedVacancies])
 
     return (
         <div className={classes.PageContentWrapper}>
@@ -84,7 +83,7 @@ const mapStateToProps = (state: AppStateType) => {
 type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
-    getVacanciesTC: () => void
+    getVacanciesTC: (isOpen: boolean) => void
 }
 
 type OwnPropsType = {

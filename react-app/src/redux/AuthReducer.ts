@@ -22,16 +22,24 @@ const AuthReducer = (state = initialState, action: ActionsTypes): InitialState =
 }
 
 export const actions = {
-    authLogin: (auth: boolean) => ({type: "AUTH/SET_AUTH", auth} as const),
+    authMe: (auth: boolean) => ({type: "AUTH/SET_AUTH", auth} as const),
     loginError: (error: string) => ({type: "AUTH/SET_LOGIN_ERROR", error} as const),
     registerError: (error: [string, string][]) => ({type: "AUTH/SET_REGISTER_ERROR", error} as const),
+}
+
+export const getAuthMeTC = (): ThunkType => async (dispatch) => {
+    await authAPI.getAuthMe().then((data) => {
+        if (data.is_authenticated) {
+            dispatch(actions.authMe(true))
+        }
+    })
 }
 
 export const postAuthLoginTC = (data: LoginType): ThunkType => async (dispatch) => {
     await authAPI.postAuthLogin(data)
         .then(response => {
             if (response.status === "Success")
-                dispatch(actions.authLogin(true))
+                dispatch(getAuthMeTC())
             else
                 dispatch(actions.loginError("Неверный логин или пароль (или ты не вышел с аккаунта, нажми f12, приложение, файлы cookie и удаляй sessionid)"))
         })
@@ -39,7 +47,7 @@ export const postAuthLoginTC = (data: LoginType): ThunkType => async (dispatch) 
 
 export const deleteAuthLoginTC = (): ThunkType => async (dispatch) => {
     await authAPI.deleteAuthLogin()
-        .then(() => dispatch(actions.authLogin(false)))
+        .then(() => dispatch(actions.authMe(false)))
 }
 
 export const postAuthRegisterTC = (data: RegisterType): ThunkType => async (dispatch) => {
