@@ -1,5 +1,5 @@
 import classes from './App.less';
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Header from "./components/Header/Header";
 import Navigation from "./components/Navigation/Navigation";
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
@@ -11,12 +11,19 @@ import WorkerRoutes from "./components/Worker/WorkerRoutes";
 import EmployerRoutes from "./components/Employer/EmployerRoutes";
 
 export const AppWrapper = () => {
+    const ref = useRef<HTMLDivElement>(null)
+    const location = useLocation().pathname;
+
+    useEffect(() => {
+        ref.current?.scrollTo(0, 0)
+    }, [location])
+
     return (
         <div className={classes.AppWrapper}>
             <Header/>
             <main className={classes.AppContentWrapper}>
                 <Navigation/>
-                <div className={classes.AppContentContainer}>
+                <div ref={ref} className={classes.AppContentContainer}>
                     <Outlet/>
                 </div>
             </main>
