@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {Arrow, Exit} from "../Common/Icons/Icons";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {deleteAuthLoginTC} from "../../redux/AuthReducer";
+import {deleteAuthLoginTC, temp} from "../../redux/AuthReducer";
 import {AppStateType} from "../../redux/ReduxStore";
 
 // TODO: Сергей Кашкин | Верстка: Сделать отцентровку изображения в квадрат без сжатия.
@@ -33,14 +33,18 @@ const Header: React.FC<Props> = (props) => {
 
     return (
         <header className={classes.Header}>
-            <div className={classes.Logo}>
+            <div className={classes.Logo} onClick={props.temp}>
                 <img width={110} height={28} src={logo} alt={"logo"}/>
             </div>
             <div className={classes.Menu}>
                 <button className={classes.Button} onClick={onClickProfileInfo} onBlur={onBlurProfileInfo}>
                     <div className={classes.ProfileInfo}>
                         <p>Сергей Сергеич</p>
-                        <p className={classes.Description}>Проводник, фронтовик, сосочка</p>
+                        <p className={classes.Description}>
+                            {
+                                props.isWorker ? "Сотрудник" : "Руководитель направления"
+                            }
+                        </p>
                     </div>
                     <div className={classes.ProfileAvatar}>
                         <img width={50} height={50} src={avatar} alt={"avatar"}/>
@@ -74,6 +78,7 @@ const Header: React.FC<Props> = (props) => {
 const mapStateToProps = (state: AppStateType) => {
     return {
         auth: state.authData.auth,
+        isWorker: state.authData.isWorker,
     }
 }
 
@@ -81,8 +86,9 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
     deleteAuthLoginTC: () => void
+    temp: () => void
 }
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {deleteAuthLoginTC}))(Header);
+export default compose<React.ComponentType>(connect(mapStateToProps, {deleteAuthLoginTC, temp}))(Header);

@@ -35,8 +35,6 @@ const App: React.FC<Props> = (props) => {
     const navigate = useNavigate();
     const location = useLocation().pathname;
 
-    const [isWorker, set] = useState(true);
-
     useEffect(() => {
         props.initializeApp()
     }, []);
@@ -54,7 +52,7 @@ const App: React.FC<Props> = (props) => {
         <Routes>
             <Route path="/" element={<AppWrapper/>}>
                 {
-                    isWorker
+                    props.isWorker
                         ? <>
                             <Route path="search">
                                 <Route path=":profileId" element={<ProfileInfo/>}/>
@@ -88,6 +86,7 @@ const App: React.FC<Props> = (props) => {
 const mapStateToProps = (state: AppStateType) => {
     return {
         auth: state.authData.auth,
+        isWorker: state.authData.isWorker,
         initialized: state.appData.initialized
     }
 }

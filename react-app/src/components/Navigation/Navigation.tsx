@@ -2,8 +2,11 @@ import React from 'react';
 import classes from './Navigation.less';
 import {NavLink, useNavigate} from "react-router-dom";
 import {Back, Liked, Plus, Search} from "../Common/Icons/Icons";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {AppStateType} from "../../redux/ReduxStore";
 
-const Navigation = () => {
+const Navigation: React.FC<MapStatePropsType> = (props) => {
     const navigate = useNavigate();
 
     return (
@@ -19,11 +22,13 @@ const Navigation = () => {
                         <Search/>
                     </NavLink>
                 </li>
-                <li>
-                    <NavLink to={'/vacancies'} className={({isActive}) => isActive ? classes.active : undefined}>
-                        <Plus/>
-                    </NavLink>
-                </li>
+                {
+                    !props.isWorker && <li>
+                        <NavLink to={'/vacancies'} className={({isActive}) => isActive ? classes.active : undefined}>
+                            <Plus/>
+                        </NavLink>
+                    </li>
+                }
             </ul>
             <div className={classes.PreviousPage} onClick={() => navigate(-1)}>
                 <Back/>
@@ -32,4 +37,12 @@ const Navigation = () => {
     );
 };
 
-export default Navigation;
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        isWorker: state.authData.isWorker,
+    }
+}
+
+type MapStatePropsType = ReturnType<typeof mapStateToProps>
+
+export default compose<React.ComponentType>(connect(mapStateToProps, {}))(Navigation);

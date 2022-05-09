@@ -4,6 +4,7 @@ import {LoginType, RegisterType} from "../types/types";
 
 const initialState = {
     auth: false,
+    isWorker: true,
     loginError: "",
     registerError: [] as [string, string][],
 }
@@ -16,6 +17,8 @@ const AuthReducer = (state = initialState, action: ActionsTypes): InitialState =
             return {...state, loginError: action.error};
         case "AUTH/SET_REGISTER_ERROR":
             return {...state, registerError: action.error};
+        case "AUTH/TEMP_SET_IS_WORKER":
+            return {...state, isWorker: !state.isWorker};
         default:
             return state;
     }
@@ -25,7 +28,10 @@ export const actions = {
     authMe: (auth: boolean) => ({type: "AUTH/SET_AUTH", auth} as const),
     loginError: (error: string) => ({type: "AUTH/SET_LOGIN_ERROR", error} as const),
     registerError: (error: [string, string][]) => ({type: "AUTH/SET_REGISTER_ERROR", error} as const),
+    temp: () => ({type: "AUTH/TEMP_SET_IS_WORKER"} as const),
 }
+
+export const temp = actions.temp;
 
 export const getAuthMeTC = (): ThunkType => async (dispatch) => {
     await authAPI.getAuthMe().then((data) => {
