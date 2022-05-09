@@ -5,9 +5,9 @@
 }
 
 .Vacancy {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5em;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 25px;
     padding: 25px;
     border-radius: 10px;
     background-color: white;
@@ -26,6 +26,16 @@
     & .Description {
         color: #5f5f5f;
     }
+}
+
+.VacancySection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+
+    .LikeButton {
+        align-self: flex-end;
+    }
 
     .ProfileAvatarWrapper, .Name {
         align-self: center;
@@ -43,7 +53,7 @@
         gap: 10px;
     }
 
-    & .ButtonWrapper {
+    .ButtonWrapper {
         justify-content: flex-end;
         align-self: flex-end;
         flex-grow: 1;
