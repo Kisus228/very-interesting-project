@@ -37,7 +37,8 @@ const Vacancy: React.FC<Props> = (props) => {
         employerPosition: "Проводник, фронтовик, сосочка",
         department: "Департамент создания сайтов",
         skills: ["Js", "Soft Skills", "C#", "Front-end"],
-        foundEmployees: [{avatar: "", name: "Клим Саныч"}, {avatar: "", name: "Дим Юрич"}]
+        foundEmployees: [{avatar: "", name: "Клим Саныч"}, {avatar: "", name: "Дим Юрич"}],
+        responded: [{name: "Дядя Богдан", id: 0}, {name: "Геральт из Ривии", id: 1}]
     })
 
     const vacancyId = Number(useParams().vacancyId)
@@ -80,6 +81,20 @@ const Vacancy: React.FC<Props> = (props) => {
                         <h4>Найденные сотрудники:</h4>
                         {
                             state.foundEmployees.map(employee => <EmployeeItem key={employee.name} {...employee}/>)
+                        }
+                    </div>
+                    <div>
+                        <h4>Откликнувшиеся сотрудники:</h4>
+                        {
+                            state.responded.map(response => <div key={response.id} className={classes.VacancyWrapper}>
+                                <p>{response.name}</p>
+                                <Button type={"button"} size={"small"} onClick={() => console.log('принять')}>
+                                    Принять заявку
+                                </Button>
+                                <Button type={"button"} size={"small"} to={`/search/${response.id}`}>
+                                    Страница резюме
+                                </Button>
+                            </div>)
                         }
                     </div>
                     <div className={classes.ButtonWrapper}>

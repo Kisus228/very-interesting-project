@@ -87,7 +87,7 @@ const Vacancy: React.FC<Props> = (props) => {
                             </div>
                         </div>
                         <div>
-                            <h4 className={classes.Name}>{props.vacancy.author}</h4>
+                            <h4 className={classes.Name}>{state.employerName}</h4>
                             <p className={classes.Description}>{state.employerPosition}</p>
                             <p>{state.department}</p>
                         </div>
