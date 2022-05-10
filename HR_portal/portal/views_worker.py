@@ -58,3 +58,16 @@ def get_liked_vacancy_(request: Request):
         record.update(is_liked=True)
         answer.append(record)
     return Response(answer)
+
+
+@api_view(['POST'])
+def send_request(request: Request):
+    worker = Worker.objects.get(user_id=request.user.id)
+    vacancy_id = request.data.get('id')
+    if vacancy_id:
+        vacancy = [j_a.vacancy.pk for j_a in JobApplications.objects.filter(worker_id=worker.pk)]
+        if vacancy_id in vacancy:
+            return Response({'mess': 'Заявка уже отправлена'}, status=200)
+        JobApplications.objects.create(vacancy_id=vacancy_id, worker=worker)
+        return Response(status=200)
+    return Response(status=400)
