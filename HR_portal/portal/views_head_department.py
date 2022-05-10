@@ -130,6 +130,7 @@ def get_resume(request: Request, **kwargs):
             answer = {
                 'name': str(worker.user),
                 'is_liked': worker.resume in liked_resume,
+                'email': worker.user.email
             }
             answer.update(worker.resume.as_dict_full())
             answer.update({'desired_vacancies': [
