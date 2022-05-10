@@ -44,6 +44,19 @@ export const Plus = () => {
     );
 };
 
+export const Work = () => {
+    return (
+        <>
+            <svg width="20" height="20" viewBox="-5 0 20 20" fill="none">
+                <path d="M1 5C1 2.5 3 1 5 1C7 1 9 2.5 9 5" strokeWidth="2"/>
+            </svg>
+            <svg width="20" height="20" viewBox="0 -5 20 20" fill="none">
+                <rect x="1" y="1" width="18" height="13" rx="1" strokeWidth="2"/>
+            </svg>
+        </>
+    );
+};
+
 export const Exit = () => {
     return (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">

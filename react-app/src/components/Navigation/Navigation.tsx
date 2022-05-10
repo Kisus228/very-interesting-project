@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Navigation.less';
 import {NavLink, useNavigate} from "react-router-dom";
-import {Back, Liked, Plus, Search} from "../Common/Icons/Icons";
+import {Back, Liked, Plus, Search, Work} from "../Common/Icons/Icons";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/ReduxStore";
@@ -23,11 +23,17 @@ const Navigation: React.FC<MapStatePropsType> = (props) => {
                     </NavLink>
                 </li>
                 {
-                    !props.isWorker && <li>
-                        <NavLink to={'/vacancies'} className={({isActive}) => isActive ? classes.active : undefined}>
-                            <Plus/>
-                        </NavLink>
-                    </li>
+                    props.isWorker
+                        ? <li>
+                            <NavLink to={"/"} className={({isActive}) => isActive ? classes.active : undefined}>
+                                <Work/>
+                            </NavLink>
+                        </li>
+                        : <li>
+                            <NavLink to={'/vacancies'} className={({isActive}) => isActive ? classes.active : undefined}>
+                                <Plus/>
+                            </NavLink>
+                        </li>
                 }
             </ul>
             <div className={classes.PreviousPage} onClick={() => navigate(-1)}>
