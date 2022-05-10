@@ -3,7 +3,7 @@ import React from 'react';
 import Button from "../Common/FormControl/Button";
 import {Form, Formik} from "formik";
 import {Input, PassInput} from "./AuthInput";
-import {Link, useOutletContext} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {validateLogin} from "./Validate";
 import {LoginType} from "../../types/types";
 
@@ -15,6 +15,11 @@ const Login: React.FC<Props> = (props) => {
 
     const onSubmit = (values: LoginType) => {
         props.postAuthLoginTC(values);
+    }
+
+    const onClickLink = () => {
+        props.removeError();
+        props.setLoginForm();
     }
 
     return (
@@ -35,7 +40,7 @@ const Login: React.FC<Props> = (props) => {
                     <span>
                         Don’t have an account yet?
                     </span>
-                    <Link to={""} onClick={props.setLoginForm}>
+                    <Link to={""} onClick={onClickLink}>
                         Register for free
                     </Link>
                 </div>
@@ -47,7 +52,8 @@ const Login: React.FC<Props> = (props) => {
 interface Props {
     loginError: string,
     postAuthLoginTC: (data: LoginType) => void,
-    setLoginForm: () => void
+    setLoginForm: () => void,
+    removeError: () => void,
 }
 
 export default Login;

@@ -4,8 +4,7 @@ import {Form, Formik} from "formik";
 import {validateRegister} from "./Validate";
 import {Input, PassInput} from "./AuthInput";
 import Button from "../Common/FormControl/Button";
-import {Link, useNavigate, useOutletContext} from "react-router-dom";
-import {LoginType, RegisterType} from "../../types/types";
+import {RegisterType} from "../../types/types";
 import {Back} from "../Common/Icons/Icons";
 
 export interface RegisterTypeWithRetryPass extends RegisterType {
@@ -32,12 +31,17 @@ const Register: React.FC<Props> = (props) => {
         });
     }
 
+    const onClickLink = () => {
+        props.removeError();
+        props.setLoginForm();
+    }
+
     return (
         <Formik initialValues={initialValues} onSubmit={onSubmit}
                 validate={values => validateRegister(values)}>
             <Form className={classes.FormWrapper}>
                 <div className={classes.FormWrapperHeader}>
-                    <div onClick={props.setLoginForm} className={classes.BackButton}>
+                    <div onClick={onClickLink} className={classes.BackButton}>
                         <Back/>
                     </div>
                     <h1>Register</h1>
@@ -61,7 +65,8 @@ const Register: React.FC<Props> = (props) => {
 interface Props {
     registerError: [string, string][],
     postAuthRegisterTC: (data: RegisterType) => void,
-    setLoginForm: () => void
+    setLoginForm: () => void,
+    removeError: () => void,
 }
 
 export default Register;

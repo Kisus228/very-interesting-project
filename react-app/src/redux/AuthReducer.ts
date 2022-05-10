@@ -47,7 +47,7 @@ export const postAuthLoginTC = (data: LoginType): ThunkType => async (dispatch) 
             if (response.status === "Success")
                 dispatch(getAuthMeTC())
             else
-                dispatch(actions.loginError("Неверный логин или пароль (или ты не вышел с аккаунта, нажми f12, приложение, файлы cookie и удаляй sessionid)"))
+                dispatch(actions.loginError("Неверный логин или пароль"))
         })
 }
 
@@ -64,6 +64,11 @@ export const postAuthRegisterTC = (data: RegisterType): ThunkType => async (disp
             else
                 dispatch(actions.registerError(Object.entries(response)))
         })
+}
+
+export const removeError = () => (dispatch: any) => {
+    dispatch(actions.loginError(""))
+    dispatch(actions.registerError([]))
 }
 
 type InitialState = typeof initialState;

@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import classes from "./Auth.less";
 import logo from "../../assets/logo.png";
 import {ReactComponent as AuthImage} from "../../assets/AuthImage.svg";
-import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {AppStateType} from "../../redux/ReduxStore";
 import {LoginType, RegisterType} from "../../types/types";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {postAuthLoginTC, postAuthRegisterTC} from "../../redux/AuthReducer";
+import {postAuthLoginTC, postAuthRegisterTC, removeError} from "../../redux/AuthReducer";
 import Login from "./Login";
 import Register from "./Register";
 
@@ -41,12 +41,14 @@ const Auth: React.FC<Props> = (props) => {
                                 {
                                     loginForm && <Login loginError={props.loginError}
                                                         setLoginForm={() => setLoginForm(false)}
-                                                        postAuthLoginTC={props.postAuthLoginTC}/>
+                                                        postAuthLoginTC={props.postAuthLoginTC}
+                                                        removeError={props.removeError}/>
                                 }
                                 {
                                     !loginForm && <Register setLoginForm={() => setLoginForm(true)}
                                                             registerError={props.registerError}
-                                                            postAuthRegisterTC={props.postAuthRegisterTC}/>
+                                                            postAuthRegisterTC={props.postAuthRegisterTC}
+                                                            removeError={props.removeError}/>
                                 }
                             </div>
                         </div>
@@ -69,8 +71,13 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 type MapDispatchPropsType = {
     postAuthLoginTC: (data: LoginType) => void
     postAuthRegisterTC: (data: RegisterType) => void
+    removeError: () => void
 }
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {postAuthLoginTC, postAuthRegisterTC}))(Auth);
+export default compose<React.ComponentType>(connect(mapStateToProps, {
+    postAuthLoginTC,
+    postAuthRegisterTC,
+    removeError
+}))(Auth);
