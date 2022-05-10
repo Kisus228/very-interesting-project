@@ -89,18 +89,20 @@ class HeadDepartment(models.Model):
 
 class Vacancy(models.Model):
     name = models.CharField(max_length=250, verbose_name='Название Вакансии')
-    salary = models.IntegerField(blank=True, verbose_name='Зарплата')
+    salary = models.IntegerField(blank=True, verbose_name='Зарплата', null=True)
     author = models.ForeignKey(HeadDepartment, on_delete=models.CASCADE, verbose_name='Автор вакансии')
     count = models.IntegerField(verbose_name='Нужное количество человек', default=1)
     free = models.IntegerField(verbose_name='Свободное количество мест', default=1)
     is_open = models.BooleanField(default=True, verbose_name='Открытая ли вакансия?')
     skills = models.ManyToManyField(Skills, related_name='records')
-    description = models.TextField(verbose_name='Описание вакансии')
-    type_employment = models.TextField(verbose_name='Тип занятости')
-    specialization = models.TextField(verbose_name='Специализация')
-    work_schedule = models.TextField(verbose_name='График работы')
-    conditions = models.TextField(verbose_name='Условия')
-    duties = models.TextField(verbose_name='Обязанности')
+    description = models.TextField(verbose_name='Описание вакансии', blank=True)
+    type_employment = models.TextField(verbose_name='Тип занятости', blank=True)
+    specialization = models.TextField(verbose_name='Специализация', blank=True)
+    work_schedule = models.TextField(verbose_name='График работы', blank=True)
+    conditions = models.TextField(verbose_name='Условия', blank=True)
+    requirements = models.TextField(verbose_name='Требования', blank=True)
+    additionally = models.TextField(verbose_name='дополнительно', blank=True)
+    duties = models.TextField(verbose_name='Обязанности', blank=True)
 
     class Meta:
         verbose_name = 'Вакансия'
@@ -108,6 +110,42 @@ class Vacancy(models.Model):
 
     def __str__(self):
         return self.name
+
+    def as_dict_short_to_worker(self):
+        skills = [skill.name for skill in self.skills.all()]
+        return {
+            'name': self.name,
+            'free': self.free,
+            'id': self.pk,
+            'skills': skills,
+            'description': self.description
+        }
+
+    def as_dict_short_to_head_depart(self):
+        return {
+            'name': self.name,
+            'count': self.count,
+            'free': self.free,
+            'is_open': self.is_open,
+            'id': self.pk
+        }
+
+    def as_dict_full(self):
+        skills = [skill.name for skill in self.skills.all()]
+        record = self.as_dict_short_to_head_depart()
+        record.update({
+            'salary': self.salary,
+            'specialization': self.specialization,
+            'description': self.description,
+            'type_employment': self.type_employment,
+            'work_schedule': self.work_schedule,
+            'conditions': self.conditions,
+            'duties': self.duties,
+            'skills': skills,
+            'requirements': self.requirements,
+            'additionally': self.additionally
+        })
+        return record
 
 
 class Worker(models.Model):

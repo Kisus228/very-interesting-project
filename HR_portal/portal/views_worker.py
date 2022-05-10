@@ -28,11 +28,11 @@ def get_vacancy(request: Request, *args, **kwargs):
     Returns:
 
     """
-    pk = kwargs.get('pk', None)
+    pk = kwargs.get('pk')
     if pk:
         try:
             vacancy = Vacancy.objects.get(pk=pk)
-            return Response(vacancy.as_dict())
+            return Response(vacancy.as_dict_full())
         except:
             return Response('Объекта не существует', status=400)
     try:
