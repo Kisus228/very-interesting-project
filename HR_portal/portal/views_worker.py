@@ -1,4 +1,4 @@
-from .assistant import get_skills, get_filter_vacancy
+from .assistant import get_skills, get_filter_vacancy, get_liked_vacancy
 from .views_head_department import *
 
 
@@ -29,14 +29,20 @@ def get_vacancy(request: Request, *args, **kwargs):
 
     """
     pk = kwargs.get('pk')
+    worker = Worker.objects.get(user_id=request.user.id)
     if pk:
         try:
             vacancy = Vacancy.objects.get(pk=pk)
-            return Response(vacancy.as_dict_full())
+            record = vacancy.as_dict_full()
+            is_liked = False
+            if vacancy in get_liked_vacancy(worker.pk):
+                is_liked = True
+            record.update(is_liked=is_liked)
+            return Response(record)
         except:
             return Response('Объекта не существует', status=400)
     try:
-        answer = get_filter_vacancy(request.GET.get('skills'))
+        answer = get_filter_vacancy(request.GET.get('skills'), worker)
         return Response(answer)
     except:
         return Response('Не правильно переданны аргументы', status=400)
