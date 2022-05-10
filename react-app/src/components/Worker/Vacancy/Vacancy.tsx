@@ -49,6 +49,8 @@ const Vacancy: React.FC<Props> = (props) => {
 
     const [liked, setLiked] = useState(false)
 
+    if (props.vacancy === null) return null;
+
     return (
         <div className={classes.PageContentWrapper}>
             <div className={classes.PageContainer}>

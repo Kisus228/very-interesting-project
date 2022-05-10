@@ -24,18 +24,7 @@ export interface RegisterType extends LoginType {
     lastname: string;
 }
 
-export type VacancyType = {
-    name: string,
-    id: number,
-    author: string,
-    count: number,
-    free: number,
-    skills: string[],
-    description: string,
-    is_open: boolean
-}
-
-export type ResumeType = {
+export interface ResumeType {
     name: string,
     id: number,
     is_liked: boolean,
@@ -44,13 +33,7 @@ export type ResumeType = {
     skills: string[]
 }
 
-export type ResumeExpendsType = {
-    name: string,
-    id: number,
-    is_liked: boolean,
-    specialization: string,
-    experience: number,
-    skills: string[]
+export interface ResumeExpendsType extends ResumeType {
     desired_vacancies: DesiredVacancyType[],
     tg: string,
     vk: string,
@@ -66,4 +49,27 @@ export type DesiredVacancyType = {
     name: string,
     id_vacancy: number,
     id_job_app: number,
+}
+
+export interface VacancyType {
+    name: string,
+    id: number,
+    is_open: boolean,
+    count: number,
+    free: number,
+}
+
+
+export interface VacancyExpendsType extends VacancyType{
+    specialization: string,
+    description: string,
+    type_employment: string,
+    work_schedule: string,
+    conditions: string,
+    skills: number[] | string[],
+    duties: string,
+    requirements: string,
+    salary: string,
+    additionally: string,
+    author: number,
 }

@@ -1,4 +1,5 @@
-import {LoginType, RegisterType} from "../types/types";
+import {LoginType, RegisterType, VacancyExpendsType, VacancyType} from "../types/types";
+import Cookies from 'js-cookie';
 
 export const authAPI = {
     async postAuthLogin(data: LoginType) {
@@ -44,6 +45,25 @@ export const vacancyAPI = {
             .then(response => response.json())
             .catch(error => console.error(error))
     },
+    async postVacancy(data: VacancyExpendsType) {
+        const csrftoken = Cookies.get("csrftoken") || "";
+        return await fetch('/authorvacancy/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .catch(error => console.error(error))
+    },
+    async putVacancy(id: number, data: VacancyExpendsType) {
+        const csrftoken = Cookies.get("csrftoken") || "";
+        return await fetch('/authorvacancy/' + id + "/", {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
+            body: JSON.stringify(data),
+        })
+            .catch(error => console.error(error))
+    },
     async getVacancy(id: number) {
         return await fetch('/authorvacancy/' + id)
             .then(response => response.json())
@@ -60,6 +80,16 @@ export const resumeAPI = {
     async getResume(id: number) {
         return await fetch('/resume/' + id)
             .then(response => response.json())
+            .catch(error => console.error(error))
+    },
+    async likeResume(id: number) {
+        const csrftoken = Cookies.get("csrftoken") || "";
+        const data = { id: id }
+        return await fetch('/like_resume/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
+            body: JSON.stringify(data),
+        })
             .catch(error => console.error(error))
     },
 }

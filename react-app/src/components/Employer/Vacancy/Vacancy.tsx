@@ -10,33 +10,6 @@ import {useParams} from "react-router-dom";
 
 const Vacancy: React.FC<Props> = (props) => {
     const [state] = useState({
-        vacancyName: "Имитатор программиста",
-        salary: "От 30 тысяч раблей в месяц",
-        speciality: "Имитатор программиста",
-        count: 2,
-        vacancyDescription: "Имитировать деятельность программиста.",
-        employmentType: "Полный день",
-        schedule: "ПН, ВТ, СР, ЧТ, ПТ",
-        conditions: "У нас хорошая веб студия, есть 4 крутых специалиста, два дизанера, маркетолог и программист, мы " +
-            "справляемся, не берём сверх меры. Но когда к нам приходят клиенты, видят в офисе всего 3 " +
-            "человека (с 1, работаем удаленно), думают что мы \"фирма однодневка\" и теряют доверие. В связи с " +
-            "этим, мы решили нанять 2-3 человек, имитаторов программиста и имитаторов дизайнера. К окладу " +
-            "прилагаются ежедневный кальян, кофе и печеньки, в свободное время можно играть в танки или " +
-            "сидеть ВК.",
-        requirements: "Наличие подзатасканного свитера (можем предоставить), носителям очков дополнительный плюс, " +
-            "\"хлипкий\" внешний вид - приветствуется. Если согласитесь сделать татуировку на видном месте, что " +
-            "тона вроде \"Я - KDEраст и горжусь этим\" дадим надбавку к окладу (накинем пару тысяч).",
-        responsibilities: "Имитировать деятельность программиста, когда приходят клиенты, открывать код (файлы с кодом " +
-            "дадим), внимательно смотерть в монитор, бормоча под нос фразы на вроде \"говорил же надо на " +
-            "фрэймворке делать!\", \"о май гад, нет!, уф, я же сделал бэкап...\", \"что за кретин писал этот " +
-            "код?!\" и т.д. полный список дадим, обязательно выучить его наизусть, будем спрашивать, раз в " +
-            "месяц список будет пополняться.",
-        additionally: "Дополнительная информация вставить текст",
-        employerName: "Сергей Сергеевич",
-        employerAvatar: "",
-        employerPosition: "Проводник, фронтовик, сосочка",
-        department: "Департамент создания сайтов",
-        skills: ["Js", "Soft Skills", "C#", "Front-end"],
         foundEmployees: [{avatar: "", name: "Клим Саныч"}, {avatar: "", name: "Дим Юрич"}],
         responded: [{name: "Дядя Богдан", id: 0}, {name: "Геральт из Ривии", id: 1}]
     })
@@ -47,31 +20,33 @@ const Vacancy: React.FC<Props> = (props) => {
             props.getVacancyTC(vacancyId);
     }, [])
 
+    if (props.vacancy === null) return null;
+
     return (
         <div className={classes.PageContentWrapper}>
             <div className={classes.PageContainer}>
                 <div className={classes.Vacancy}>
                     <div>
                         <h3>{props.vacancy.name}</h3>
-                        <p className={classes.Description}>{state.salary}</p>
+                        <p className={classes.Description}>{props.vacancy.salary}</p>
                     </div>
                     <div>
-                        <h4>Специальность: {state.speciality}</h4>
-                        <p className={classes.Description}>Количество мест: {state.count}</p>
+                        <h4>Специальность: {props.vacancy.specialization}</h4>
+                        <p className={classes.Description}>Количество мест: {props.vacancy.count}</p>
                     </div>
                     <div>
                         <h4>Описание вакансии:</h4>
                         <p>{props.vacancy.description}</p>
-                        <p><b>Тип занятости: </b>{state.employmentType}</p>
-                        <p><b>График работы: </b>{state.schedule}</p>
+                        <p><b>Тип занятости: </b>{props.vacancy.type_employment}</p>
+                        <p><b>График работы: </b>{props.vacancy.work_schedule}</p>
                         <h4>Условия:</h4>
-                        <p>{state.conditions}</p>
+                        <p>{props.vacancy.conditions}</p>
                         <h4>Требования:</h4>
-                        <p>{state.requirements}</p>
+                        <p>{props.vacancy.requirements}</p>
                         <h4>Обязанности:</h4>
-                        <p>{state.responsibilities}</p>
+                        <p>{props.vacancy.duties}</p>
                         <h4>Дополнительно:</h4>
-                        <p>{state.additionally}</p>
+                        <p>{props.vacancy.additionally}</p>
                     </div>
                     <div>
                         <h4>Навыки для вакансии:</h4>

@@ -6,19 +6,23 @@ import avatar from "../../../assets/avatar.png";
 import LikeButton from "../../Common/FormControl/LikeButton";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {getResumeTC} from "../../../redux/ResumeReducer";
+import {getResumeTC, likeResumeTC} from "../../../redux/ResumeReducer";
 import {AppStateType} from "../../../redux/ReduxStore";
 
 const ProfileInfo: React.FC<Props> = (props) => {
     const profileId = Number(useParams().profileId);
 
     useEffect(() => {
-        if (!isNaN(profileId))
+        if (!isNaN(profileId)) {
             props.getResumeTC(profileId);
+        }
     }, [])
-    const [liked, setLiked] = useState(props.resume?.is_liked ?? false);
 
     if (props.resume === null) return null
+
+    const onClickLikeButton = () => {
+        props.likeResumeTC(profileId, true);
+    }
 
     return (
         <div className={classes.PageContentWrapper}>
@@ -60,7 +64,7 @@ const ProfileInfo: React.FC<Props> = (props) => {
                     <div>
                         <div className={classes.ProfileInfoHeader}>
                             <h2>{props.resume.name}</h2>
-                            <LikeButton liked={liked} onClick={() => setLiked(!liked)}/>
+                            <LikeButton liked={props.resume.is_liked} onClick={onClickLikeButton}/>
                         </div>
                         <p>Специальность: {props.resume.specialization}</p>
                         <p>Стаж: {props.resume.experience} лет</p>
@@ -106,8 +110,9 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
     getResumeTC: (id: number) => void
+    likeResumeTC: (id: number, resumePage: boolean) => void
 }
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {getResumeTC}))(ProfileInfo);
+export default compose<React.ComponentType>(connect(mapStateToProps, {getResumeTC, likeResumeTC}))(ProfileInfo);

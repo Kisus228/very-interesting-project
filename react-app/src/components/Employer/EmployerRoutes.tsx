@@ -9,6 +9,7 @@ import Vacancy from "./Vacancy/Vacancy";
 import Auth from "../Auth/Auth";
 import React from "react";
 import {AppWrapper} from "../../App";
+import EditVacancy from "./NewVacancy/EditVacancy";
 
 
 const EmployerRoutes = () => {
@@ -25,7 +26,7 @@ const EmployerRoutes = () => {
                     <Route path="history" element={<Vacancies openedVacancies={false}/>}/>
                     <Route path="new" element={<NewVacancy/>}/>
                     <Route path=":vacancyId" element={<Vacancy/>}/>
-                    <Route path=":vacancyId/edit" element={<NewVacancy/>}/>
+                    <Route path=":vacancyId/edit" element={<EditVacancy/>}/>
                 </Route>
                 <Route path="profile" element={<MyProfile/>}/>
             </Route>

@@ -10,11 +10,11 @@ import {connect} from "react-redux";
 import {getFilterTC} from "../../../redux/FilterReducer"
 import {AppStateType} from "../../../redux/ReduxStore";
 import {VacancyExpendsType, VacancyType} from "../../../types/types";
-import {getVacancyTC, postVacancyTC} from "../../../redux/VacansyReducer";
+import {getVacancyTC, postVacancyTC, putVacancyTC} from "../../../redux/VacansyReducer";
 import {getDataForSubmit, getInitialValuesForEdit} from "./InitForm";
 import VacancyForm from "./VacancyForm";
 
-interface ValuesType {
+export interface ValuesType {
     vacancyName: string,
     speciality: string,
     vacancyDescription: string,
@@ -30,33 +30,26 @@ interface ValuesType {
 }
 
 const NewVacancy: React.FC<Props> = (props) => {
+    const vacancyId = Number(useParams().vacancyId);
+
     useEffect(() => {
         props.getFilterTC();
+        props.getVacancyTC(vacancyId);
     }, [])
-
-    const initialValues: ValuesType = {
-        vacancyName: "",
-        speciality: "",
-        vacancyDescription: "",
-        employmentType: "",
-        schedule: "",
-        conditions: "",
-        skills: [],
-        requirements: "",
-        responsibilities: "",
-        salary: "",
-        count: "",
-        additionally: ""
-    }
 
     const navigate = useNavigate();
 
+    if (props.vacancy === null) return null
+
+    const initialValues = getInitialValuesForEdit(props.vacancy);
+
+
     const onSubmit = (values: ValuesType) => {
-        props.postVacancyTC(getDataForSubmit(values))
+        props.putVacancyTC(vacancyId, getDataForSubmit(values))
         navigate("/vacancies");
     }
 
-    return <VacancyForm onSubmit={onSubmit} initialValues={initialValues} editForm={false} skills={props.skills}/>;
+    return <VacancyForm onSubmit={onSubmit} initialValues={initialValues} editForm={true} skills={props.skills}/>
 };
 
 const mapStateToProps = (state: AppStateType) => {
@@ -70,12 +63,14 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
     getFilterTC: () => void
-    postVacancyTC: (data: VacancyExpendsType) => void
+    getVacancyTC: (id: number) => void
+    putVacancyTC: (id: number, data: VacancyExpendsType) => void
 }
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
 export default compose<React.ComponentType>(connect(mapStateToProps, {
     getFilterTC,
-    postVacancyTC
+    getVacancyTC,
+    putVacancyTC
 }))(NewVacancy);

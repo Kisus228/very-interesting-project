@@ -8,6 +8,7 @@ interface SelectProps {
     name: string;
     label: string;
     options: Options<SkillType>;
+    defaultValue: string[];
     isMulti?: boolean;
     placeholder?: string;
 }
@@ -29,7 +30,7 @@ const CustomSelect: React.FC<FormikSelectProps> = (props) => {
     const getValue = () => {
         if (props.options) {
             return props.isMulti
-                ? props.options.filter(option => props.field.value.indexOf(option.value) >= 0)
+                ? props.options.filter(option => props.defaultValue.includes(option.label))
                 : props.options.find(option => option.value === props.field.value);
         } else {
             return props.isMulti ? [] : ("" as any);
@@ -41,7 +42,7 @@ const CustomSelect: React.FC<FormikSelectProps> = (props) => {
             className="Select"
             classNamePrefix="React-select"
             name={props.field.name}
-            value={getValue()}
+            defaultValue={getValue()}
             onChange={onChange}
             options={props.options}
             placeholder={props.placeholder}
