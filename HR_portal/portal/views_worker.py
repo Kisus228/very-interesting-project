@@ -48,3 +48,13 @@ def get_vacancy(request: Request, *args, **kwargs):
         return Response('Не правильно переданны аргументы', status=400)
 
 
+@api_view(['GET'])
+def get_liked_vacancy_(request: Request):
+    worker = Worker.objects.get(user_id=request.user.id)
+    liked_vacancy = get_liked_vacancy(worker.pk)
+    answer = []
+    for vacancy in liked_vacancy:
+        record = vacancy.as_dict_short_to_worker()
+        record.update(is_liked=True)
+        answer.append(record)
+    return Response(answer)

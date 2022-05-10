@@ -170,3 +170,17 @@ def like_resume(request: Request):
     else:
         head_depart.liked_resume.remove(resume)
     return Response(status=200)
+
+
+@api_view(['GET'])
+def get_liked_resume_(request: Request):
+    head_depart = HeadDepartment.objects.get(user_id=request.user.id)
+    liked_resume = get_liked_resume(head_depart.pk)
+    answer = []
+    for resume in liked_resume:
+        worker = Worker.objects.get(resume_id=resume.pk)
+        record = resume.as_dict_short()
+        record.update(is_liked=True, name=str(worker.user))
+        answer.append(record)
+    return Response(answer)
+
