@@ -4,7 +4,7 @@ import {ResumeExpendsType, ResumeType, VacancyType} from "../types/types";
 
 const initialState = {
     resumes: [] as ResumeType[],
-    resume: {} as ResumeExpendsType,
+    resume: null as ResumeExpendsType | null,
 }
 
 const ResumeReducer = (state = initialState, action: ActionsTypes): InitialState => {
