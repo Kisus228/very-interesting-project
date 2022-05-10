@@ -13,7 +13,6 @@ import {AppStateType} from "../../../redux/ReduxStore";
 interface ValuesType {
     vacancyName: string,
     speciality: string,
-    department: string,
     vacancyDescription: string,
     employmentType: string,
     schedule: string,
@@ -33,7 +32,6 @@ const NewVacancy: React.FC<Props> = (props) => {
         ? {
             vacancyName: "",
             speciality: "",
-            department: "",
             vacancyDescription: "",
             employmentType: "",
             schedule: "",
@@ -48,7 +46,6 @@ const NewVacancy: React.FC<Props> = (props) => {
         : {
             vacancyName: "тут будет запрос на бэк",
             speciality: "",
-            department: "",
             vacancyDescription: "",
             employmentType: "",
             schedule: "",
@@ -64,13 +61,6 @@ const NewVacancy: React.FC<Props> = (props) => {
     useEffect(() => {
         props.getFilterTC()
     }, [])
-
-    const [speciality] = useState(
-        [
-            {value: 0, label: 'Имитатор программиста'},
-            {value: 1, label: 'Front-end разработчик'},
-        ]
-    );
 
     const onSubmit = (values: ValuesType) => {
         if (isNaN(vacancyId))
@@ -89,7 +79,7 @@ const NewVacancy: React.FC<Props> = (props) => {
                             <section className={classes.VacancySection}>
                                 <FormInput label={"Название вакансии"} type="text" name="vacancyName"
                                            placeholder={"Напишите название вакансии"}/>
-                                <FormSelect name={"speciality"} label={"Специальность"} options={speciality}
+                                <FormInput label={"Специальность"} type={"text"} name={"speciality"}
                                             placeholder={"Выберите специальность"}/>
                                 <FormInput label={"Описание вакансии"} type="text" name="vacancyDescription"
                                            placeholder={"Напишите описание вакансии"}/>
@@ -107,7 +97,7 @@ const NewVacancy: React.FC<Props> = (props) => {
                                            placeholder={"Напишите требования вакансии"}/>
                                 <FormInput label={"Обязанности"} type="text" name="responsibilities"
                                            placeholder={"Напишите обязанности сотрудника"}/>
-                                <FormInput label={"Заработная плата"} type="text" name="responsibilities"
+                                <FormInput label={"Заработная плата"} type="text" name="salary"
                                            placeholder={"Напишите сумму заработной платы"}/>
                                 <FormInput label={"Количество сотрудников"} type="number" name="count"
                                            placeholder={"Напишите кол-во сотрудников на вакансию"}/>
