@@ -9,17 +9,17 @@ from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
 
 from .models import CustomUser
-from .serilizer import LoginSerializer, RegisterSerializer
+from .serilizer import LoginSerializer, UserRegisterSerializer
 from Users.models import CustomUser
 
 
 class RegisterUserView(CreateAPIView):
     queryset = CustomUser.objects.all()
-    serializer_class = RegisterSerializer
+    serializer_class = UserRegisterSerializer
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        serializer = RegisterSerializer(data=request.data)
+        serializer = UserRegisterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({'status': 'Success'}, status=status.HTTP_200_OK)
