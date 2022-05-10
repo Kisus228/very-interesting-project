@@ -50,4 +50,16 @@ export const vacancyAPI = {
             .catch(error => console.error(error))
     },
 }
-// TODO: Сергей Кашкин: Передавать фильтры в запросы
+
+export const resumeAPI = {
+    async getResumes(skills: string[]) {
+        return await fetch(`/resume${skills.length ? ("?skills=" + skills.join(",")) : ""}`)
+            .then(response => response.json())
+            .catch(error => console.error(error))
+    },
+    async getResume(id: number) {
+        return await fetch('/resume/' + id)
+            .then(response => response.json())
+            .catch(error => console.error(error))
+    },
+}

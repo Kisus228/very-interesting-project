@@ -4,7 +4,7 @@ import {LoginType, RegisterType} from "../types/types";
 
 const initialState = {
     auth: false,
-    isWorker: true,
+    isWorker: false,
     loginError: "",
     registerError: [] as [string, string][],
 }

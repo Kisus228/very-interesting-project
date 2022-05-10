@@ -34,3 +34,36 @@ export type VacancyType = {
     description: string,
     is_open: boolean
 }
+
+export type ResumeType = {
+    name: string,
+    id: number,
+    is_liked: boolean,
+    specialization: string,
+    experience: number,
+    skills: string[]
+}
+
+export type ResumeExpendsType = {
+    name: string,
+    id: number,
+    is_liked: boolean,
+    specialization: string,
+    experience: number,
+    skills: string[]
+    desired_vacancies: DesiredVacancyType[],
+    tg: string,
+    vk: string,
+    github: string,
+    gitlab: string,
+    email: string,
+    resume_text: string,
+    about_me: string,
+    //birthday: string
+}
+
+export type DesiredVacancyType = {
+    name: string,
+    id_vacancy: number,
+    id_job_app: number,
+}

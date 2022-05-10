@@ -47,7 +47,8 @@ const WorkerVacancies = () => {
         <div className={classes.PageContentWrapper}>
             <div className={classes.PageContainer}>
                 <div>
-                    <Filter/>
+                    <Filter setFilter={() => console.log("123")} filter={[]}
+                            selectedFilter={[]}/>
                 </div>
                 <div>
                     <h2>Найдено вакансий по запросу: {state.length}</h2>

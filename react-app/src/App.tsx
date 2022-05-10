@@ -48,7 +48,11 @@ const App: React.FC<Props> = (props) => {
         }
     }, [props.auth, props.initialized]);
 
-    return props.isWorker ? <WorkerRoutes/> : <EmployerRoutes/>;
+    return props.initialized
+        ? props.isWorker
+            ? <WorkerRoutes/>
+            : <EmployerRoutes/>
+        : null;
 }
 
 const mapStateToProps = (state: AppStateType) => {

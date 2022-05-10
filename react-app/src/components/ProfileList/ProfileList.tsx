@@ -25,7 +25,8 @@ const ProfileList: React.FC<PropsType> = (props) => {
         <div className={classes.PageContentWrapper}>
             <div className={classes.PageContainer}>
                 <div>
-                    <Filter/>
+                    <Filter setFilter={() => console.log("123")} filter={[]}
+                            selectedFilter={[]}/>
                 </div>
                 <div>
                     <h2>Найдено людей по запросу: {props.state.length}</h2>

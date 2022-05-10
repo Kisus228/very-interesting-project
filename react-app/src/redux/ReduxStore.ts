@@ -4,11 +4,13 @@ import {Action, applyMiddleware, combineReducers, compose, createStore} from "re
 import AuthReducer from "./AuthReducer";
 import VacancyReducer from "./VacansyReducer";
 import AppReducer from "./AppReducer";
+import ResumeReducer from "./ResumeReducer";
 
 const reducers = combineReducers({
     appData: AppReducer,
     filterData: FilterReducer,
     vacancyData: VacancyReducer,
+    resumeData: ResumeReducer,
     authData: AuthReducer,
 });
 
