@@ -64,5 +64,5 @@ def get_short_resume(worker, liked_resume):
         'name': str(worker.user),
         'is_liked': worker.resume in liked_resume,
     }
-    record.update(worker.resume.as_dict_short_to_head_depart())
+    record.update(worker.resume.as_dict_short())
     return record
