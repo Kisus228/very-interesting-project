@@ -1,4 +1,4 @@
-from .models import Skills, GroupSkills, Vacancy, JobApplications, Resume
+from .models import Skills, GroupSkills, Vacancy, JobApplications, Resume, HeadDepartment, Worker
 
 
 def get_skills():
@@ -30,18 +30,39 @@ def get_filter_vacancy(param):
     return answer
 
 
-def get_filter_resume(param):
+def get_resume_by_filter(param, head_depart):
     """Возвращает список резюме по фильтрам"""
+    liked_resume = get_liked_resume(head_depart.pk)
     if param:
         resume_id = set()
         answer = []
         skills = param.split(',')
         for resume in Resume.objects.all():
             for skill in skills:
-                if int(skill) in [vac.pk for vac in resume.skills.all()]:
+                if skill.isnumeric() and int(skill) in [vac.pk for vac in resume.skills.all()]:
                     if resume.pk not in resume_id:
                         resume_id.add(resume.pk)
-                        answer.append(resume.as_dict())
+                        worker = Worker.objects.get(resume_id=resume.pk)
+                        record = get_short_resume(worker, liked_resume)
+                        answer.append(record)
     else:
-        answer = [resume.as_dict() for resume in Resume.objects.all()]
+        answer = []
+        for resume in Resume.objects.all():
+            worker = Worker.objects.get(resume_id=resume.pk)
+            record = get_short_resume(worker, liked_resume)
+            answer.append(record)
     return answer
+
+
+def get_liked_resume(head_depart_id):
+    head_department: HeadDepartment = HeadDepartment.objects.get(pk=head_depart_id)
+    return head_department.liked_resume.all()
+
+
+def get_short_resume(worker, liked_resume):
+    record = {
+        'name': str(worker.user),
+        'is_liked': worker.resume in liked_resume,
+    }
+    record.update(worker.resume.as_dict_short_to_head_depart())
+    return record

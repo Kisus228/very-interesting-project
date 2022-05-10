@@ -25,7 +25,7 @@ class SkillsAdmin(admin.ModelAdmin):
 
 class ResumeAdmin(admin.ModelAdmin):
     model = Resume
-    list_display = ['job', 'resume_text']
+    list_display = ['resume_text']
 
 
 admin.site.register(HeadDepartment, HeadDepartmentAdmin)

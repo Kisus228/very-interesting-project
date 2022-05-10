@@ -5,9 +5,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from .models import Vacancy, HeadDepartment, JobApplications, Resume
+from .models import Vacancy, HeadDepartment, JobApplications, Resume, Worker
 from .serilizer import CreateVacancySerializer
-from .assistant import get_filter_resume
+from .assistant import get_liked_resume, get_resume_by_filter, get_short_resume
 
 
 class VacancyApiView(CreateAPIView):
@@ -30,20 +30,18 @@ class VacancyApiView(CreateAPIView):
 
         """
         is_open = request.GET.get('is_open') == 'True'
-        authors = HeadDepartment.objects.filter(user=request.user.id)
-        author = authors[0] if authors else None
+        author = HeadDepartment.objects.get(user_id=request.user.id)
         pk = kwargs.get('pk', None)
         try:
             vacancy = Vacancy.objects.get(pk=pk)
-            return Response(vacancy.as_dict())
+            return Response(vacancy.as_dict_full())
         except:
             vacancies = Vacancy.objects.filter(author_id=author)
-            return Response([vacancy.as_dict() for vacancy in vacancies if vacancy.is_open == is_open])
+            return Response([vacancy.as_dict_short_to_head_depart() for vacancy in vacancies if vacancy.is_open == is_open])
 
     def post(self, request, *args):
         author_request = HeadDepartment.objects.filter(user=request.user.id)
         author = request.data.get('author', None)
-
         if len(author_request) > 0 and author and int(author) == author_request[0].pk:
             serializer = CreateVacancySerializer(data=request.data)
             if serializer.is_valid():
@@ -101,45 +99,73 @@ class VacancyApiView(CreateAPIView):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 @authentication_classes([SessionAuthentication])
-def get_job_applications(request: Request):
-    """
-    Заявки на работу
-    Args:
-        request:
-
-    Returns:
-
-    """
-    vacancy_id = request.GET.get('vacancy')
-    job_applications = JobApplications.objects.filter(vacancy_id=vacancy_id)
-    return Response([job.brief_information() for job in job_applications])
-
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-@authentication_classes([SessionAuthentication])
-def get_favorites_job_app(request: Request):
-    user_id = request.user.id
-    try:
-        author = HeadDepartment.objects.get(user_id=user_id)
-    except:
-        return Response({'Куда полез хохол?'}, status=400)
-    job_applications = JobApplications.objects.filter(author_id=author.pk)
-    return Response([j_a.brief_information() for j_a in job_applications if j_a.is_liked])
+def get_resume_responding_worker(request: Request, **kwargs):
+    head_depart = HeadDepartment.objects.get(user_id=request.user.id)
+    liked_resume = get_liked_resume(head_depart.pk)
+    vacancies = Vacancy.objects.filter(author_id=head_depart.pk)
+    job_apps = [JobApplications.objects.filter(vacancy_id=vacancy.pk) for vacancy in vacancies]
+    workers_id = set()
+    answer = []
+    for job_app in job_apps:
+        for j_a in job_app:
+            if j_a.worker.pk not in workers_id:
+                worker = j_a.worker
+                record = get_short_resume(worker, liked_resume)
+                answer.append(record)
+    return Response(answer)
 
 
 @api_view(['GET'])
-def get_resume(request: Request, *args, **kwargs):
-    id = kwargs.get('pk')
-    if id:
+def get_resume(request: Request, **kwargs):
+    head_depart = HeadDepartment.objects.get(user_id=request.user.id)
+    liked_resume = get_liked_resume(head_depart.pk)
+    vacancies = Vacancy.objects.filter(author_id=head_depart.pk)
+    skills_param = request.GET.get('skills')
+    resume_id = kwargs.get('pk')
+    if resume_id:
         try:
-            resume = Resume.objects.get(id=id)
+            worker = Worker.objects.get(resume_id=int(resume_id))
+            job_app_worker = JobApplications.objects.filter(worker_id=worker.pk)
+            intersection = list(filter(lambda x: x.vacancy in vacancies, job_app_worker))
+            answer = {
+                'name': str(worker.user),
+                'is_liked': worker.resume in liked_resume,
+            }
+            answer.update(worker.resume.as_dict_full())
+            answer.update({'desired_vacancies': [
+                {'name': j_a.vacancy.name, 'id_vacancy': j_a.vacancy.pk, 'id_job_app': j_a.pk}
+                for j_a in intersection]})
+            return Response(answer)
         except:
             return Response(status=400)
-        return Response(resume.as_dict())
-    try:
-        answer = get_filter_resume(request.GET.get('skills'))
-        return Response(answer)
-    except Exception as ex:
-        print(ex)
-        return Response('Не правильно переданны аргументы', status=400)
+    else:
+        resume_filter = get_resume_by_filter(skills_param, head_depart)
+        return Response(resume_filter)
+
+
+@api_view(['GET'])
+def get_job_application(request, **kwargs):
+    """Смотрть резюме из вакансии"""
+    head_depart = HeadDepartment.objects.get(user_id=request.user.id)
+    liked_resume = get_liked_resume(head_depart.pk)
+    vacancy_id = kwargs.get('pk')
+    answer = []
+    workers = [job_app.worker for job_app in JobApplications.objects.filter(vacancy_id=int(vacancy_id))]
+    for worker in workers:
+        record = get_short_resume(worker, liked_resume)
+        answer.append(record)
+    return Response(answer)
+
+
+@api_view(['POST'])
+def like_resume(request: Request):
+    resume_id = request.data.get('id')
+    user_id = request.user.id
+    resume = Resume.objects.get(id=resume_id)
+    head_depart: HeadDepartment = HeadDepartment.objects.get(user_id=user_id)
+    liked_resume = head_depart.liked_resume.all()
+    if resume not in liked_resume:
+        head_depart.liked_resume.add(resume)
+    else:
+        head_depart.liked_resume.remove(resume)
+    return Response(status=200)
