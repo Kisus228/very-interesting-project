@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import classes from './WorkerVacancies.less';
+import classes from './Vacancies.less';
 import Filter from "../../Filter/Filter";
 import {useNavigate} from "react-router-dom";
 import avatar from "../../../assets/avatar.png"
@@ -20,7 +20,7 @@ type ProfileItemType = {
     liked: boolean,
 }
 
-const WorkerVacancies = () => {
+const Vacancies = () => {
     const defaultState = [
         {
             id: 0,
@@ -87,4 +87,4 @@ const VacancyItem = (props: ProfileItemType) => {
     );
 }
 
-export default WorkerVacancies;
+export default Vacancies;

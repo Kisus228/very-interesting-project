@@ -1,5 +1,5 @@
 import {Route, Routes} from "react-router-dom";
-import WorkerVacancies from "./Vacancies/WorkerVacancies";
+import Vacancies from "./Vacancies/Vacancies";
 import LikedResumes from "../Employer/Resumes/LikedResumes";
 import MyProfile from "../MyProfile/MyProfile";
 import Auth from "../Auth/Auth";
@@ -13,7 +13,7 @@ const WorkerRoutes = () => {
             <Route path="/" element={<AppWrapper/>}>
                 <Route path="search">
                     <Route path=":vacancyId" element={<Vacancy/>}/>
-                    <Route index element={<WorkerVacancies/>}/>
+                    <Route index element={<Vacancies/>}/>
                 </Route>
                 <Route path="liked" element={<LikedResumes/>}/>
                 <Route path="profile" element={<MyProfile/>}/>
