@@ -5,7 +5,7 @@ import Button from "../../Common/FormControl/Button";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {getVacancyTC} from "../../../redux/VacansyReducer";
+import {getVacancyTC} from "../../../redux/EmployerVacancyReducer";
 import {useParams} from "react-router-dom";
 import LikeButton from "../../Common/FormControl/LikeButton";
 
@@ -130,7 +130,7 @@ const EmployeeItem = (props: { avatar: any, name: string }) => {
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        vacancy: state.vacancyData.vacancy,
+        vacancy: state.employerVacancyData.vacancy,
     }
 }
 

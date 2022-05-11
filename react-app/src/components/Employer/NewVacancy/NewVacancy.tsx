@@ -4,7 +4,7 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {getFilterTC} from "../../../redux/FilterReducer"
 import {AppStateType} from "../../../redux/ReduxStore";
-import {postVacancyTC} from "../../../redux/VacansyReducer";
+import {postVacancyTC} from "../../../redux/EmployerVacancyReducer";
 import {getDataForSubmit, ValuesType} from "./InitForm";
 import VacancyForm from "./VacancyForm";
 
@@ -42,7 +42,7 @@ const NewVacancy: React.FC<Props> = (props) => {
 const mapStateToProps = (state: AppStateType) => {
     return {
         skills: state.filterData.skills,
-        vacancy: state.vacancyData.vacancy
+        vacancy: state.employerVacancyData.vacancy
     }
 }
 

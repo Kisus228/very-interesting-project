@@ -5,7 +5,7 @@ import VacanciesItem from "./VacanciesItem";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {closeVacancyTC, deleteVacancyTC, getVacanciesTC} from "../../../redux/VacansyReducer";
+import {closeVacancyTC, deleteVacancyTC, getVacanciesTC} from "../../../redux/EmployerVacancyReducer";
 import cn from "classnames";
 
 const Vacancies: React.FC<Props> = (props) => {
@@ -92,7 +92,7 @@ const PageHeader = (props: { openedVacancies: boolean }) => {
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        vacancies: state.vacancyData.vacancies,
+        vacancies: state.employerVacancyData.vacancies,
     }
 }
 
