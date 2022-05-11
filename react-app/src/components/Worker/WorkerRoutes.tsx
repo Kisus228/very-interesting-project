@@ -1,6 +1,6 @@
 import {Route, Routes} from "react-router-dom";
 import WorkerVacancies from "./Vacancies/WorkerVacancies";
-import LikedResumes from "../Resumes/LikedResumes";
+import LikedResumes from "../Employer/Resumes/LikedResumes";
 import MyProfile from "../MyProfile/MyProfile";
 import Auth from "../Auth/Auth";
 import React from "react";

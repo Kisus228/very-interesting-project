@@ -1,8 +1,8 @@
 import {Route, Routes} from "react-router-dom";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import LikedResumes from "../Resumes/LikedResumes";
+import LikedResumes from "./Resumes/LikedResumes";
 import MyProfile from "../MyProfile/MyProfile";
-import Search from "../Resumes/SearchResumes";
+import Search from "./Resumes/SearchResumes";
 import Vacancies from "./Vacancies/Vacancies";
 import NewVacancy from "./NewVacancy/NewVacancy";
 import Vacancy from "./Vacancy/Vacancy";

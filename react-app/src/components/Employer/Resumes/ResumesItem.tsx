@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import classes from './ResumesItem.less';
-import Filter from "../Filter/Filter";
+import Filter from "../../Filter/Filter";
 import {useNavigate} from "react-router-dom";
-import avatar from "../../assets/avatar.png";
-import LikeButton from "../Common/FormControl/LikeButton";
-import Button from "../Common/FormControl/Button";
-import {ResumeType} from "../../types/types";
+import avatar from "../../../assets/avatar.png";
+import LikeButton from "../../Common/FormControl/LikeButton";
+import Button from "../../Common/FormControl/Button";
+import {ResumeType} from "../../../types/types";
 
 const ResumesItem = (props: { resume: ResumeType, likeResumeTC: (id: number, resumePage: boolean) => void }) => {
     const onClickLikeButton = () => {

@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import ResumesItem from "./ResumesItem";
 import classes from "./ResumesItem.less";
-import Filter from "../Filter/Filter";
-import {AppStateType} from "../../redux/ReduxStore";
+import Filter from "../../Filter/Filter";
+import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {getLikedResumesTC, getResumesTC, likeResumeTC} from "../../redux/ResumeReducer";
-import {getFilterTC} from "../../redux/FilterReducer";
+import {getLikedResumesTC, getResumesTC, likeResumeTC} from "../../../redux/ResumeReducer";
+import {getFilterTC} from "../../../redux/FilterReducer";
 
 // TODO: Сергей Кашкин: Когда появится бэк и запросы, убрать эту компоненту, а к компоненте Resumes добавить запрос на основе url.
 

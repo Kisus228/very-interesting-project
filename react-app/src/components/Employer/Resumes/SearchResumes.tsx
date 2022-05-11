@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {AppStateType} from "../../redux/ReduxStore";
-import {getResumesTC, likeResumeTC} from "../../redux/ResumeReducer";
+import {AppStateType} from "../../../redux/ReduxStore";
+import {getResumesTC, likeResumeTC} from "../../../redux/ResumeReducer";
 import classes from "./ResumesItem.less";
-import Filter from "../Filter/Filter";
-import {getFilterTC} from "../../redux/FilterReducer";
+import Filter from "../../Filter/Filter";
+import {getFilterTC} from "../../../redux/FilterReducer";
 import ResumesItem from "./ResumesItem";
 
 const SearchResumes: React.FC<Props> = (props) => {
