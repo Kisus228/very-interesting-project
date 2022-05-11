@@ -92,7 +92,7 @@ export const workerVacancyAPI = {
             .catch(error => console.error(error))
     },
     async getVacancy(id: number) {
-        return await fetch('/vacancy/' + id)
+        return await fetch('/vacancy/' + id + "/")
             .then(response => response.json())
             .catch(error => console.error(error))
     },
