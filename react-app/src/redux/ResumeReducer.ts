@@ -34,6 +34,11 @@ export const getResumesTC = (filter: string[]): ThunkType => async (dispatch) =>
         .then(result => dispatch(actions.setResumes(result)))
 }
 
+export const getLikedResumesTC = (): ThunkType => async (dispatch) => {
+    await resumeAPI.getLikedResumes()
+        .then(result => dispatch(actions.setResumes(result)))
+}
+
 export const getResumeTC = (id: number): ThunkType => async (dispatch) => {
     await resumeAPI.getResume(id)
         .then(result => dispatch(actions.setResume(result)))

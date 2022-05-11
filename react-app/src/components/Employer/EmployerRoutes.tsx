@@ -1,8 +1,8 @@
 import {Route, Routes} from "react-router-dom";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import Liked from "../Liked/Liked";
+import LikedResumes from "../Resumes/LikedResumes";
 import MyProfile from "../MyProfile/MyProfile";
-import Search from "../Search/Search";
+import Search from "../Resumes/SearchResumes";
 import Vacancies from "./Vacancies/Vacancies";
 import NewVacancy from "./NewVacancy/NewVacancy";
 import Vacancy from "./Vacancy/Vacancy";
@@ -20,7 +20,7 @@ const EmployerRoutes = () => {
                     <Route path=":profileId" element={<ProfileInfo/>}/>
                     <Route index element={<Search/>}/>
                 </Route>
-                <Route path="liked" element={<Liked/>}/>
+                <Route path="liked" element={<LikedResumes/>}/>
                 <Route path="vacancies">
                     <Route index element={<Vacancies openedVacancies={true}/>}/>
                     <Route path="history" element={<Vacancies openedVacancies={false}/>}/>

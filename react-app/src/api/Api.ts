@@ -77,6 +77,11 @@ export const resumeAPI = {
             .then(response => response.json())
             .catch(error => console.error(error))
     },
+    async getLikedResumes() {
+        return await fetch('/liked_resume/')
+            .then(response => response.json())
+            .catch(error => console.error(error))
+    },
     async getResume(id: number) {
         return await fetch('/resume/' + id)
             .then(response => response.json())
