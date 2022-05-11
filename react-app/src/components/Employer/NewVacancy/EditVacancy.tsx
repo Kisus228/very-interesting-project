@@ -9,25 +9,9 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {getFilterTC} from "../../../redux/FilterReducer"
 import {AppStateType} from "../../../redux/ReduxStore";
-import {VacancyExpendsType, VacancyType} from "../../../types/types";
 import {getVacancyTC, postVacancyTC, putVacancyTC} from "../../../redux/VacansyReducer";
-import {getDataForSubmit, getInitialValuesForEdit} from "./InitForm";
+import {getDataForSubmit, getInitialValuesForEdit, ValuesType} from "./InitForm";
 import VacancyForm from "./VacancyForm";
-
-export interface ValuesType {
-    vacancyName: string,
-    speciality: string,
-    vacancyDescription: string,
-    employmentType: string,
-    schedule: string,
-    conditions: string,
-    skills: any,
-    requirements: string,
-    responsibilities: string,
-    salary: string,
-    count: string,
-    additionally: string
-}
 
 const NewVacancy: React.FC<Props> = (props) => {
     const vacancyId = Number(useParams().vacancyId);
@@ -64,7 +48,7 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 type MapDispatchPropsType = {
     getFilterTC: () => void
     getVacancyTC: (id: number) => void
-    putVacancyTC: (id: number, data: VacancyExpendsType) => void
+    putVacancyTC: (id: number, data: any) => void
 }
 
 type Props = MapStatePropsType & MapDispatchPropsType;

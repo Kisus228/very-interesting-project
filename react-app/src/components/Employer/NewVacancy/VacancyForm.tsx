@@ -4,8 +4,8 @@ import {Form, Formik} from "formik";
 import FormInput from "../../Common/FormControl/FormInput";
 import {FormSelect} from "../../Common/FormControl/FormSelect";
 import Button from "../../Common/FormControl/Button";
-import {ValuesType} from "./EditVacancy";
 import {SkillType} from "../../../types/types";
+import {ValuesType} from "./InitForm";
 
 interface Props {
     onSubmit: (values: ValuesType) => void

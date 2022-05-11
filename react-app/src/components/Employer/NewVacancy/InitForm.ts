@@ -1,5 +1,21 @@
 import {VacancyExpendsType} from "../../../types/types";
-import {ValuesType} from "./EditVacancy";
+
+export interface ValuesType {
+    vacancyName: string,
+    speciality: string,
+    vacancyDescription: string,
+    employmentType: string,
+    schedule: string,
+    conditions: string,
+    skills: any,
+    requirements: string,
+    responsibilities: string,
+    salary: string,
+    count: string,
+    additionally: string,
+    id: number
+}
+
 //TODO: Сергей Кашкин: Доделать skills с id
 export const getInitialValuesForEdit = (vacancy: VacancyExpendsType) => {
     return {
@@ -14,7 +30,8 @@ export const getInitialValuesForEdit = (vacancy: VacancyExpendsType) => {
         responsibilities: vacancy.duties,
         salary: vacancy.salary,
         count: String(vacancy.count),
-        additionally: vacancy.additionally
+        additionally: vacancy.additionally,
+        id: vacancy.id,
     }
 }
 
@@ -26,8 +43,8 @@ export const getDataForSubmit = (values: ValuesType) => {
         description: values.vacancyDescription,
         duties: values.responsibilities,
         free: Number(values.count),
-        id: 0,
-        author: 1, //TODO: Сергей Кашкин: Доделать
+        id: values.id,
+        author: 0, //TODO: Сергей Кашкин: Доделать
         is_open: true,
         name: values.vacancyName,
         requirements: values.requirements,
