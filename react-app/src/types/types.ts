@@ -51,7 +51,7 @@ export type DesiredVacancyType = {
     id_job_app: number,
 }
 
-export interface VacancyType {
+export interface EmployerVacancyType {
     name: string,
     id: number,
     is_open: boolean,
@@ -59,8 +59,7 @@ export interface VacancyType {
     free: number,
 }
 
-
-export interface VacancyExpendsType extends VacancyType{
+export interface EmployerVacancyExpendsType extends EmployerVacancyType {
     specialization: string,
     description: string,
     type_employment: string,
@@ -72,4 +71,26 @@ export interface VacancyExpendsType extends VacancyType{
     salary: string,
     additionally: string,
     author: number,
+}
+
+export interface WorkerVacancyType {
+    name: string,
+    free: number,
+    id: number,
+    skills: SkillType[],
+    description: string,
+    is_liked: boolean
+}
+
+export interface WorkerVacancyExpendsType extends WorkerVacancyType {
+    count: number,
+    is_open: boolean,
+    salary: string,
+    specialization: string,
+    type_employment: string,
+    work_schedule: string,
+    conditions: string,
+    duties: string,
+    requirements: string,
+    additionally: string,
 }

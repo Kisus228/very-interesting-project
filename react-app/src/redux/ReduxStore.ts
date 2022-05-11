@@ -5,11 +5,13 @@ import AuthReducer from "./AuthReducer";
 import EmployerVacancyReducer from "./EmployerVacancyReducer";
 import AppReducer from "./AppReducer";
 import ResumeReducer from "./ResumeReducer";
+import WorkerVacancyReducer from "./WorkerVacancyReducer";
 
 const reducers = combineReducers({
     appData: AppReducer,
     filterData: FilterReducer,
     employerVacancyData: EmployerVacancyReducer,
+    workerVacancyData: WorkerVacancyReducer,
     resumeData: ResumeReducer,
     authData: AuthReducer,
 });

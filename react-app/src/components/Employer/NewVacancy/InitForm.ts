@@ -1,4 +1,4 @@
-import {VacancyExpendsType} from "../../../types/types";
+import {EmployerVacancyExpendsType} from "../../../types/types";
 
 export interface ValuesType {
     vacancyName: string,
@@ -17,7 +17,7 @@ export interface ValuesType {
 }
 
 //TODO: Сергей Кашкин: Доделать skills с id
-export const getInitialValuesForEdit = (vacancy: VacancyExpendsType) => {
+export const getInitialValuesForEdit = (vacancy: EmployerVacancyExpendsType) => {
     return {
         vacancyName: vacancy.name,
         speciality: vacancy.specialization,

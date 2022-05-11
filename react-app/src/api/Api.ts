@@ -1,4 +1,4 @@
-import {LoginType, RegisterType, VacancyExpendsType, VacancyType} from "../types/types";
+import {LoginType, RegisterType, EmployerVacancyExpendsType, EmployerVacancyType} from "../types/types";
 import Cookies from 'js-cookie';
 
 export const authAPI = {
@@ -45,7 +45,7 @@ export const employerVacancyAPI = {
             .then(response => response.json())
             .catch(error => console.error(error))
     },
-    async postVacancy(data: VacancyExpendsType) {
+    async postVacancy(data: EmployerVacancyExpendsType) {
         const csrftoken = Cookies.get("csrftoken") || "";
         return await fetch('/authorvacancy/', {
             method: 'POST',
@@ -55,7 +55,7 @@ export const employerVacancyAPI = {
             .then(response => response.json())
             .catch(error => console.error(error))
     },
-    async putVacancy(id: number, data: VacancyExpendsType) {
+    async putVacancy(id: number, data: EmployerVacancyExpendsType) {
         const csrftoken = Cookies.get("csrftoken") || "";
         return await fetch('/authorvacancy/' + id + "/", {
             method: 'PUT',
@@ -76,6 +76,33 @@ export const employerVacancyAPI = {
     async getVacancy(id: number) {
         return await fetch('/authorvacancy/' + id)
             .then(response => response.json())
+            .catch(error => console.error(error))
+    },
+}
+
+export const workerVacancyAPI = {
+    async getVacancies(skills: number[]) {
+        return await fetch(`/vacancy${skills.length ? ("?skills=" + skills.join(",")) : ""}`)
+            .then(response => response.json())
+            .catch(error => console.error(error))
+    },
+    async getLikedVacancies() {
+        return await fetch('/liked_vacancy/')
+            .then(response => response.json())
+            .catch(error => console.error(error))
+    },
+    async getVacancy(id: number) {
+        return await fetch('/vacancy/' + id)
+            .then(response => response.json())
+            .catch(error => console.error(error))
+    },
+    async likeVacancy(id: number) {
+        const csrftoken = Cookies.get("csrftoken") || "";
+        return await fetch('/like_vacancy/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
+            body: JSON.stringify({id: id}),
+        })
             .catch(error => console.error(error))
     },
 }

@@ -3,10 +3,10 @@ import classes from './Vacancies.less';
 import Button from "../../Common/FormControl/Button";
 import {Close, Delete, Edit, Open} from "../../Common/Icons/Icons";
 import {useNavigate} from "react-router-dom";
-import {VacancyType} from "../../../types/types";
+import {EmployerVacancyType} from "../../../types/types";
 
 interface Props {
-    vacancy: VacancyType
+    vacancy: EmployerVacancyType
     closeVacancy: () => void
     deleteVacancy: () => void
 }

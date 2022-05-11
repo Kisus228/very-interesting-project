@@ -1,10 +1,10 @@
 import {employerVacancyAPI} from "../api/Api";
 import {BaseThunkType, InferActionsTypes} from './ReduxStore';
-import {VacancyExpendsType, VacancyType} from "../types/types";
+import {EmployerVacancyExpendsType, EmployerVacancyType} from "../types/types";
 
 const initialState = {
-    vacancies: [] as VacancyType[],
-    vacancy: null as VacancyExpendsType | null,
+    vacancies: [] as EmployerVacancyType[],
+    vacancy: null as EmployerVacancyExpendsType | null,
 }
 
 const VacancyReducer = (state = initialState, action: ActionsTypes): InitialState => {
@@ -29,11 +29,11 @@ const VacancyReducer = (state = initialState, action: ActionsTypes): InitialStat
 }
 
 export const actions = {
-    setVacancies: (vacancies: VacancyType[]) => ({type: "EMPLOYER_VACANCY/SET_VACANCIES", vacancies} as const),
-    postVacancy: (vacancy: VacancyExpendsType) => ({type: "EMPLOYER_VACANCY/POST_VACANCY", vacancy} as const),
-    putVacancy: (id: number, vacancy: VacancyExpendsType) => ({type: "EMPLOYER_VACANCY/PUT_VACANCY", id, vacancy} as const),
+    setVacancies: (vacancies: EmployerVacancyType[]) => ({type: "EMPLOYER_VACANCY/SET_VACANCIES", vacancies} as const),
+    postVacancy: (vacancy: EmployerVacancyExpendsType) => ({type: "EMPLOYER_VACANCY/POST_VACANCY", vacancy} as const),
+    putVacancy: (id: number, vacancy: EmployerVacancyExpendsType) => ({type: "EMPLOYER_VACANCY/PUT_VACANCY", id, vacancy} as const),
     deleteVacancy: (id: number) => ({type: "EMPLOYER_VACANCY/DELETE_VACANCY", id} as const),
-    setVacancy: (vacancy: VacancyExpendsType) => ({type: "EMPLOYER_VACANCY/SET_VACANCY", vacancy} as const),
+    setVacancy: (vacancy: EmployerVacancyExpendsType) => ({type: "EMPLOYER_VACANCY/SET_VACANCY", vacancy} as const),
     resetVacancy: () => ({type: "EMPLOYER_VACANCY/RESET_VACANCY"} as const),
 }
 
@@ -42,7 +42,7 @@ export const getVacanciesTC = (isOpen: boolean): ThunkType => async (dispatch) =
         .then(result => dispatch(actions.setVacancies(result)))
 }
 
-export const postVacancyTC = (data: VacancyExpendsType): ThunkType => async (dispatch) => {
+export const postVacancyTC = (data: EmployerVacancyExpendsType): ThunkType => async (dispatch) => {
     await employerVacancyAPI.postVacancy(data)
         .then(result => {
             if (!isNaN(Number(result))) {
@@ -79,7 +79,7 @@ export const deleteVacancyTC = (id: number, authorId: number): ThunkType => asyn
 
 }
 
-export const putVacancyTC = (id: number, data: VacancyExpendsType): ThunkType => async (dispatch) => {
+export const putVacancyTC = (id: number, data: EmployerVacancyExpendsType): ThunkType => async (dispatch) => {
     await employerVacancyAPI.putVacancy(id, data)
         .then(result => {
             // @ts-ignore
