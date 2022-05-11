@@ -22,19 +22,11 @@ const Navigation: React.FC<MapStatePropsType> = (props) => {
                         <Search/>
                     </NavLink>
                 </li>
-                {
-                    props.isWorker
-                        ? <li>
-                            <NavLink to={"/"} className={({isActive}) => isActive ? classes.active : undefined}>
-                                <Work/>
-                            </NavLink>
-                        </li>
-                        : <li>
-                            <NavLink to={'/vacancies'} className={({isActive}) => isActive ? classes.active : undefined}>
-                                <Plus/>
-                            </NavLink>
-                        </li>
-                }
+                <li>
+                    <NavLink to={"/vacancies"} className={({isActive}) => isActive ? classes.active : undefined}>
+                        {props.isWorker ? <Work/> : <Plus/>}
+                    </NavLink>
+                </li>
             </ul>
             <div className={classes.PreviousPage} onClick={() => navigate(-1)}>
                 <Back/>
