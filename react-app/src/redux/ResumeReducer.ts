@@ -1,6 +1,6 @@
-import {resumeAPI, vacancyAPI} from "../api/Api";
+import {resumeAPI} from "../api/Api";
 import {BaseThunkType, InferActionsTypes} from './ReduxStore';
-import {ResumeExpendsType, ResumeType, VacancyType} from "../types/types";
+import {ResumeExpendsType, ResumeType} from "../types/types";
 
 const initialState = {
     resumes: [] as ResumeType[],

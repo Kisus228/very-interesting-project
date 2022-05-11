@@ -39,7 +39,7 @@ export const filterAPI = {
     },
 }
 
-export const vacancyAPI = {
+export const employerVacancyAPI = {
     async getVacancies(isOpen: boolean) {
         return await fetch(`/authorvacancy${isOpen ? "?is_open=True" : ""}`)
             .then(response => response.json())

@@ -1,4 +1,4 @@
-import {vacancyAPI} from "../api/Api";
+import {employerVacancyAPI} from "../api/Api";
 import {BaseThunkType, InferActionsTypes} from './ReduxStore';
 import {VacancyExpendsType, VacancyType} from "../types/types";
 
@@ -38,12 +38,12 @@ export const actions = {
 }
 
 export const getVacanciesTC = (isOpen: boolean): ThunkType => async (dispatch) => {
-    await vacancyAPI.getVacancies(isOpen)
+    await employerVacancyAPI.getVacancies(isOpen)
         .then(result => dispatch(actions.setVacancies(result)))
 }
 
 export const postVacancyTC = (data: VacancyExpendsType): ThunkType => async (dispatch) => {
-    await vacancyAPI.postVacancy(data)
+    await employerVacancyAPI.postVacancy(data)
         .then(result => {
             if (!isNaN(Number(result))) {
                 data.id = result;
@@ -53,11 +53,11 @@ export const postVacancyTC = (data: VacancyExpendsType): ThunkType => async (dis
 }
 
 export const closeVacancyTC = (id: number, authorId: number): ThunkType => async (dispatch) => {
-    await vacancyAPI.getVacancy(id)
+    await employerVacancyAPI.getVacancy(id)
         .then(data => {
             data.is_open = !data.is_open;
             data.author = authorId;
-            vacancyAPI.putVacancy(id, data)
+            employerVacancyAPI.putVacancy(id, data)
                 .then(result => {
                     // @ts-ignore
                     if (result.status === 200) {
@@ -69,7 +69,7 @@ export const closeVacancyTC = (id: number, authorId: number): ThunkType => async
 }
 
 export const deleteVacancyTC = (id: number, authorId: number): ThunkType => async (dispatch) => {
-    await vacancyAPI.deleteVacancy(id, authorId)
+    await employerVacancyAPI.deleteVacancy(id, authorId)
         .then(result => {
             // @ts-ignore
             if (result.status === 200) {
@@ -80,7 +80,7 @@ export const deleteVacancyTC = (id: number, authorId: number): ThunkType => asyn
 }
 
 export const putVacancyTC = (id: number, data: VacancyExpendsType): ThunkType => async (dispatch) => {
-    await vacancyAPI.putVacancy(id, data)
+    await employerVacancyAPI.putVacancy(id, data)
         .then(result => {
             // @ts-ignore
             if (result.status === 200) {
@@ -91,7 +91,7 @@ export const putVacancyTC = (id: number, data: VacancyExpendsType): ThunkType =>
 
 export const getVacancyTC = (id: number): ThunkType => async (dispatch) => {
     dispatch(actions.resetVacancy())
-    await vacancyAPI.getVacancy(id)
+    await employerVacancyAPI.getVacancy(id)
         .then(result => dispatch(actions.setVacancy(result)))
 }
 
