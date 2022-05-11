@@ -5,10 +5,6 @@ import {AppStateType} from "../../redux/ReduxStore";
 import {getResumesTC, likeResumeTC} from "../../redux/ResumeReducer";
 import classes from "./ResumesItem.less";
 import Filter from "../Filter/Filter";
-import avatar from "../../assets/avatar.png";
-import LikeButton from "../Common/FormControl/LikeButton";
-import Button from "../Common/FormControl/Button";
-import {ResumeType} from "../../types/types";
 import {getFilterTC} from "../../redux/FilterReducer";
 import ResumesItem from "./ResumesItem";
 

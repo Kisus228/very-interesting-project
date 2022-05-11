@@ -64,6 +64,15 @@ export const vacancyAPI = {
         })
             .catch(error => console.error(error))
     },
+    async deleteVacancy(id: number, authorId: number) {
+        const csrftoken = Cookies.get("csrftoken") || "";
+        return await fetch('/authorvacancy/' + id + "/", {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
+            body: JSON.stringify({author: authorId})
+        })
+            .catch(error => console.error(error))
+    },
     async getVacancy(id: number) {
         return await fetch('/authorvacancy/' + id)
             .then(response => response.json())

@@ -5,7 +5,7 @@ import VacanciesItem from "./VacanciesItem";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {getVacanciesTC} from "../../../redux/VacansyReducer";
+import {closeVacancyTC, deleteVacancyTC, getVacanciesTC} from "../../../redux/VacansyReducer";
 import cn from "classnames";
 
 const Vacancies: React.FC<Props> = (props) => {
@@ -63,7 +63,11 @@ const Vacancies: React.FC<Props> = (props) => {
                         <div>Статус</div>
                     </div>
                     <ul>
-                        {props.vacancies.map(item => <VacanciesItem key={item.id} {...item}/>)}
+                        {
+                            props.vacancies.map(item =>
+                                <VacanciesItem key={item.id} vacancy={item} closeVacancy={() => {}}
+                                               deleteVacancy={() => props.deleteVacancyTC(item.id, 1)}/>)
+                        }
                     </ul>
                 </div>
             </div>
@@ -96,6 +100,8 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
     getVacanciesTC: (isOpen: boolean) => void
+    closeVacancyTC: (vacancyId: number, authorId: number) => void
+    deleteVacancyTC: (vacancyId: number, authorId: number) => void
 }
 
 type OwnPropsType = {
@@ -104,4 +110,8 @@ type OwnPropsType = {
 
 type Props = MapStatePropsType & MapDispatchPropsType & OwnPropsType;
 
-export default compose(connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {getVacanciesTC}))(Vacancies);
+export default compose(connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
+    getVacanciesTC,
+    closeVacancyTC,
+    deleteVacancyTC
+}))(Vacancies);

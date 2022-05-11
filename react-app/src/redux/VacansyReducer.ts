@@ -17,6 +17,8 @@ const VacancyReducer = (state = initialState, action: ActionsTypes): InitialStat
             const newVacancies = [...state.vacancies];
             newVacancies[newVacancies.findIndex(vacancy => vacancy.id === action.id)] = action.vacancy
             return {...state, vacancies: newVacancies};
+        case "VACANCY/DELETE_VACANCY":
+            return {...state, vacancies: state.vacancies.filter(vacancy => vacancy.id !== action.id)};
         case "VACANCY/SET_VACANCY":
             return {...state, vacancy: {...action.vacancy}};
         case "VACANCY/RESET_VACANCY":
@@ -30,6 +32,7 @@ export const actions = {
     setVacancies: (vacancies: VacancyType[]) => ({type: "VACANCY/SET_VACANCIES", vacancies} as const),
     postVacancy: (vacancy: VacancyExpendsType) => ({type: "VACANCY/POST_VACANCY", vacancy} as const),
     putVacancy: (id: number, vacancy: VacancyExpendsType) => ({type: "VACANCY/PUT_VACANCY", id, vacancy} as const),
+    deleteVacancy: (id: number) => ({type: "VACANCY/DELETE_VACANCY", id} as const),
     setVacancy: (vacancy: VacancyExpendsType) => ({type: "VACANCY/SET_VACANCY", vacancy} as const),
     resetVacancy: () => ({type: "VACANCY/RESET_VACANCY"} as const),
 }
@@ -47,6 +50,33 @@ export const postVacancyTC = (data: VacancyExpendsType): ThunkType => async (dis
                 dispatch(actions.postVacancy(data))
             }
         })
+}
+
+export const closeVacancyTC = (id: number, authorId: number): ThunkType => async (dispatch) => {
+    await vacancyAPI.getVacancy(id)
+        .then(data => {
+            data.is_open = !data.is_open;
+            data.author = authorId;
+            vacancyAPI.putVacancy(id, data)
+                .then(result => {
+                    // @ts-ignore
+                    if (result.status === 200) {
+                        dispatch(getVacanciesTC(!data.is_open))
+                    }
+                })
+        })
+
+}
+
+export const deleteVacancyTC = (id: number, authorId: number): ThunkType => async (dispatch) => {
+    await vacancyAPI.deleteVacancy(id, authorId)
+        .then(result => {
+            // @ts-ignore
+            if (result.status === 200) {
+                dispatch(actions.deleteVacancy(id))
+            }
+        })
+
 }
 
 export const putVacancyTC = (id: number, data: VacancyExpendsType): ThunkType => async (dispatch) => {
