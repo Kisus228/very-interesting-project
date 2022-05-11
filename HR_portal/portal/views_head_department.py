@@ -40,42 +40,34 @@ class VacancyApiView(CreateAPIView):
             return Response([vacancy.as_dict_short_to_head_depart() for vacancy in vacancies if vacancy.is_open == is_open])
 
     def post(self, request, *args):
-        author_request = HeadDepartment.objects.filter(user=request.user.id)
-        author = request.data.get('author', None)
-        if len(author_request) > 0 and author and int(author) == author_request[0].pk:
-            serializer = CreateVacancySerializer(data=request.data)
-            if serializer.is_valid():
-                vacancy = serializer.save()
-                return Response(vacancy.id, status=200)
-            else:
-                return Response(serializer.errors, status=400)
+        author_request = HeadDepartment.objects.get(user=request.user.id)
+        serializer = CreateVacancySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.validated_data['author'] = author_request
+            vacancy = serializer.save()
+            return Response(vacancy.id, status=200)
         else:
-            return Response('Не верный пользователь', status=400)
+            return Response(serializer.errors, status=400)
 
     @staticmethod
     def put(request, *args, **kwargs):
-        author_request = HeadDepartment.objects.filter(user=request.user.id)
-        author = request.data.get('author', None)
+        author_request = HeadDepartment.objects.get(user=request.user.id)
+        pk = kwargs.get('pk', None)
+        if not pk:
+            return Response(status=400)
+        try:
+            instance = Vacancy.objects.get(pk=pk)
+        except Exception:
+            return Response('Объект не существует', status=400)
 
-        if len(author_request) > 0 and author and int(author) == author_request[0].pk:
-
-            pk = kwargs.get('pk', None)
-            if not pk:
-                return Response(status=400)
-            try:
-                instance = Vacancy.objects.get(pk=pk)
-            except Exception:
-                return Response('Объект не существует', status=400)
-
-            serializer = CreateVacancySerializer(data=request.data, instance=instance)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
-                return Response(serializer.data)
-            else:
-                return Response(status=400, data='Данные не валидны')
-
+        serializer = CreateVacancySerializer(data=request.data, instance=instance)
+        if serializer.is_valid(raise_exception=True):
+            serializer.validated_data['author'] = author_request
+            serializer.save()
+            return Response(serializer.data)
         else:
-            return Response('Не верный пользователь', status=400)
+            return Response(status=400, data='Данные не валидны')
+
 
     @staticmethod
     def delete(request, *args, **kwargs):
@@ -170,3 +162,17 @@ def like_resume(request: Request):
     else:
         head_depart.liked_resume.remove(resume)
     return Response(status=200)
+
+
+@api_view(['GET'])
+def get_liked_resume_(request: Request):
+    head_depart = HeadDepartment.objects.get(user_id=request.user.id)
+    liked_resume = get_liked_resume(head_depart.pk)
+    answer = []
+    for resume in liked_resume:
+        worker = Worker.objects.get(resume_id=resume.pk)
+        record = resume.as_dict_short()
+        record.update(is_liked=True, name=str(worker.user))
+        answer.append(record)
+    return Response(answer)
+

@@ -1,6 +1,6 @@
 from django.urls import path
 from .views_worker import get_filter, VacancyApiView, get_vacancy, get_resume_responding_worker, get_resume, \
-    get_job_application, like_resume
+    get_job_application, like_resume, get_liked_vacancy_, get_liked_resume_, send_request
 
 urlpatterns = [
     path('get_filter/', get_filter),
@@ -13,4 +13,7 @@ urlpatterns = [
     path('resume/<int:pk>/', get_resume),
     path('resumes_vacancy/<int:pk>/', get_job_application),
     path('like_resume/', like_resume),
+    path('liked_vacancy/', get_liked_vacancy_),
+    path('liked_resume/', get_liked_resume_),
+    path('send_request/', send_request),
 ]
