@@ -9,19 +9,19 @@ const initialState = {
 
 const VacancyReducer = (state = initialState, action: ActionsTypes): InitialState => {
     switch (action.type) {
-        case "VACANCY/SET_VACANCIES":
+        case "EMPLOYER_VACANCY/SET_VACANCIES":
             return {...state, vacancies: [...action.vacancies]};
-        case "VACANCY/POST_VACANCY":
+        case "EMPLOYER_VACANCY/POST_VACANCY":
             return {...state, vacancies: [...state.vacancies, action.vacancy]};
-        case "VACANCY/PUT_VACANCY":
+        case "EMPLOYER_VACANCY/PUT_VACANCY":
             const newVacancies = [...state.vacancies];
             newVacancies[newVacancies.findIndex(vacancy => vacancy.id === action.id)] = action.vacancy
             return {...state, vacancies: newVacancies};
-        case "VACANCY/DELETE_VACANCY":
+        case "EMPLOYER_VACANCY/DELETE_VACANCY":
             return {...state, vacancies: state.vacancies.filter(vacancy => vacancy.id !== action.id)};
-        case "VACANCY/SET_VACANCY":
+        case "EMPLOYER_VACANCY/SET_VACANCY":
             return {...state, vacancy: {...action.vacancy}};
-        case "VACANCY/RESET_VACANCY":
+        case "EMPLOYER_VACANCY/RESET_VACANCY":
             return {...state, vacancy: null};
         default:
             return state;
@@ -29,12 +29,12 @@ const VacancyReducer = (state = initialState, action: ActionsTypes): InitialStat
 }
 
 export const actions = {
-    setVacancies: (vacancies: VacancyType[]) => ({type: "VACANCY/SET_VACANCIES", vacancies} as const),
-    postVacancy: (vacancy: VacancyExpendsType) => ({type: "VACANCY/POST_VACANCY", vacancy} as const),
-    putVacancy: (id: number, vacancy: VacancyExpendsType) => ({type: "VACANCY/PUT_VACANCY", id, vacancy} as const),
-    deleteVacancy: (id: number) => ({type: "VACANCY/DELETE_VACANCY", id} as const),
-    setVacancy: (vacancy: VacancyExpendsType) => ({type: "VACANCY/SET_VACANCY", vacancy} as const),
-    resetVacancy: () => ({type: "VACANCY/RESET_VACANCY"} as const),
+    setVacancies: (vacancies: VacancyType[]) => ({type: "EMPLOYER_VACANCY/SET_VACANCIES", vacancies} as const),
+    postVacancy: (vacancy: VacancyExpendsType) => ({type: "EMPLOYER_VACANCY/POST_VACANCY", vacancy} as const),
+    putVacancy: (id: number, vacancy: VacancyExpendsType) => ({type: "EMPLOYER_VACANCY/PUT_VACANCY", id, vacancy} as const),
+    deleteVacancy: (id: number) => ({type: "EMPLOYER_VACANCY/DELETE_VACANCY", id} as const),
+    setVacancy: (vacancy: VacancyExpendsType) => ({type: "EMPLOYER_VACANCY/SET_VACANCY", vacancy} as const),
+    resetVacancy: () => ({type: "EMPLOYER_VACANCY/RESET_VACANCY"} as const),
 }
 
 export const getVacanciesTC = (isOpen: boolean): ThunkType => async (dispatch) => {
