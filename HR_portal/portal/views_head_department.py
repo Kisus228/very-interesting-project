@@ -37,7 +37,14 @@ class VacancyApiView(CreateAPIView):
             return Response(vacancy.as_dict_full())
         except:
             vacancies = Vacancy.objects.filter(author_id=author)
-            return Response([vacancy.as_dict_short_to_head_depart() for vacancy in vacancies if vacancy.is_open == is_open])
+            answer = []
+            for vacancy in vacancies:
+                if vacancy.is_open == is_open:
+                    count_job_app = len(JobApplications.objects.filter(vacancy_id=vacancy.pk))
+                    record = vacancy.as_dict_short_to_head_depart()
+                    record.update({'count_job_app': count_job_app})
+                    answer.append(record)
+            return Response(answer)
 
     def post(self, request, *args):
         author_request = HeadDepartment.objects.get(user=request.user.id)
@@ -185,6 +192,7 @@ def open_close_vacancy(request: Request):
         head_depart = HeadDepartment.objects.get(user_id=request.user.id)
         if vacancy.author == head_depart:
             vacancy.is_open = not vacancy.is_open
+            vacancy.save()
             return Response(status=200)
         else:
             return Response(status=400)

@@ -112,7 +112,7 @@ class Vacancy(models.Model):
         return self.name
 
     def as_dict_short_to_worker(self):
-        skills = [skill.name for skill in self.skills.all()]
+        skills = [{'name': skill.name, 'id': skill.pk} for skill in self.skills.all()]
         return {
             'name': self.name,
             'free': self.free,
@@ -187,4 +187,3 @@ class AcceptedEmployees(models.Model):
     class Meta:
         verbose_name = 'Принятый работник'
         verbose_name_plural = 'Принятые работники'
-
