@@ -176,3 +176,17 @@ def get_liked_resume_(request: Request):
         answer.append(record)
     return Response(answer)
 
+
+@api_view(['POST'])
+def open_close_vacancy(request: Request):
+    vacancy_id = request.data.get('id')
+    try:
+        vacancy = Vacancy.objects.get(pk=int(vacancy_id))
+        head_depart = HeadDepartment.objects.get(user_id=request.user.id)
+        if vacancy.author == head_depart:
+            vacancy.is_open = not vacancy.is_open
+            return Response(status=200)
+        else:
+            return Response(status=400)
+    except:
+        return Response(status=400)

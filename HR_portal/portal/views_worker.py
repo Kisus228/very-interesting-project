@@ -37,7 +37,13 @@ def get_vacancy(request: Request, *args, **kwargs):
             is_liked = False
             if vacancy in get_liked_vacancy(worker.pk):
                 is_liked = True
-            record.update(is_liked=is_liked)
+            is_registered = bool(len(JobApplications.objects.filter(vacancy_id=vacancy.pk).filter(worker_id=worker.pk)))
+            record.update(
+                is_liked=is_liked,
+                author=str(vacancy.author),
+                department=str(vacancy.author.department),
+                is_registered=is_registered
+            )
             return Response(record)
         except:
             return Response('Объекта не существует', status=400)
@@ -54,9 +60,10 @@ def get_liked_vacancy_(request: Request):
     liked_vacancy = get_liked_vacancy(worker.pk)
     answer = []
     for vacancy in liked_vacancy:
-        record = vacancy.as_dict_short_to_worker()
-        record.update(is_liked=True)
-        answer.append(record)
+        if vacancy.is_open:
+            record = vacancy.as_dict_short_to_worker()
+            record.update(is_liked=True)
+            answer.append(record)
     return Response(answer)
 
 
