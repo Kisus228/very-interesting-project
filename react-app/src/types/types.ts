@@ -93,4 +93,7 @@ export interface WorkerVacancyExpendsType extends WorkerVacancyType {
     duties: string,
     requirements: string,
     additionally: string,
+    author: string,
+    department: string,
+    is_registered: boolean
 }

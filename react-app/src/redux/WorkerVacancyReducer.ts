@@ -18,8 +18,12 @@ const VacancyReducer = (state = initialState, action: ActionsTypes): InitialStat
         case "WORKER_VACANCY/LIKE_VACANCY":
             const newVacancies = [...state.vacancies];
             const vacancyIndex = newVacancies.findIndex(vacancy => vacancy.id === action.id);
-            newVacancies[vacancyIndex].is_liked = !newVacancies[vacancyIndex].is_liked
+            newVacancies[vacancyIndex].is_liked = !newVacancies[vacancyIndex].is_liked;
             return {...state, vacancies: newVacancies};
+        case "WORKER_VACANCY/SEND_REQUEST":
+            const newVacancy = {...state.vacancy} as WorkerVacancyExpendsType;
+            newVacancy.is_registered = true;
+            return {...state, vacancy: newVacancy};
         default:
             return state;
     }
@@ -29,6 +33,7 @@ export const actions = {
     setVacancies: (vacancies: WorkerVacancyType[]) => ({type: "WORKER_VACANCY/SET_VACANCIES", vacancies} as const),
     setVacancy: (vacancy: WorkerVacancyExpendsType) => ({type: "WORKER_VACANCY/SET_VACANCY", vacancy} as const),
     likeVacancy: (id: number) => ({type: "WORKER_VACANCY/LIKE_VACANCY", id} as const),
+    sendRequest: () => ({type: "WORKER_VACANCY/SEND_REQUEST"} as const),
     resetVacancy: () => ({type: "WORKER_VACANCY/RESET_VACANCY"} as const),
 }
 
@@ -56,6 +61,16 @@ export const likeVacancyTC = (id: number, vacancyPage: boolean): ThunkType => as
                 dispatch(actions.likeVacancy(id))
                 if (vacancyPage)
                     dispatch(getVacancyTC(id))
+            }
+        })
+}
+
+export const sendRequestTC = (id: number): ThunkType => async (dispatch) => {
+    await workerVacancyAPI.sendRequest(id)
+        .then(result => {
+            // @ts-ignore
+            if (result.status === 200 && !result.json().mess) {
+                dispatch(actions.sendRequest())
             }
         })
 }

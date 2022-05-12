@@ -7,7 +7,7 @@ import {EmployerVacancyType} from "../../../types/types";
 
 interface Props {
     vacancy: EmployerVacancyType
-    closeVacancy: () => void
+    openCloseVacancy: () => void
     deleteVacancy: () => void
 }
 
@@ -26,13 +26,13 @@ const VacanciesItem: React.FC<Props> = (props) => {
                     props.vacancy.is_open &&
                     <>
                         <Edit onClick={() => navigate(`/vacancies/${props.vacancy.id}/edit`)}/>
-                        <Close onClick={() => console.log('Close')}/>
+                        <Close onClick={props.openCloseVacancy}/>
                     </>
                 }
                 {
                     !props.vacancy.is_open &&
                     <>
-                        <Open onClick={() => console.log('Open')}/>
+                        <Open onClick={props.openCloseVacancy}/>
                         <Delete onClick={props.deleteVacancy}/>
                     </>
                 }

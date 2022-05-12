@@ -5,16 +5,12 @@ import Button from "../../Common/FormControl/Button";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {getVacancyTC} from "../../../redux/WorkerVacancyReducer";
+import {getVacancyTC, sendRequestTC} from "../../../redux/WorkerVacancyReducer";
 import {useParams} from "react-router-dom";
 import LikeButton from "../../Common/FormControl/LikeButton";
 
 const Vacancy: React.FC<Props> = (props) => {
     const [state] = useState({
-        employerName: "Сергей Сергеевич",
-        employerAvatar: "",
-        employerPosition: "Проводник, фронтовик, сосочка",
-        department: "Департамент создания сайтов",
         foundEmployees: [{avatar: "", name: "Клим Саныч"}, {avatar: "", name: "Дим Юрич"}]
     })
 
@@ -27,6 +23,8 @@ const Vacancy: React.FC<Props> = (props) => {
     const [liked, setLiked] = useState(false)
 
     if (props.vacancy === null) return null;
+
+    const id = props.vacancy.id;
 
     return (
         <div className={classes.PageContentWrapper}>
@@ -66,8 +64,8 @@ const Vacancy: React.FC<Props> = (props) => {
                             </div>
                         </div>
                         <div>
-                            <h4 className={classes.Name}>{state.employerName}</h4>
-                            <p>{state.department}</p>
+                            <h4 className={classes.Name}>{props.vacancy.author}</h4>
+                            <p>{props.vacancy.department}</p>
                         </div>
                         <div>
                             <h4>Навыки для вакансии:</h4>
@@ -81,9 +79,11 @@ const Vacancy: React.FC<Props> = (props) => {
                         </div>
                         <div className={classes.ButtonWrapper}>
                             {
-                                props.vacancy.is_open
+                                props.vacancy.is_registered
                                     ? <Button type={"button"} disabled>Подать заявку</Button>
-                                    : <Button type={"button"} color={"green"}>Подать заявку</Button>
+                                    : <Button type={"button"} onClick={() => props.sendRequestTC(id)} color={"green"}>
+                                        Подать заявку
+                                    </Button>
                             }
                         </div>
                     </section>
@@ -114,8 +114,9 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
     getVacancyTC: (id: number) => void
+    sendRequestTC: (id: number) => void
 }
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {getVacancyTC}))(Vacancy);
+export default compose<React.ComponentType>(connect(mapStateToProps, {getVacancyTC, sendRequestTC}))(Vacancy);

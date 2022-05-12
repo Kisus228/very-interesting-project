@@ -31,7 +31,11 @@ const VacancyReducer = (state = initialState, action: ActionsTypes): InitialStat
 export const actions = {
     setVacancies: (vacancies: EmployerVacancyType[]) => ({type: "EMPLOYER_VACANCY/SET_VACANCIES", vacancies} as const),
     postVacancy: (vacancy: EmployerVacancyExpendsType) => ({type: "EMPLOYER_VACANCY/POST_VACANCY", vacancy} as const),
-    putVacancy: (id: number, vacancy: EmployerVacancyExpendsType) => ({type: "EMPLOYER_VACANCY/PUT_VACANCY", id, vacancy} as const),
+    putVacancy: (id: number, vacancy: EmployerVacancyExpendsType) => ({
+        type: "EMPLOYER_VACANCY/PUT_VACANCY",
+        id,
+        vacancy
+    } as const),
     deleteVacancy: (id: number) => ({type: "EMPLOYER_VACANCY/DELETE_VACANCY", id} as const),
     setVacancy: (vacancy: EmployerVacancyExpendsType) => ({type: "EMPLOYER_VACANCY/SET_VACANCY", vacancy} as const),
     resetVacancy: () => ({type: "EMPLOYER_VACANCY/RESET_VACANCY"} as const),
@@ -52,18 +56,13 @@ export const postVacancyTC = (data: EmployerVacancyExpendsType): ThunkType => as
         })
 }
 
-export const closeVacancyTC = (id: number, authorId: number): ThunkType => async (dispatch) => {
-    await employerVacancyAPI.getVacancy(id)
-        .then(data => {
-            data.is_open = !data.is_open;
-            data.author = authorId;
-            employerVacancyAPI.putVacancy(id, data)
-                .then(result => {
-                    // @ts-ignore
-                    if (result.status === 200) {
-                        dispatch(getVacanciesTC(!data.is_open))
-                    }
-                })
+export const openCloseVacancyTC = (id: number, authorId: number): ThunkType => async (dispatch) => {
+    await employerVacancyAPI.openCloseVacancy(id, authorId)
+        .then(result => {
+            // @ts-ignore
+            if (result.status === 200) {
+                dispatch(actions.deleteVacancy(id))
+            }
         })
 
 }

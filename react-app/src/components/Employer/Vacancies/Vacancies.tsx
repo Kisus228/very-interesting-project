@@ -5,7 +5,7 @@ import VacanciesItem from "./VacanciesItem";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {closeVacancyTC, deleteVacancyTC, getVacanciesTC} from "../../../redux/EmployerVacancyReducer";
+import {openCloseVacancyTC, deleteVacancyTC, getVacanciesTC} from "../../../redux/EmployerVacancyReducer";
 import cn from "classnames";
 
 const Vacancies: React.FC<Props> = (props) => {
@@ -65,8 +65,9 @@ const Vacancies: React.FC<Props> = (props) => {
                     <ul>
                         {
                             props.vacancies.map(item =>
-                                <VacanciesItem key={item.id} vacancy={item} closeVacancy={() => {}}
-                                               deleteVacancy={() => props.deleteVacancyTC(item.id, 1)}/>)
+                                <VacanciesItem key={item.id} vacancy={item}
+                                               deleteVacancy={() => props.deleteVacancyTC(item.id, 1)}
+                                               openCloseVacancy={() => props.openCloseVacancyTC(item.id, 1)}/>)
                         }
                     </ul>
                 </div>
@@ -100,7 +101,7 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
     getVacanciesTC: (isOpen: boolean) => void
-    closeVacancyTC: (vacancyId: number, authorId: number) => void
+    openCloseVacancyTC: (vacancyId: number, authorId: number) => void
     deleteVacancyTC: (vacancyId: number, authorId: number) => void
 }
 
@@ -112,6 +113,6 @@ type Props = MapStatePropsType & MapDispatchPropsType & OwnPropsType;
 
 export default compose(connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
     getVacanciesTC,
-    closeVacancyTC,
+    openCloseVacancyTC,
     deleteVacancyTC
 }))(Vacancies);

@@ -7,20 +7,6 @@ import LikeButton from "../../Common/FormControl/LikeButton";
 import Button from "../../Common/FormControl/Button";
 import {WorkerVacancyType} from "../../../types/types";
 
-interface PropsType {
-    state: ProfileItemType[];
-}
-
-type ProfileItemType = {
-    id: number,
-    name: string,
-    description: string,
-    avatar: any,
-    free: number,
-    competence: string[],
-    liked: boolean,
-}
-
 const VacancyItem = (props: WorkerVacancyType) => {
     const [liked, setLiked] = useState(props.is_liked);
     const navigate = useNavigate();

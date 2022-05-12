@@ -78,6 +78,15 @@ export const employerVacancyAPI = {
             .then(response => response.json())
             .catch(error => console.error(error))
     },
+    async openCloseVacancy(id: number, authorId: number) {
+        const csrftoken = Cookies.get("csrftoken") || "";
+        return await fetch('/open_close_vacancy/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
+            body: JSON.stringify({id: id}),
+        })
+            .catch(error => console.error(error))
+    }
 }
 
 export const workerVacancyAPI = {
@@ -99,6 +108,15 @@ export const workerVacancyAPI = {
     async likeVacancy(id: number) {
         const csrftoken = Cookies.get("csrftoken") || "";
         return await fetch('/like_vacancy/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
+            body: JSON.stringify({id: id}),
+        })
+            .catch(error => console.error(error))
+    },
+    async sendRequest(id: number) {
+        const csrftoken = Cookies.get("csrftoken") || "";
+        return await fetch('/send_request/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
             body: JSON.stringify({id: id}),
