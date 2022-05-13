@@ -6,6 +6,7 @@ import {FormSelect} from "../../Common/FormControl/FormSelect";
 import Button from "../../Common/FormControl/Button";
 import {SkillType} from "../../../types/types";
 import {ValuesType} from "./InitForm";
+import {FormTextarea} from "../../Common/FormControl/FormTextarea";
 
 interface Props {
     onSubmit: (values: ValuesType) => void
@@ -27,28 +28,28 @@ const VacancyForm: React.FC<Props> = (props) => {
                                            placeholder={"Напишите название вакансии"} required/>
                                 <FormInput label={"Специальность"} type={"text"} name={"speciality"}
                                            placeholder={"Выберите специальность"} required/>
-                                <FormInput label={"Описание вакансии"} type="text" name="vacancyDescription"
+                                <FormTextarea label={"Описание вакансии"} type="text" name="vacancyDescription"
                                            placeholder={"Напишите описание вакансии"} required/>
                                 <FormInput label={"Тип занятости"} type="text" name="employmentType"
                                            placeholder={"Напишите тип занятости"} required/>
                                 <FormInput label={"График работы"} type="text" name="schedule"
                                            placeholder={"Напишите график работы"} required/>
-                                <FormInput label={"Условия"} type="text" name="conditions"
+                                <FormTextarea label={"Условия"} type="text" name="conditions"
                                            placeholder={"Напишите условия вакансии"} required/>
                             </section>
                             <section className={classes.VacancySection}>
                                 <FormSelect name={"skills"} label={"Навыки"} defaultValue={props.initialValues.skills}
                                             options={props.skills} placeholder={"Выберите необходимые навыки"} isMulti
                                             required/>
-                                <FormInput label={"Требования"} type="text" name="requirements"
+                                <FormTextarea label={"Требования"} type="text" name="requirements"
                                            placeholder={"Напишите требования вакансии"} required/>
-                                <FormInput label={"Обязанности"} type="text" name="responsibilities"
+                                <FormTextarea label={"Обязанности"} type="text" name="responsibilities"
                                            placeholder={"Напишите обязанности сотрудника"} required/>
                                 <FormInput label={"Заработная плата"} type="text" name="salary"
                                            placeholder={"Напишите сумму заработной платы"} required/>
                                 <FormInput label={"Количество сотрудников"} type="number" name="count"
                                            placeholder={"Напишите кол-во сотрудников на вакансию"} required/>
-                                <FormInput label={"Дополнительно"} type="text" name="additionally"
+                                <FormTextarea label={"Дополнительно"} type="text" name="additionally"
                                            placeholder={"Дополнительная информация"}/>
                                 <div className={classes.ButtonWrapper}>
                                     <Button type={"submit"} color={"green"}>

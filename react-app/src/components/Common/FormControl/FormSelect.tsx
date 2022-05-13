@@ -58,7 +58,7 @@ const CustomSelect: React.FC<FormikSelectProps> = (props) => {
                 onChange={() => {
                 }}
                 value={value}
-                style={{opacity: 0, height: 0}}
+                style={{position: "absolute", bottom: 0, opacity: 0, height: 0, width: "100%", boxSizing: "border-box"}}
                 required={props.required}
             />
         </>
@@ -67,7 +67,7 @@ const CustomSelect: React.FC<FormikSelectProps> = (props) => {
 
 export const FormSelect: React.FC<SelectProps> = (props) => {
     return (
-        <div>
+        <div className="FormSelect">
             <h4>{props.label}</h4>
             <Field component={CustomSelect} {...props}/>
         </div>
