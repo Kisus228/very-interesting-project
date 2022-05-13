@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import classes from './Vacancies.less';
-import Filter from "../../Filter/Filter";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {getFilterTC} from "../../../redux/FilterReducer";
-import {getLikedVacanciesTC, getVacanciesTC} from "../../../redux/WorkerVacancyReducer";
+import {getLikedVacanciesTC} from "../../../redux/WorkerVacancyReducer";
 import VacancyItem from "./VacancyItem";
 
 const LikedVacancies: React.FC<Props> = (props) => {

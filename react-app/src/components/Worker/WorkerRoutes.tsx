@@ -1,6 +1,4 @@
 import {Route, Routes} from "react-router-dom";
-import VacancyItem from "./Vacancies/VacancyItem";
-import LikedResumes from "../Employer/Resumes/LikedResumes";
 import MyProfile from "../MyProfile/MyProfile";
 import Auth from "../Auth/Auth";
 import React from "react";
@@ -8,9 +6,6 @@ import {AppWrapper} from "../../App";
 import Vacancy from "./Vacancy/Vacancy";
 import SearchVacancies from "./Vacancies/SearchVacancies";
 import LikedVacancies from "./Vacancies/LikedVacancies";
-import Vacancies from "../Employer/Vacancies/Vacancies";
-import NewVacancy from "../Employer/NewVacancy/NewVacancy";
-import EditVacancy from "../Employer/NewVacancy/EditVacancy";
 import VacanciesRequests from "./VacanciesRequests/VacanciesRequests";
 
 const WorkerRoutes = () => {
@@ -23,7 +18,7 @@ const WorkerRoutes = () => {
                 </Route>
                 <Route path="liked" element={<LikedVacancies/>}/>
                 <Route path="profile" element={<MyProfile/>}/>
-                <Route path="vacancies"element={<VacanciesRequests/>}/>
+                <Route path="vacancies" element={<VacanciesRequests/>}/>
             </Route>
             <Route path="auth" element={<Auth/>}/>
         </Routes>

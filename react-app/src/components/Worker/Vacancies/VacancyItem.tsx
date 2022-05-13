@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import classes from './Vacancies.less';
-import Filter from "../../Filter/Filter";
-import {useNavigate} from "react-router-dom";
 import avatar from "../../../assets/avatar.png"
 import LikeButton from "../../Common/FormControl/LikeButton";
 import Button from "../../Common/FormControl/Button";
@@ -9,7 +7,6 @@ import {WorkerVacancyType} from "../../../types/types";
 
 const VacancyItem = (props: WorkerVacancyType) => {
     const [liked, setLiked] = useState(props.is_liked);
-    const navigate = useNavigate();
     return (
         <li className={classes.ProfileItem}>
             <div className={classes.ProfileAvatar}>

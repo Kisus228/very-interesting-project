@@ -1,4 +1,4 @@
-import {BaseThunkType, InferActionsTypes} from "./ReduxStore";
+import {InferActionsTypes} from "./ReduxStore";
 import {getAuthMeTC} from "./AuthReducer";
 
 const initialState = {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import classes from './ProfileInfo.less';
 import {useParams} from "react-router-dom";
 import Button from "../../Common/FormControl/Button";

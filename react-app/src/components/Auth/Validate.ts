@@ -1,4 +1,4 @@
-import {LoginType, RegisterType} from "../../types/types";
+import {LoginType} from "../../types/types";
 import {RegisterTypeWithRetryPass} from "./Register";
 
 const email = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;

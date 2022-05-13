@@ -1,11 +1,7 @@
-import React, {useEffect} from "react";
+import React from "react";
 import classes from "./Filter.less";
 import CategoryItem from "./CategoryItem";
 import Button from "../Common/FormControl/Button";
-import {connect} from "react-redux";
-import {compose} from "redux";
-import {getFilterTC} from "../../redux/FilterReducer";
-import {AppStateType} from "../../redux/ReduxStore";
 import {FilterType} from "../../types/types";
 
 export type onChangeFilterType = (checked: boolean, newId: number) => void;

@@ -1,15 +1,12 @@
 import React from 'react';
 import classes from './VacanciesRequests.less';
 import Button from "../../Common/FormControl/Button";
-import {useNavigate} from "react-router-dom";
 
 interface Props {
     vacancy: any
 }
 
 const VacanciesItem: React.FC<Props> = (props) => {
-    const navigate = useNavigate();
-
     return (
         <li className={classes.VacanciesTableWrapper}>
             <div className={classes.Info}>{props.vacancy.name}</div>
