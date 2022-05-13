@@ -112,7 +112,7 @@ class Vacancy(models.Model):
         return self.name
 
     def as_dict_short_to_worker(self):
-        skills = [{'name': skill.name, 'id': skill.pk} for skill in self.skills.all()]
+        skills = [skill.name for skill in self.skills.all()]
         return {
             'name': self.name,
             'free': self.free,
@@ -131,7 +131,7 @@ class Vacancy(models.Model):
         }
 
     def as_dict_full(self):
-        skills = [skill.name for skill in self.skills.all()]
+        skills = [{'name': skill.name, 'id': skill.pk} for skill in self.skills.all()]
         record = self.as_dict_short_to_head_depart()
         record.update({
             'salary': self.salary,
