@@ -7,7 +7,7 @@ export interface ValuesType {
     employmentType: string,
     schedule: string,
     conditions: string,
-    skills: any,
+    skills: number[],
     requirements: string,
     responsibilities: string,
     salary: string,
@@ -16,7 +16,6 @@ export interface ValuesType {
     id: number
 }
 
-//TODO: Сергей Кашкин: Доделать skills с id
 export const getInitialValuesForEdit = (vacancy: EmployerVacancyExpendsType) => {
     return {
         vacancyName: vacancy.name,
@@ -25,7 +24,7 @@ export const getInitialValuesForEdit = (vacancy: EmployerVacancyExpendsType) => 
         employmentType: vacancy.type_employment,
         schedule: vacancy.work_schedule,
         conditions: vacancy.conditions,
-        skills: vacancy.skills as string[],
+        skills: vacancy.skills.map(skill => skill.id),
         requirements: vacancy.requirements,
         responsibilities: vacancy.duties,
         salary: vacancy.salary,
@@ -44,7 +43,7 @@ export const getDataForSubmit = (values: ValuesType) => {
         duties: values.responsibilities,
         free: Number(values.count),
         id: values.id,
-        author: 0, //TODO: Сергей Кашкин: Доделать
+        author: 1, //TODO: Сергей Кашкин: Доделать
         is_open: true,
         name: values.vacancyName,
         requirements: values.requirements,

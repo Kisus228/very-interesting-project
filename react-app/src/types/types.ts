@@ -65,7 +65,7 @@ export interface EmployerVacancyExpendsType extends EmployerVacancyType {
     type_employment: string,
     work_schedule: string,
     conditions: string,
-    skills: number[] | string[],
+    skills: CompetenceType[],
     duties: string,
     requirements: string,
     salary: string,
@@ -77,12 +77,12 @@ export interface WorkerVacancyType {
     name: string,
     free: number,
     id: number,
-    skills: SkillType[],
+    skills: string[],
     description: string,
     is_liked: boolean
 }
 
-export interface WorkerVacancyExpendsType extends WorkerVacancyType {
+export interface WorkerVacancyExpendsType extends Omit<WorkerVacancyType, "skills"> {
     count: number,
     is_open: boolean,
     salary: string,
@@ -96,4 +96,5 @@ export interface WorkerVacancyExpendsType extends WorkerVacancyType {
     author: string,
     department: string,
     is_registered: boolean
+    skills: CompetenceType[]
 }

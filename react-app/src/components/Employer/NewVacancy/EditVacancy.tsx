@@ -1,15 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import classes from './NewVacancy.less';
-import Button from "../../Common/FormControl/Button";
-import {Form, Formik} from "formik";
-import {FormSelect} from "../../Common/FormControl/FormSelect";
-import FormInput from "../../Common/FormControl/FormInput";
+import React, {useEffect} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {getFilterTC} from "../../../redux/FilterReducer"
 import {AppStateType} from "../../../redux/ReduxStore";
-import {getVacancyTC, postVacancyTC, putVacancyTC} from "../../../redux/EmployerVacancyReducer";
+import {getVacancyTC, putVacancyTC} from "../../../redux/EmployerVacancyReducer";
 import {getDataForSubmit, getInitialValuesForEdit, ValuesType} from "./InitForm";
 import VacancyForm from "./VacancyForm";
 

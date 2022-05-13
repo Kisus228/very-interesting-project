@@ -5,7 +5,7 @@ import Button from "../../Common/FormControl/Button";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {getVacancyTC} from "../../../redux/EmployerVacancyReducer";
+import {getVacancyTC, openCloseVacancyTC} from "../../../redux/EmployerVacancyReducer";
 import {useParams} from "react-router-dom";
 
 const Vacancy: React.FC<Props> = (props) => {
@@ -22,6 +22,8 @@ const Vacancy: React.FC<Props> = (props) => {
 
     if (props.vacancy === null) return null;
 
+    const id = props.vacancy.id;
+    const isOpen = props.vacancy.is_open;
     return (
         <div className={classes.PageContentWrapper}>
             <div className={classes.PageContainer}>
@@ -50,7 +52,7 @@ const Vacancy: React.FC<Props> = (props) => {
                     </div>
                     <div>
                         <h4>Навыки для вакансии:</h4>
-                        <div>{props.vacancy?.skills?.join(", ")}</div>
+                        <div>{props.vacancy.skills.map(skill => skill.name).join(", ")}</div>
                     </div>
                     <div>
                         <h4>Найденные сотрудники:</h4>
@@ -75,8 +77,14 @@ const Vacancy: React.FC<Props> = (props) => {
                     <div className={classes.ButtonWrapper}>
                         {
                             props.vacancy.is_open
-                                ? <Button type={"button"} color={"red"}>Закрыть вакансию</Button>
-                                : <Button type={"button"} color={"green"}>Открыть вакансию</Button>
+                                ? <Button type={"button"} onClick={() => props.openCloseVacancyTC(id, isOpen)}
+                                          color={"red"}>
+                                    Закрыть вакансию
+                                </Button>
+                                : <Button type={"button"} onClick={() => props.openCloseVacancyTC(id, isOpen)}
+                                          color={"green"}>
+                                    Открыть вакансию
+                                </Button>
                         }
                     </div>
                 </div>
@@ -106,8 +114,9 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
     getVacancyTC: (id: number) => void
+    openCloseVacancyTC: (vacancyId: number, isOpen: boolean) => void
 }
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {getVacancyTC}))(Vacancy);
+export default compose<React.ComponentType>(connect(mapStateToProps, {getVacancyTC, openCloseVacancyTC}))(Vacancy);

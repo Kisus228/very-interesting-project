@@ -1,4 +1,4 @@
-import {LoginType, RegisterType, EmployerVacancyExpendsType, EmployerVacancyType} from "../types/types";
+import {EmployerVacancyExpendsType, LoginType, RegisterType} from "../types/types";
 import Cookies from 'js-cookie';
 
 export const authAPI = {
@@ -78,7 +78,7 @@ export const employerVacancyAPI = {
             .then(response => response.json())
             .catch(error => console.error(error))
     },
-    async openCloseVacancy(id: number, authorId: number) {
+    async openCloseVacancy(id: number) {
         const csrftoken = Cookies.get("csrftoken") || "";
         return await fetch('/open_close_vacancy/', {
             method: 'POST',
@@ -143,7 +143,7 @@ export const resumeAPI = {
     },
     async likeResume(id: number) {
         const csrftoken = Cookies.get("csrftoken") || "";
-        const data = { id: id }
+        const data = {id: id}
         return await fetch('/like_resume/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},

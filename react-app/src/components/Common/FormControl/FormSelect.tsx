@@ -1,14 +1,14 @@
 import {Field, FieldProps} from "formik";
 import React from "react";
-import Select, {Options, OnChangeValue} from "react-select";
+import Select, {OnChangeValue, Options} from "react-select";
 import './FormControl.css';
-import {CompetenceType, SkillType} from "../../../types/types";
+import {SkillType} from "../../../types/types";
 
 interface SelectProps {
     name: string;
     label: string;
     options: Options<SkillType>;
-    defaultValue: string[];
+    defaultValue: number[];
     isMulti?: boolean;
     placeholder?: string;
 }
@@ -26,11 +26,10 @@ const CustomSelect: React.FC<FormikSelectProps> = (props) => {
                 : (option as SkillType).value
         );
     };
-
     const getValue = () => {
         if (props.options) {
             return props.isMulti
-                ? props.options.filter(option => props.defaultValue.includes(option.label))
+                ? props.options.filter(option => props.defaultValue.includes(option.value))
                 : props.options.find(option => option.value === props.field.value);
         } else {
             return props.isMulti ? [] : ("" as any);

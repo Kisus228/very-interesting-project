@@ -19,6 +19,12 @@ const VacancyReducer = (state = initialState, action: ActionsTypes): InitialStat
             return {...state, vacancies: newVacancies};
         case "EMPLOYER_VACANCY/DELETE_VACANCY":
             return {...state, vacancies: state.vacancies.filter(vacancy => vacancy.id !== action.id)};
+        case "EMPLOYER_VACANCY/OPEN_CLOSE_VACANCY":
+            return {
+                ...state,
+                vacancies: state.vacancies.filter(vacancy => vacancy.id !== action.id),
+                vacancy: state.vacancy !== null ? {...state.vacancy, is_open: !action.isOpen} : null
+            };
         case "EMPLOYER_VACANCY/SET_VACANCY":
             return {...state, vacancy: {...action.vacancy}};
         case "EMPLOYER_VACANCY/RESET_VACANCY":
@@ -37,6 +43,11 @@ export const actions = {
         vacancy
     } as const),
     deleteVacancy: (id: number) => ({type: "EMPLOYER_VACANCY/DELETE_VACANCY", id} as const),
+    openCloseVacancy: (id: number, isOpen: boolean) => ({
+        type: "EMPLOYER_VACANCY/OPEN_CLOSE_VACANCY",
+        id,
+        isOpen
+    } as const),
     setVacancy: (vacancy: EmployerVacancyExpendsType) => ({type: "EMPLOYER_VACANCY/SET_VACANCY", vacancy} as const),
     resetVacancy: () => ({type: "EMPLOYER_VACANCY/RESET_VACANCY"} as const),
 }
@@ -56,12 +67,12 @@ export const postVacancyTC = (data: EmployerVacancyExpendsType): ThunkType => as
         })
 }
 
-export const openCloseVacancyTC = (id: number, authorId: number): ThunkType => async (dispatch) => {
-    await employerVacancyAPI.openCloseVacancy(id, authorId)
+export const openCloseVacancyTC = (id: number, isOpen: boolean): ThunkType => async (dispatch) => {
+    await employerVacancyAPI.openCloseVacancy(id)
         .then(result => {
             // @ts-ignore
             if (result.status === 200) {
-                dispatch(actions.deleteVacancy(id))
+                dispatch(actions.openCloseVacancy(id, isOpen))
             }
         })
 

@@ -1,5 +1,5 @@
 import {filterAPI} from "../api/Api";
-import {FilterType, SkillType} from "../types/types";
+import {CompetenceType, FilterType, SkillType} from "../types/types";
 import {BaseThunkType, InferActionsTypes} from './ReduxStore';
 
 const initialState = {
@@ -28,8 +28,7 @@ export const getFilterTC = (): ThunkType => async (dispatch) => {
     await filterAPI.getFilter()
         .then((filter: FilterType[]) => {
             const skills = filter
-                .map((item) => item.skills)
-                .reduce((all, skills) => (all.concat(skills)), [])
+                .reduce((all: CompetenceType[], item) => (all.concat(item.skills)), [])
                 .map((item) => ({value: item.id, label: item.name}))
             dispatch(actions.setFilter(filter, skills))
         })
