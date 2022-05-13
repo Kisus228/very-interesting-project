@@ -1,5 +1,5 @@
 import {Field, FieldProps} from "formik";
-import React from "react";
+import React, {useState} from "react";
 import Select, {OnChangeValue, Options} from "react-select";
 import './FormControl.css';
 import {SkillType} from "../../../types/types";
@@ -11,6 +11,7 @@ interface SelectProps {
     defaultValue: number[];
     isMulti?: boolean;
     placeholder?: string;
+    required?: boolean;
 }
 
 interface FormikSelectProps extends FieldProps, SelectProps {
@@ -18,14 +19,6 @@ interface FormikSelectProps extends FieldProps, SelectProps {
 
 
 const CustomSelect: React.FC<FormikSelectProps> = (props) => {
-    const onChange = (option: OnChangeValue<SkillType | SkillType[], boolean>) => {
-        props.form.setFieldValue(
-            props.field.name,
-            props.isMulti
-                ? (option as SkillType[]).map((item: SkillType) => item.value)
-                : (option as SkillType).value
-        );
-    };
     const getValue = () => {
         if (props.options) {
             return props.isMulti
@@ -36,17 +29,39 @@ const CustomSelect: React.FC<FormikSelectProps> = (props) => {
         }
     };
 
+    const [value, setValue] = useState(getValue())
+
+    const onChange = (option: OnChangeValue<SkillType | SkillType[], boolean>) => {
+        const value = props.isMulti
+            ? (option as SkillType[]).map((item: SkillType) => item.value)
+            : (option as SkillType).value
+
+        props.form.setFieldValue(props.field.name, value);
+        setValue(value)
+    };
+
     return (
-        <Select
-            className="Select"
-            classNamePrefix="React-select"
-            name={props.field.name}
-            defaultValue={getValue()}
-            onChange={onChange}
-            options={props.options}
-            placeholder={props.placeholder}
-            isMulti={props.isMulti}
-        />
+        <>
+            <Select
+                className="Select"
+                classNamePrefix="React-select"
+                name={props.field.name}
+                defaultValue={getValue()}
+                onChange={onChange}
+                options={props.options}
+                placeholder={props.placeholder}
+                isMulti={props.isMulti}
+            />
+            <input
+                tabIndex={-1}
+                autoComplete="off"
+                onChange={() => {
+                }}
+                value={value}
+                style={{opacity: 0, height: 0}}
+                required={props.required}
+            />
+        </>
     );
 };
 
