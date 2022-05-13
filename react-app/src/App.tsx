@@ -1,27 +1,74 @@
-// @ts-ignore
-import styles from './App.less';
-import React from 'react';
-import logo from './logo.svg';
+import classes from './App.less';
+import React, {useEffect, useRef} from 'react';
+import Header from "./components/Header/Header";
+import Navigation from "./components/Navigation/Navigation";
+import {Outlet, useLocation, useNavigate} from 'react-router-dom';
+import {AppStateType} from "./redux/ReduxStore";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {initializeApp} from "./redux/AppReducer";
+import WorkerRoutes from "./components/Worker/WorkerRoutes";
+import EmployerRoutes from "./components/Employer/EmployerRoutes";
 
-function App() {
-  return (
-    <div className={styles.App}>
-      <header className={styles.AppHeader}>
-        <img src={logo} className={styles.AppLogo} alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className={styles.AppLink}
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export const AppWrapper = () => {
+    const ref = useRef<HTMLDivElement>(null)
+    const location = useLocation().pathname;
+
+    useEffect(() => {
+        ref.current?.scrollTo(0, 0)
+    }, [location])
+
+    return (
+        <div className={classes.AppWrapper}>
+            <Header/>
+            <main className={classes.AppContentWrapper}>
+                <Navigation/>
+                <div ref={ref} className={classes.AppContentContainer}>
+                    <Outlet/>
+                </div>
+            </main>
+        </div>
+    );
 }
 
-export default App;
+const App: React.FC<Props> = (props) => {
+    const navigate = useNavigate();
+    const location = useLocation().pathname;
+
+    useEffect(() => {
+        props.initializeApp()
+    }, []);
+
+    useEffect(() => {
+        if (props.initialized && !props.auth && !(location === '/auth')) {
+            navigate('/auth', {state: location, replace: true});
+        }
+        if (props.initialized && props.auth && location === '/') {
+            navigate('/search', {replace: true});
+        }
+    }, [props.auth, props.initialized]);
+
+    return props.initialized
+        ? props.isWorker
+            ? <WorkerRoutes/>
+            : <EmployerRoutes/>
+        : null;
+}
+
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        auth: state.authData.auth,
+        isWorker: state.authData.isWorker,
+        initialized: state.appData.initialized
+    }
+}
+
+type MapStatePropsType = ReturnType<typeof mapStateToProps>
+
+type MapDispatchPropsType = {
+    initializeApp: () => void,
+}
+
+type Props = MapStatePropsType & MapDispatchPropsType;
+
+export default compose<React.ComponentType>(connect(mapStateToProps, {initializeApp}))(App);
