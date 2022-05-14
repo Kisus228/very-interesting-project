@@ -57,6 +57,7 @@ export interface EmployerVacancyType {
     is_open: boolean,
     count: number,
     free: number,
+    count_job_app: number,
 }
 
 export interface EmployerVacancyExpendsType extends EmployerVacancyType {

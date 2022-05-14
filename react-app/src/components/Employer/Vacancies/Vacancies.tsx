@@ -9,41 +9,6 @@ import {deleteVacancyTC, getVacanciesTC, openCloseVacancyTC} from "../../../redu
 import cn from "classnames";
 
 const Vacancies: React.FC<Props> = (props) => {
-    const [state] = useState([
-        {
-            name: "Back-end разработчик",
-            id: 0,
-            count: 3,
-            find: 1,
-            total: 2,
-            status: "Открыта",
-        },
-        {
-            name: "Front-end разработчик",
-            id: 1,
-            count: 6,
-            find: 0,
-            total: 2,
-            status: "Открыта",
-        },
-        {
-            name: "Аналитик",
-            id: 2,
-            count: 1,
-            find: 0,
-            total: 2,
-            status: "Открыта",
-        },
-        {
-            name: "Дизайнер",
-            id: 3,
-            count: 14,
-            find: 1,
-            total: 3,
-            status: "Открыта",
-        },
-    ])
-
     useEffect(() => {
         props.getVacanciesTC(props.openedVacancies);
     }, [props.openedVacancies])
