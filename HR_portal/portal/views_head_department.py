@@ -36,6 +36,7 @@ class VacancyApiView(CreateAPIView):
             vacancy = Vacancy.objects.get(pk=pk)
             job_apps = JobApplications.objects.filter(vacancy_id=vacancy.pk)
             job_apps_answer = []
+            accepted = [str(acc.worker) for acc in AcceptedEmployees.objects.filter(vacancy_id=vacancy.pk)]
             for job_app in job_apps:
                 job_apps_answer.append({
                     'username': str(job_app.worker),
@@ -43,6 +44,7 @@ class VacancyApiView(CreateAPIView):
                     'resume_id': job_app.worker.resume.pk
                 })
             answer = vacancy.as_dict_full()
+            answer.update(accepted=accepted)
             answer.update(job_apps=job_apps_answer)
             return Response(answer)
         except:
@@ -212,7 +214,10 @@ def open_close_vacancy(request: Request):
 
 @api_view(['POST'])
 def accept_application(request: Request):
-    worker_id = request.data.get('worker_id')
-    vacancy_id = request.data.get('vacancy_id')
-    if worker_id and vacancy_id:
-        AcceptedEmployees.objects.create()
+    j_a = request.data.get('id')
+    j_a: JobApplications = JobApplications.objects.get(pk=j_a)
+    if j_a:
+        AcceptedEmployees.objects.create(vacancy_id=j_a.vacancy.pk, worker_id=j_a.worker.pk)
+        j_a.delete()
+        return Response(status=200)
+    return Response(status=400)
