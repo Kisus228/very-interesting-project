@@ -86,7 +86,16 @@ export const employerVacancyAPI = {
             body: JSON.stringify({id: id}),
         })
             .catch(error => console.error(error))
-    }
+    },
+    async acceptApplication(id: number) {
+        const csrftoken = Cookies.get("csrftoken") || "";
+        return await fetch('/accept_application/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
+            body: JSON.stringify({id: id}),
+        })
+            .catch(error => console.error(error))
+    },
 }
 
 export const workerVacancyAPI = {

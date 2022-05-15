@@ -78,6 +78,18 @@ export const openCloseVacancyTC = (id: number, isOpen: boolean): ThunkType => as
 
 }
 
+export const acceptApplicationTC = (acceptId: number, vacancyId: number): ThunkType => async (dispatch) => {
+    await employerVacancyAPI.acceptApplication(acceptId)
+        .then(result => {
+            // @ts-ignore
+            if (result.status === 200) {
+                employerVacancyAPI.getVacancy(vacancyId)
+                    .then(result => dispatch(actions.setVacancy(result)))
+            }
+        })
+
+}
+
 export const deleteVacancyTC = (id: number, authorId: number): ThunkType => async (dispatch) => {
     await employerVacancyAPI.deleteVacancy(id, authorId)
         .then(result => {

@@ -5,13 +5,12 @@ import Button from "../../Common/FormControl/Button";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {getVacancyTC, openCloseVacancyTC} from "../../../redux/EmployerVacancyReducer";
+import {acceptApplicationTC, getVacancyTC, openCloseVacancyTC} from "../../../redux/EmployerVacancyReducer";
 import {useParams} from "react-router-dom";
 
 const Vacancy: React.FC<Props> = (props) => {
     const [state] = useState({
-        foundEmployees: [{avatar: "", name: "Клим Саныч"}, {avatar: "", name: "Дим Юрич"}],
-        responded: [{name: "Дядя Богдан", id: 0}, {name: "Геральт из Ривии", id: 1}]
+        foundEmployees: [{avatar: "", name: "Клим Саныч"}, {avatar: "", name: "Дим Юрич"}]
     })
 
     const vacancyId = Number(useParams().vacancyId)
@@ -57,18 +56,21 @@ const Vacancy: React.FC<Props> = (props) => {
                     <div>
                         <h4>Найденные сотрудники:</h4>
                         {
-                            state.foundEmployees.map(employee => <EmployeeItem key={employee.name} {...employee}/>)
+                            props.vacancy.accepted.map(employee => <EmployeeItem key={employee} avatar={""}
+                                                                                 name={employee}/>)
                         }
                     </div>
                     <div>
                         <h4>Откликнувшиеся сотрудники:</h4>
                         {
-                            state.responded.map(response => <div key={response.id} className={classes.VacancyWrapper}>
-                                <p>{response.name}</p>
-                                <Button type={"button"} size={"small"} onClick={() => console.log('принять')}>
+                            props.vacancy.job_apps.map(response => <div key={response.job_app_id}
+                                                                        className={classes.VacancyWrapper}>
+                                <p>{response.username}</p>
+                                <Button type={"button"} size={"small"}
+                                        onClick={() => props.acceptApplicationTC(response.job_app_id, id)}>
                                     Принять заявку
                                 </Button>
-                                <Button type={"button"} size={"small"} to={`/search/${response.id}`}>
+                                <Button type={"button"} size={"small"} to={`/search/${response.resume_id}`}>
                                     Страница резюме
                                 </Button>
                             </div>)
@@ -115,8 +117,13 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 type MapDispatchPropsType = {
     getVacancyTC: (id: number) => void
     openCloseVacancyTC: (vacancyId: number, isOpen: boolean) => void
+    acceptApplicationTC: (acceptOd: number, vacancyId: number) => void
 }
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {getVacancyTC, openCloseVacancyTC}))(Vacancy);
+export default compose<React.ComponentType>(connect(mapStateToProps, {
+    getVacancyTC,
+    openCloseVacancyTC,
+    acceptApplicationTC
+}))(Vacancy);

@@ -219,7 +219,7 @@ def accept_application(request: Request):
     if j_a:
         AcceptedEmployees.objects.create(vacancy_id=j_a.vacancy.pk, worker_id=j_a.worker.pk)
         vacancy: Vacancy = j_a.vacancy
-        vacancy.free += 1
+        vacancy.free -= 1
         vacancy.save()
         j_a.delete()
         return Response(status=200)
