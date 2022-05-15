@@ -34,6 +34,15 @@ class VacancyApiView(CreateAPIView):
         pk = kwargs.get('pk', None)
         try:
             vacancy = Vacancy.objects.get(pk=pk)
+            job_apps = JobApplications.objects.filter(vacancy_id=vacancy.pk)
+            job_apps_answer = []
+            for job_app in job_apps:
+                job_apps_answer.append({
+                    'username': str(job_app.worker),
+                    'job_app_id': job_app.pk,
+                    'resume_id': job_app.worker.resume.pk
+                })
+            vacancy.update(job_apps=job_apps_answer)
             return Response(vacancy.as_dict_full())
         except:
             vacancies = Vacancy.objects.filter(author_id=author)
