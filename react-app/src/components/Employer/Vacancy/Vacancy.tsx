@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import classes from './Vacancy.less';
 import avatar from "../../../assets/avatar.png";
 import Button from "../../Common/FormControl/Button";
@@ -9,10 +9,6 @@ import {acceptApplicationTC, getVacancyTC, openCloseVacancyTC} from "../../../re
 import {useParams} from "react-router-dom";
 
 const Vacancy: React.FC<Props> = (props) => {
-    const [state] = useState({
-        foundEmployees: [{avatar: "", name: "Клим Саныч"}, {avatar: "", name: "Дим Юрич"}]
-    })
-
     const vacancyId = Number(useParams().vacancyId)
     useEffect(() => {
         if (!isNaN(vacancyId))

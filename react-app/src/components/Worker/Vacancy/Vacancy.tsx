@@ -10,10 +10,6 @@ import {useParams} from "react-router-dom";
 import LikeButton from "../../Common/FormControl/LikeButton";
 
 const Vacancy: React.FC<Props> = (props) => {
-    const [state] = useState({
-        foundEmployees: [{avatar: "", name: "Клим Саныч"}, {avatar: "", name: "Дим Юрич"}]
-    })
-
     const vacancyId = Number(useParams().vacancyId)
     useEffect(() => {
         if (!isNaN(vacancyId))
@@ -72,10 +68,9 @@ const Vacancy: React.FC<Props> = (props) => {
                             <div>{props.vacancy.skills.map(skill => skill.name).join(", ")}</div>
                         </div>
                         <div>
-                            <h4>Найденные сотрудники:</h4>
-                            {
-                                state.foundEmployees.map(employee => <EmployeeItem key={employee.name} {...employee}/>)
-                            }
+                            <h4>
+                                Найдено сотрудников: {props.vacancy.count - props.vacancy.free} из {props.vacancy.count}
+                            </h4>
                         </div>
                         <div className={classes.ButtonWrapper}>
                             {
