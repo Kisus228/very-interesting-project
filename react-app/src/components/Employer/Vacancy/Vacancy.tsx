@@ -117,7 +117,7 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 type MapDispatchPropsType = {
     getVacancyTC: (id: number) => void
     openCloseVacancyTC: (vacancyId: number, isOpen: boolean) => void
-    acceptApplicationTC: (acceptOd: number, vacancyId: number) => void
+    acceptApplicationTC: (acceptId: number, vacancyId: number) => void
 }
 
 type Props = MapStatePropsType & MapDispatchPropsType;

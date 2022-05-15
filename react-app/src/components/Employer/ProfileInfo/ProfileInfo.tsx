@@ -6,7 +6,7 @@ import avatar from "../../../assets/avatar.png";
 import LikeButton from "../../Common/FormControl/LikeButton";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {getResumeTC, likeResumeTC} from "../../../redux/ResumeReducer";
+import {acceptApplicationTC, getResumeTC, likeResumeTC} from "../../../redux/ResumeReducer";
 import {AppStateType} from "../../../redux/ReduxStore";
 
 const ProfileInfo: React.FC<Props> = (props) => {
@@ -77,7 +77,8 @@ const ProfileInfo: React.FC<Props> = (props) => {
                                 {props.resume.desired_vacancies.map(item => (
                                     <div key={item.id_vacancy} className={classes.VacancyWrapper}>
                                         <p>{item.name}</p>
-                                        <Button type={"button"} size={"small"} onClick={() => console.log('принять')}>
+                                        <Button type={"button"} size={"small"}
+                                                onClick={() => props.acceptApplicationTC(item.id_job_app)}>
                                             Принять заявку
                                         </Button>
                                         <Button type={"button"} size={"small"} to={`/vacancies/${item.id_vacancy}`}>
@@ -111,8 +112,13 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 type MapDispatchPropsType = {
     getResumeTC: (id: number) => void
     likeResumeTC: (id: number, resumePage: boolean) => void
+    acceptApplicationTC: (acceptId: number) => void
 }
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {getResumeTC, likeResumeTC}))(ProfileInfo);
+export default compose<React.ComponentType>(connect(mapStateToProps, {
+    getResumeTC,
+    likeResumeTC,
+    acceptApplicationTC
+}))(ProfileInfo);
