@@ -1,0 +1,72 @@
+@import "../../../GlobalStyles";
+
+.PageContainer {
+    display: grid;
+    grid-template-columns: @grid-fixed-width 1fr;
+    gap: 10px;
+    word-break: break-word;
+
+    & h4 {
+        margin-top: 0;
+    }
+
+    & h3 {
+        margin: 0;
+    }
+
+    & h2 {
+        margin: 0;
+    }
+}
+
+.ProfileContentWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+
+    & > div {
+        padding: 25px;
+        border-radius: 10px;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.ProfileAvatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: @grid-fixed-width;
+    width: @grid-fixed-width;
+    box-sizing: border-box;
+}
+
+.ProfileMenu, .ProfileInfo {
+    .ProfileContentWrapper();
+
+    & .ProfileContacts {
+        box-sizing: border-box;
+        padding: 10px;
+    }
+}
+
+.ProfileInfoHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.VacancyWrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    & p {
+        flex-grow: 1;
+    }
+}
+
+.LinkParagraph {
+    margin: 0.3em 0;
+}

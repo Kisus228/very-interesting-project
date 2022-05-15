@@ -1,0 +1,74 @@
+.button {
+    box-sizing: border-box;
+    width: 100%;
+    border: 0;
+    border-radius: 5px;
+    padding: 15px 10px;
+    color: white;
+    background-color: #5FA5DB;
+    font-size: 1em;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+
+    &:hover {
+        background-color: #6CB0E4;
+    }
+
+    &:active {
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+        background-color: #3F92D2;
+    }
+}
+
+.small {
+    width: min(150px, 100%);
+    font-size: 0.7em;
+    padding: 10px 5px;
+}
+
+.large {
+    width: min(200px, 100%);
+    font-size: 1em;
+    padding: 15px 10px;
+}
+
+.redButton {
+    background-color: #EE5F8A;
+
+    &:hover {
+        background-color: #F36A93;
+    }
+
+    &:active {
+        background-color: #F13C73;
+    }
+}
+
+.greenButton {
+    background-color: #5CE75C;
+
+    &:hover {
+        background-color: #68ED68;
+    }
+
+    &:active {
+        background-color: #39E639;
+    }
+}
+
+.grayButton {
+    cursor: auto;
+    background-color: gray;
+
+    &:hover {
+        background-color: gray;
+    }
+
+    &:active {
+        box-shadow: none;
+        background-color: gray;
+    }
+}

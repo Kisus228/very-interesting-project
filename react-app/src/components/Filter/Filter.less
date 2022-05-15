@@ -1,0 +1,84 @@
+@import "../../GlobalStyles";
+
+.Filter {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    & ul {
+        margin: 0;
+        padding: 0 10px;
+    }
+
+    & li > ul {
+        padding-right: 0;
+    }
+
+    & li {
+        list-style-type: none;
+    }
+
+    & h3 {
+        text-align: center;
+        width: 100%;
+        margin: 10px 0;
+        border-bottom: 2px solid #C9CED6;
+        padding-bottom: 10px;
+    }
+
+    & h4 {
+        margin: 0;
+    }
+
+    & .ButtonWrapper {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    @media (max-width: 750px) {
+        & > ul {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+    }
+}
+
+.DropdownButtonWrapper {
+    display: flex;
+}
+
+.DropdownButton {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.SvgContainer {
+    height: 8px;
+    width: 12px;
+    transition: transform 0.5s;
+}
+
+.DropdownOpened {
+    transform: scaleY(-1);
+}
+
+.Animation {
+    transition: height 0.5s, color 0.5s;
+    overflow: hidden;
+}
+
+.Opened {
+    height: 1.35em;
+}
+
+.Closed {
+    height: 0;
+    color: rgba(0, 0, 0, 0);
+}

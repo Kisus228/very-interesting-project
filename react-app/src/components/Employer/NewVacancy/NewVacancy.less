@@ -1,0 +1,38 @@
+@import "../../../GlobalStyles";
+
+.PageContainer {
+    max-width: 1000px;
+}
+
+.NewVacancy {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    padding: 25px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    & h3, h4 {
+        margin: 0;
+    }
+}
+
+.VacancySection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+
+    & > div {
+        display: flex;
+        gap: 0.5em;
+        flex-direction: column;
+    }
+
+    & .ButtonWrapper {
+        justify-content: flex-end;
+        align-self: flex-end;
+        flex-grow: 1;
+        min-width: 150px;
+    }
+}
