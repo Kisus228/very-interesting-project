@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from .models import Vacancy, HeadDepartment, JobApplications, Resume, Worker
+from .models import Vacancy, HeadDepartment, JobApplications, Resume, Worker, AcceptedEmployees
 from .serilizer import CreateVacancySerializer
 from .assistant import get_liked_resume, get_resume_by_filter, get_short_resume
 
@@ -42,8 +42,9 @@ class VacancyApiView(CreateAPIView):
                     'job_app_id': job_app.pk,
                     'resume_id': job_app.worker.resume.pk
                 })
-            vacancy.update(job_apps=job_apps_answer)
-            return Response(vacancy.as_dict_full())
+            answer = vacancy.as_dict_full()
+            answer.update(job_apps=job_apps_answer)
+            return Response(answer)
         except:
             vacancies = Vacancy.objects.filter(author_id=author)
             answer = []
@@ -207,3 +208,11 @@ def open_close_vacancy(request: Request):
             return Response(status=400)
     except:
         return Response(status=400)
+
+
+@api_view(['POST'])
+def accept_application(request: Request):
+    worker_id = request.data.get('worker_id')
+    vacancy_id = request.data.get('vacancy_id')
+    if worker_id and vacancy_id:
+        AcceptedEmployees.objects.create()
