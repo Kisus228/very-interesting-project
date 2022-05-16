@@ -1,6 +1,7 @@
 import {employerVacancyAPI} from "../api/Api";
 import {BaseThunkType, InferActionsTypes} from './ReduxStore';
 import {EmployerVacancyExpendsType, EmployerVacancyType} from "../types/types";
+import {endLoadingTC, startLoadingTC} from "./AppReducer";
 
 const initialState = {
     vacancies: [] as EmployerVacancyType[],
@@ -87,7 +88,6 @@ export const acceptApplicationTC = (acceptId: number, vacancyId: number): ThunkT
                     .then(result => dispatch(actions.setVacancy(result)))
             }
         })
-
 }
 
 export const deleteVacancyTC = (id: number, authorId: number): ThunkType => async (dispatch) => {
@@ -112,9 +112,13 @@ export const putVacancyTC = (id: number, data: EmployerVacancyExpendsType): Thun
 }
 
 export const getVacancyTC = (id: number): ThunkType => async (dispatch) => {
-    dispatch(actions.resetVacancy())
+    dispatch(startLoadingTC());
+    dispatch(actions.resetVacancy());
     await employerVacancyAPI.getVacancy(id)
-        .then(result => dispatch(actions.setVacancy(result)))
+        .then(result => {
+            dispatch(actions.setVacancy(result))
+            dispatch(endLoadingTC())
+        })
 }
 
 type InitialState = typeof initialState;

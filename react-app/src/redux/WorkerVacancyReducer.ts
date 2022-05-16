@@ -1,6 +1,7 @@
 import {workerVacancyAPI} from "../api/Api";
 import {BaseThunkType, InferActionsTypes} from './ReduxStore';
 import {WorkerVacancyExpendsType, WorkerVacancyType} from "../types/types";
+import {endLoadingTC, startLoadingTC} from "./AppReducer";
 
 const initialState = {
     vacancies: [] as WorkerVacancyType[],
@@ -39,18 +40,22 @@ export const actions = {
 
 export const getVacanciesTC = (filter: number[]): ThunkType => async (dispatch) => {
     await workerVacancyAPI.getVacancies(filter)
-        .then(result => dispatch(actions.setVacancies(result)))
+        .then(result => dispatch(actions.setVacancies(result)));
 }
 
 export const getLikedVacanciesTC = (): ThunkType => async (dispatch) => {
     await workerVacancyAPI.getLikedVacancies()
-        .then(result => dispatch(actions.setVacancies(result)))
+        .then(result => dispatch(actions.setVacancies(result)));
 }
 
 export const getVacancyTC = (id: number): ThunkType => async (dispatch) => {
-    dispatch(actions.resetVacancy())
+    dispatch(startLoadingTC());
+    dispatch(actions.resetVacancy());
     await workerVacancyAPI.getVacancy(id)
-        .then(result => dispatch(actions.setVacancy(result)))
+        .then(result => {
+            dispatch(actions.setVacancy(result));
+            dispatch(endLoadingTC());
+        })
 }
 
 export const likeVacancyTC = (id: number, vacancyPage: boolean): ThunkType => async (dispatch) => {

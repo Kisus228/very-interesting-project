@@ -8,6 +8,7 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {acceptApplicationTC, getResumeTC, likeResumeTC} from "../../../redux/ResumeReducer";
 import {AppStateType} from "../../../redux/ReduxStore";
+import {withLoading} from "../../../hoc/withLoading/withLoading";
 
 const ProfileInfo: React.FC<Props> = (props) => {
     const profileId = Number(useParams().profileId);
@@ -121,4 +122,4 @@ export default compose<React.ComponentType>(connect(mapStateToProps, {
     getResumeTC,
     likeResumeTC,
     acceptApplicationTC
-}))(ProfileInfo);
+}), withLoading)(ProfileInfo);
