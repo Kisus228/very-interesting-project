@@ -13,53 +13,19 @@
     }
 }
 
-.Vacancies {
-    border-radius: 10px;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-
-    & ul {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin: 0;
-        padding: 15px;
-    }
-
-    & li {
-        padding: 10px;
-        border-radius: 10px;
-        box-sizing: border-box;
-        height: 80px;
-        background-color: #EDEDED;
-        text-decoration: none;
-    }
-
-    & .VacanciesWrapper {
-        padding: 5px 25px;
-    }
-}
-
-.VacanciesTableHeader {
-    border-bottom: 2px solid #C9CED6;
-}
-
 .VacanciesTableWrapper {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr 210px;
-    text-align: center;
+    grid-template-columns: 1.5fr repeat(3, 1fr) 210px;
 
-    & > div {
-        margin: auto 0;
+    @media (max-width: 730px) {
+        grid-template-columns: 1.5fr 210px;
+
+        & > .Info {
+            display: none;
+        }
     }
 
-    & > div:first-of-type {
-        text-align: start;
-    }
-
-    & .VacanciesButtons {
-        display: flex;
-        align-items: center;
-        gap: 10px;
+    @media (max-width: 500px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, auto);
     }
 }

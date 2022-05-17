@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import classes from './Vacancies.less';
+import classes from "./../../../ProfileVacancyStyles.less";
 import avatar from "../../../assets/avatar.png"
 import LikeButton from "../../Common/FormControl/LikeButton";
 import Button from "../../Common/FormControl/Button";

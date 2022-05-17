@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './ResumesItem.less';
+import classes from "./../../../ProfileVacancyStyles.less";
 import avatar from "../../../assets/avatar.png";
 import LikeButton from "../../Common/FormControl/LikeButton";
 import Button from "../../Common/FormControl/Button";

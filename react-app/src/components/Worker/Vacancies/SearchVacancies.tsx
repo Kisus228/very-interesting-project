@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import classes from './Vacancies.less';
+import classes from "./../../../ProfileVacancyStyles.less";
 import Filter from "../../Filter/Filter";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";

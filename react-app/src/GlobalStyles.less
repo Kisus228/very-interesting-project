@@ -28,3 +28,72 @@
     width: 20px;
     height: 20px;
 }
+
+.VacanciesTableHeader {
+    border-bottom: 2px solid #C9CED6;
+
+    @media (max-width: 500px) {
+        display: none !important;
+    }
+}
+
+.VacanciesTable {
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    & ul {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin: 0;
+        padding: 15px;
+    }
+
+    & li {
+        padding: 10px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        min-height: 80px;
+        background-color: #EDEDED;
+        text-decoration: none;
+    }
+
+    & .VacanciesWrapper {
+        padding: 5px 25px;
+    }
+}
+
+.VacanciesTableWrapper {
+    display: grid;
+    gap: 5px;
+    text-align: center;
+    min-width: 230px;
+
+    & > div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: auto 0;
+    }
+
+    & > div:first-of-type {
+        text-align: start;
+    }
+
+    & .VacanciesButtons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    @media (max-width: 500px) {
+        & > div:first-of-type {
+            text-align: center !important;
+        }
+
+        & .VacanciesButtons {
+            justify-content: center;
+        }
+    }
+}

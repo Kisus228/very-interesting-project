@@ -19,13 +19,13 @@ const Vacancies: React.FC<Props> = (props) => {
                 <div className={classes.PageHeader}>
                     <PageHeader openedVacancies={props.openedVacancies}/>
                 </div>
-                <div className={classes.Vacancies}>
+                <div className={classes.VacanciesTable}>
                     <div className={cn(classes.VacanciesWrapper, classes.VacanciesTableHeader,
                         classes.VacanciesTableWrapper)}>
-                        <div>Название</div>
-                        <div>Кол-во откликов</div>
-                        <div>Найдено</div>
-                        <div>Статус</div>
+                        <div className={classes.Name}>Название</div>
+                        <div className={classes.Info}>Кол-во откликов</div>
+                        <div className={classes.Info}>Найдено</div>
+                        <div className={classes.Info}>Статус</div>
                     </div>
                     <ul>
                         {

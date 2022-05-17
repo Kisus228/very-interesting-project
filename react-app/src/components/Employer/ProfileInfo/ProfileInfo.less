@@ -17,6 +17,23 @@
     & h2 {
         margin: 0;
     }
+
+    @media (max-width: 800px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, auto);
+
+        & > .ProfileMenu {
+            flex-direction: row;
+        }
+
+        & .ProfileAvatar {
+            height: 100%;
+        }
+
+        & .ProfileContacts {
+            flex-grow: 1;
+        }
+    }
 }
 
 .ProfileContentWrapper {
@@ -58,12 +75,17 @@
 }
 
 .VacancyWrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr repeat(2, 150px);
     gap: 10px;
     align-items: center;
+    justify-content: space-between;
 
     & p {
-        flex-grow: 1;
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 

@@ -9,10 +9,16 @@
     background-color: #ffffff;
     width: 100%;
     box-sizing: border-box;
+
+    @media (max-width: 470px) {
+        justify-content: flex-end;
+    }
 }
 
 .Logo {
-
+    @media (max-width: 470px) {
+        display: none;
+    }
 }
 
 .Menu {
@@ -44,7 +50,6 @@
     justify-content: center;
     align-items: end;
     gap: 5px;
-    min-width: 200px;
 
     & p {
         margin: 0;
@@ -62,6 +67,10 @@
 
     & img {
         border-radius: 50%;
+    }
+
+    @media (max-width: 560px) {
+        display: none;
     }
 }
 
