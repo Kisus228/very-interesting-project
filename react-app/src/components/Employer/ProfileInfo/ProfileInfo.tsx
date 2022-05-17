@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import {acceptApplicationTC, getResumeTC, likeResumeTC} from "../../../redux/ResumeReducer";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {withLoading} from "../../../hoc/withLoading/withLoading";
+import Contacts from "../../Common/Contacts/Contacts";
 
 const ProfileInfo: React.FC<Props> = (props) => {
     const profileId = Number(useParams().profileId);
@@ -34,26 +35,7 @@ const ProfileInfo: React.FC<Props> = (props) => {
                     </div>
                     <div className={classes.ProfileContacts}>
                         <h4>Контактные данные:</h4>
-                        {
-                            props.resume.vk && <p className={classes.LinkParagraph}>
-                                <a target="_blank" href={props.resume.vk}>VK</a>
-                            </p>
-                        }
-                        {
-                            props.resume.tg && <p className={classes.LinkParagraph}>
-                                <a target="_blank" href={props.resume.tg}>Telegram</a>
-                            </p>
-                        }
-                        {
-                            props.resume.github && <p className={classes.LinkParagraph}>
-                                <a target="_blank" href={props.resume.github}>Github</a>
-                            </p>
-                        }
-                        {
-                            props.resume.gitlab && <p className={classes.LinkParagraph}>
-                                <a target="_blank" href={props.resume.gitlab}>Gitlab</a>
-                            </p>
-                        }
+                        <Contacts contacts={props.resume}/>
                         {
                             props.resume.email && <p className={classes.LinkParagraph}>
                                 Email: {props.resume.email}

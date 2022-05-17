@@ -5,9 +5,6 @@
 }
 
 .Profile {
-    display: grid;
-    grid-template-columns: @grid-fixed-width 1fr;
-    gap: 25px;
     padding: 25px;
     border-radius: 10px;
     background-color: white;
@@ -16,6 +13,18 @@
     & p {
         margin-top: 0;
     }
+
+    & h4 {
+        margin: 0;
+    }
+}
+
+.ProfileWrapper {
+    .Profile();
+    display: grid;
+    grid-template-columns: @grid-fixed-width 1fr;
+    grid-template-rows: repeat(2, auto);
+    gap: 25px;
 }
 
 .ProfileAvatar {
@@ -25,4 +34,57 @@
     height: @grid-fixed-width;
     width: @grid-fixed-width;
     box-sizing: border-box;
+}
+
+.ProfileAreaWithButton {
+    display: flex;
+    flex-direction: column;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.WorkerFormWrapper {
+    .Profile();
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.EmployerFormWrapper {
+    .Profile();
+    display: flex;
+    justify-content: center;
+
+    & > .FormSection {
+        max-width: 462.5px;
+    }
+}
+
+.FormSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    flex-grow: 1;
+
+    & > div {
+        display: flex;
+        gap: 0.5em;
+        flex-direction: column;
+    }
+}
+
+.ButtonWrapper {
+    justify-content: flex-end;
+    flex-grow: 1;
+
+    & > div {
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 0.5em;
+    }
+
+    & > div > button {
+        width: 150px;
+    }
 }

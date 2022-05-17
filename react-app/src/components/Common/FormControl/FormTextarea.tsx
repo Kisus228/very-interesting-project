@@ -5,7 +5,6 @@ import './FormControl.css';
 interface Props {
     name: string;
     label: string;
-    type: "text" | "number";
     placeholder?: string;
     required?: boolean;
 }
