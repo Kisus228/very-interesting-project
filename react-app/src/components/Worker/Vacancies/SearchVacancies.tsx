@@ -31,7 +31,8 @@ const SearchVacancies: React.FC<Props> = (props) => {
                     <h2>Найдено вакансий по запросу: {props.vacancies.length}</h2>
                     <ul className={classes.ProfileItemsWrapper}>
                         {
-                            props.vacancies.map(item => <VacancyItem key={item.id} {...item}/>)
+                            props.vacancies.map(item => <VacancyItem key={item.id} vacancy={item}
+                                                                     likeVacancyTC={props.likeVacancyTC}/>)
                         }
                     </ul>
                 </div>
