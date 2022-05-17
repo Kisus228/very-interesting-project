@@ -6,8 +6,10 @@ import avatar from "../../../assets/avatar.png";
 import LikeButton from "../../Common/FormControl/LikeButton";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {getResumeTC, likeResumeTC} from "../../../redux/ResumeReducer";
+import {acceptApplicationTC, getResumeTC, likeResumeTC} from "../../../redux/ResumeReducer";
 import {AppStateType} from "../../../redux/ReduxStore";
+import {withLoading} from "../../../hoc/withLoading/withLoading";
+import Contacts from "../../Common/Contacts/Contacts";
 
 const ProfileInfo: React.FC<Props> = (props) => {
     const profileId = Number(useParams().profileId);
@@ -33,26 +35,7 @@ const ProfileInfo: React.FC<Props> = (props) => {
                     </div>
                     <div className={classes.ProfileContacts}>
                         <h4>Контактные данные:</h4>
-                        {
-                            props.resume.vk && <p className={classes.LinkParagraph}>
-                                <a target="_blank" href={props.resume.vk}>VK</a>
-                            </p>
-                        }
-                        {
-                            props.resume.tg && <p className={classes.LinkParagraph}>
-                                <a target="_blank" href={props.resume.tg}>Telegram</a>
-                            </p>
-                        }
-                        {
-                            props.resume.github && <p className={classes.LinkParagraph}>
-                                <a target="_blank" href={props.resume.github}>Github</a>
-                            </p>
-                        }
-                        {
-                            props.resume.gitlab && <p className={classes.LinkParagraph}>
-                                <a target="_blank" href={props.resume.gitlab}>Gitlab</a>
-                            </p>
-                        }
+                        <Contacts contacts={props.resume}/>
                         {
                             props.resume.email && <p className={classes.LinkParagraph}>
                                 Email: {props.resume.email}
@@ -77,7 +60,8 @@ const ProfileInfo: React.FC<Props> = (props) => {
                                 {props.resume.desired_vacancies.map(item => (
                                     <div key={item.id_vacancy} className={classes.VacancyWrapper}>
                                         <p>{item.name}</p>
-                                        <Button type={"button"} size={"small"} onClick={() => console.log('принять')}>
+                                        <Button type={"button"} size={"small"}
+                                                onClick={() => props.acceptApplicationTC(item.id_job_app)}>
                                             Принять заявку
                                         </Button>
                                         <Button type={"button"} size={"small"} to={`/vacancies/${item.id_vacancy}`}>
@@ -111,8 +95,13 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 type MapDispatchPropsType = {
     getResumeTC: (id: number) => void
     likeResumeTC: (id: number, resumePage: boolean) => void
+    acceptApplicationTC: (acceptId: number) => void
 }
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {getResumeTC, likeResumeTC}))(ProfileInfo);
+export default compose<React.ComponentType>(connect(mapStateToProps, {
+    getResumeTC,
+    likeResumeTC,
+    acceptApplicationTC
+}), withLoading)(ProfileInfo);

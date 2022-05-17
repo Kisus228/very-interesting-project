@@ -6,7 +6,7 @@ import cn from "classnames";
 interface Props {
     name: string;
     label: string;
-    type: "text" | "number";
+    type: "text" | "number" | "email" | "date";
     placeholder?: string;
     required?: boolean;
 }

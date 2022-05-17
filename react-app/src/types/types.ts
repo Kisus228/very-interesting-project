@@ -72,6 +72,8 @@ export interface EmployerVacancyExpendsType extends EmployerVacancyType {
     salary: string,
     additionally: string,
     author: number,
+    job_apps: JobAppsType[],
+    accepted: string[],
 }
 
 export interface WorkerVacancyType {
@@ -98,4 +100,10 @@ export interface WorkerVacancyExpendsType extends Omit<WorkerVacancyType, "skill
     department: string,
     is_registered: boolean
     skills: CompetenceType[]
+}
+
+export type JobAppsType = {
+    username: string,
+    job_app_id: number,
+    resume_id: number
 }

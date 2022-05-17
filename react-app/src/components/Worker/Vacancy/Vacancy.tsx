@@ -8,12 +8,10 @@ import {connect} from "react-redux";
 import {getVacancyTC, sendRequestTC} from "../../../redux/WorkerVacancyReducer";
 import {useParams} from "react-router-dom";
 import LikeButton from "../../Common/FormControl/LikeButton";
+import {withLoading} from "../../../hoc/withLoading/withLoading";
+import {WorkerVacancyExpendsType} from "../../../types/types";
 
 const Vacancy: React.FC<Props> = (props) => {
-    const [state] = useState({
-        foundEmployees: [{avatar: "", name: "Клим Саныч"}, {avatar: "", name: "Дим Юрич"}]
-    })
-
     const vacancyId = Number(useParams().vacancyId)
     useEffect(() => {
         if (!isNaN(vacancyId))
@@ -24,7 +22,7 @@ const Vacancy: React.FC<Props> = (props) => {
 
     if (props.vacancy === null) return null;
 
-    const id = props.vacancy.id;
+    const vacancy = props.vacancy as WorkerVacancyExpendsType
 
     return (
         <div className={classes.PageContentWrapper}>
@@ -32,26 +30,26 @@ const Vacancy: React.FC<Props> = (props) => {
                 <div className={classes.Vacancy}>
                     <section className={classes.VacancySection}>
                         <div>
-                            <h3>{props.vacancy.name}</h3>
-                            <p className={classes.Description}>{props.vacancy.salary}</p>
+                            <h3>{vacancy.name}</h3>
+                            <p className={classes.Description}>{vacancy.salary}</p>
                         </div>
                         <div>
-                            <h4>Специальность: {props.vacancy.specialization}</h4>
-                            <p className={classes.Description}>Количество мест: {props.vacancy.count}</p>
+                            <h4>Специальность: {vacancy.specialization}</h4>
+                            <p className={classes.Description}>Количество мест: {vacancy.count}</p>
                         </div>
                         <div>
                             <h4>Описание вакансии:</h4>
-                            <p>{props.vacancy.description}</p>
-                            <p><b>Тип занятости: </b>{props.vacancy.type_employment}</p>
-                            <p><b>График работы: </b>{props.vacancy.work_schedule}</p>
+                            <p>{vacancy.description}</p>
+                            <p><b>Тип занятости: </b>{vacancy.type_employment}</p>
+                            <p><b>График работы: </b>{vacancy.work_schedule}</p>
                             <h4>Условия:</h4>
-                            <p>{props.vacancy.conditions}</p>
+                            <p>{vacancy.conditions}</p>
                             <h4>Требования:</h4>
-                            <p>{props.vacancy.requirements}</p>
+                            <p>{vacancy.requirements}</p>
                             <h4>Обязанности:</h4>
-                            <p>{props.vacancy.duties}</p>
+                            <p>{vacancy.duties}</p>
                             <h4>Дополнительно:</h4>
-                            <p>{props.vacancy.additionally}</p>
+                            <p>{vacancy.additionally}</p>
                         </div>
                     </section>
                     <section className={classes.VacancySection}>
@@ -64,24 +62,23 @@ const Vacancy: React.FC<Props> = (props) => {
                             </div>
                         </div>
                         <div>
-                            <h4 className={classes.Name}>{props.vacancy.author}</h4>
-                            <p>{props.vacancy.department}</p>
+                            <h4 className={classes.Name}>{vacancy.author}</h4>
+                            <p>{vacancy.department}</p>
                         </div>
                         <div>
                             <h4>Навыки для вакансии:</h4>
-                            <div>{props.vacancy.skills.map(skill => skill.name).join(", ")}</div>
+                            <div>{vacancy.skills.map(skill => skill.name).join(", ")}</div>
                         </div>
                         <div>
-                            <h4>Найденные сотрудники:</h4>
-                            {
-                                state.foundEmployees.map(employee => <EmployeeItem key={employee.name} {...employee}/>)
-                            }
+                            <h4>
+                                Найдено сотрудников: {vacancy.count - vacancy.free} из {vacancy.count}
+                            </h4>
                         </div>
                         <div className={classes.ButtonWrapper}>
                             {
-                                props.vacancy.is_registered
+                                vacancy.is_registered
                                     ? <Button type={"button"} disabled>Подать заявку</Button>
-                                    : <Button type={"button"} onClick={() => props.sendRequestTC(id)} color={"green"}>
+                                    : <Button type={"button"} onClick={() => props.sendRequestTC(vacancy.id)} color={"green"}>
                                         Подать заявку
                                     </Button>
                             }
@@ -93,20 +90,9 @@ const Vacancy: React.FC<Props> = (props) => {
     );
 };
 
-const EmployeeItem = (props: { avatar: any, name: string }) => {
-    return (
-        <div className={classes.EmployeeWrapper}>
-            <div className={classes.ProfileAvatarSmall}>
-                <img width={50} height={50} src={avatar} alt={"avatar"}/>
-            </div>
-            <p>{props.name}</p>
-        </div>
-    );
-}
-
 const mapStateToProps = (state: AppStateType) => {
     return {
-        vacancy: state.workerVacancyData.vacancy,
+        vacancy: state.workerVacancyData.vacancy
     }
 }
 
@@ -119,4 +105,7 @@ type MapDispatchPropsType = {
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {getVacancyTC, sendRequestTC}))(Vacancy);
+export default compose<React.ComponentType>(connect(mapStateToProps, {
+    getVacancyTC,
+    sendRequestTC
+}), withLoading)(Vacancy);
