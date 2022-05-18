@@ -31,6 +31,13 @@ const Vacancy: React.FC<Props> = (props) => {
                             <h3>{vacancy.name}</h3>
                             <p className={classes.Description}>{vacancy.salary}</p>
                         </div>
+                    </section>
+                    <section className={classes.VacancySection}>
+                        <div className={classes.LikeButton}>
+                            <LikeButton liked={vacancy.is_liked} onClick={() => likeVacancyTC(vacancy.id, true)}/>
+                        </div>
+                    </section>
+                    <section className={classes.VacancySection}>
                         <div>
                             <h4>Специальность: {vacancy.specialization}</h4>
                             <p className={classes.Description}>Количество мест: {vacancy.count}</p>
@@ -51,9 +58,6 @@ const Vacancy: React.FC<Props> = (props) => {
                         </div>
                     </section>
                     <section className={classes.VacancySection}>
-                        <div className={classes.LikeButton}>
-                            <LikeButton liked={vacancy.is_liked} onClick={() => likeVacancyTC(vacancy.id, true)}/>
-                        </div>
                         <div className={classes.ProfileAvatarWrapper}>
                             <div className={classes.ProfileAvatarLarge}>
                                 <img width={150} height={150} src={avatar} alt={"avatar"}/>

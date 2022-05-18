@@ -34,6 +34,16 @@
             flex-grow: 1;
         }
     }
+
+    @media (max-width: 500px) {
+        & .ProfileAvatar {
+            width: 100%;
+        }
+
+        & > .ProfileMenu {
+            flex-direction: column;
+        }
+    }
 }
 
 .ProfileContentWrapper {
@@ -79,13 +89,39 @@
     grid-template-columns: 1fr repeat(2, 150px);
     gap: 10px;
     align-items: center;
-    justify-content: space-between;
 
     & p {
         display: inline-block;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    @media (max-width: 600px) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, auto);
+
+        & p {
+            margin-right: auto;
+            margin-left: auto;
+            margin-bottom: 0;
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+
+        & button, a {
+            margin: 0 auto;
+        }
+    }
+
+    @media (max-width: 450px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, auto);
+
+        & p {
+            grid-column-start: 1;
+            grid-column-end: 2;
+        }
     }
 }
 
