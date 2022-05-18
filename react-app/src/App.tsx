@@ -1,5 +1,5 @@
 import classes from './App.less';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Header from "./components/Header/Header";
 import Navigation from "./components/Navigation/Navigation";
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
@@ -13,16 +13,18 @@ import EmployerRoutes from "./components/Employer/EmployerRoutes";
 export const AppWrapper = () => {
     const ref = useRef<HTMLDivElement>(null)
     const location = useLocation().pathname;
+    const [navbarToggle, setNavbarToggle] = useState(false);
 
     useEffect(() => {
-        ref.current?.scrollTo(0, 0)
+        ref.current?.scrollTo(0, 0);
+        setNavbarToggle(false);
     }, [location])
 
     return (
         <div className={classes.AppWrapper}>
-            <Header/>
+            <Header onClickNavbarToggle={() => setNavbarToggle(!navbarToggle)}/>
             <main className={classes.AppContentWrapper}>
-                <Navigation/>
+                <Navigation navbarToggle={navbarToggle}/>
                 <div ref={ref} className={classes.AppContentContainer}>
                     <Outlet/>
                 </div>
