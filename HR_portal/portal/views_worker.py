@@ -68,6 +68,20 @@ def get_liked_vacancy_(request: Request):
 
 
 @api_view(['POST'])
+def like_vacancy(request: Request):
+    vacancy_id = request.data.get('id')
+    user_id = request.user.id
+    vacancy = Vacancy.objects.get(id=vacancy_id)
+    worker: Worker = Worker.objects.get(user_id=user_id)
+    liked_apps = worker.liked_apps.all()
+    if vacancy not in liked_apps:
+        worker.liked_apps.add(vacancy)
+    else:
+        worker.liked_apps.remove(vacancy)
+    return Response(status=200)
+
+
+@api_view(['POST'])
 def send_request(request: Request):
     worker = Worker.objects.get(user_id=request.user.id)
     vacancy_id = request.data.get('id')

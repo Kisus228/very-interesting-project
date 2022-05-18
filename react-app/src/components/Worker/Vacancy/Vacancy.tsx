@@ -5,7 +5,7 @@ import Button from "../../Common/FormControl/Button";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {getVacancyTC, sendRequestTC} from "../../../redux/WorkerVacancyReducer";
+import {getVacancyTC, likeVacancyTC, sendRequestTC} from "../../../redux/WorkerVacancyReducer";
 import {useParams} from "react-router-dom";
 import LikeButton from "../../Common/FormControl/LikeButton";
 import {withLoading} from "../../../hoc/withLoading/withLoading";
@@ -17,8 +17,6 @@ const Vacancy: React.FC<Props> = (props) => {
         if (!isNaN(vacancyId))
             props.getVacancyTC(vacancyId);
     }, [])
-
-    const [liked, setLiked] = useState(false)
 
     if (props.vacancy === null) return null;
 
@@ -54,7 +52,7 @@ const Vacancy: React.FC<Props> = (props) => {
                     </section>
                     <section className={classes.VacancySection}>
                         <div className={classes.LikeButton}>
-                            <LikeButton liked={liked} onClick={() => setLiked(!liked)}/>
+                            <LikeButton liked={vacancy.is_liked} onClick={() => likeVacancyTC(vacancy.id, true)}/>
                         </div>
                         <div className={classes.ProfileAvatarWrapper}>
                             <div className={classes.ProfileAvatarLarge}>
@@ -100,6 +98,7 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
     getVacancyTC: (id: number) => void
+    likeVacancyTC: (id: number, vacancyPage: boolean) => void,
     sendRequestTC: (id: number) => void
 }
 
@@ -107,5 +106,6 @@ type Props = MapStatePropsType & MapDispatchPropsType;
 
 export default compose<React.ComponentType>(connect(mapStateToProps, {
     getVacancyTC,
-    sendRequestTC
+    sendRequestTC,
+    likeVacancyTC
 }), withLoading)(Vacancy);
