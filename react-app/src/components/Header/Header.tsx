@@ -47,7 +47,7 @@ const Header: React.FC<Props> = (props) => {
                         </p>
                     </div>
                     <div className={classes.ProfileAvatar}>
-                        <img width={50} height={50} src={avatar} alt={"avatar"}/>
+                        <img width={40} height={40} src={avatar} alt={"avatar"}/>
                     </div>
                     <div>
                         <Arrow color={"#C9CED6"}/>
