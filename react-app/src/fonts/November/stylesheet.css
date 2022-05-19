@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'November LCG';
+    src: url('NovemberLCG-Bold.eot');
+    src: local('November LCG Bold'), local('NovemberLCG-Bold'),
+        url('NovemberLCG-Bold.eot?#iefix') format('embedded-opentype'),
+        url('NovemberLCG-Bold.woff2') format('woff2'),
+        url('NovemberLCG-Bold.woff') format('woff'),
+        url('NovemberLCG-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'November LCG';
+    src: url('NovemberLCG-Regular.eot');
+    src: local('November LCG Regular'), local('NovemberLCG-Regular'),
+        url('NovemberLCG-Regular.eot?#iefix') format('embedded-opentype'),
+        url('NovemberLCG-Regular.woff2') format('woff2'),
+        url('NovemberLCG-Regular.woff') format('woff'),
+        url('NovemberLCG-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
