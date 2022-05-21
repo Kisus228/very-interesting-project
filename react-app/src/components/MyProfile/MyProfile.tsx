@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import Contacts from "../Common/Contacts/Contacts";
 import WorkerForm from "./WorkerForm";
 import EmployerForm from "./EmployerForm";
+import {putPhotoTC} from "../../redux/AuthReducer";
 
 const MyProfile: React.FC<Props> = (props) => {
     const [state] = useState({
@@ -40,6 +41,12 @@ const MyProfile: React.FC<Props> = (props) => {
         setEditForm(false);
     }
 
+    const onUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files && e.target.files[0];
+        if (file)
+            props.putPhotoTC(file);
+    }
+
     const getAge = (birthday: Date) => {
         const now = new Date();
         const age = now.getFullYear() - birthday.getFullYear();
@@ -64,6 +71,7 @@ const MyProfile: React.FC<Props> = (props) => {
                                 <p><b>Фамилия:</b> {state.secondName}</p>
                                 <p><b>Отчество:</b> {state.middleName}</p>
                                 <p><b>Почта:</b> {state.email}</p>
+                                <input type="file" accept="image/jpeg,image/png,image/gif" onChange={onUpload}/>
                                 {
                                     props.isWorker
                                         ? <>
@@ -109,8 +117,10 @@ const mapStateToProps = (state: AppStateType) => {
 
 type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
-type MapDispatchPropsType = {}
+type MapDispatchPropsType = {
+    putPhotoTC: (file: File) => void
+}
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {}))(MyProfile);
+export default compose<React.ComponentType>(connect(mapStateToProps, {putPhotoTC}))(MyProfile);

@@ -1,8 +1,11 @@
 @import url("fonts/November/stylesheet.css");
 
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "November LCG", sans-serif;
+}
+
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "November LCG", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }

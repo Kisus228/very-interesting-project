@@ -28,10 +28,10 @@ const Vacancies: React.FC<Props> = (props) => {
                         <div className={classes.Info}>Статус</div>
                     </div>
                     <ul>
-                        {
+                        { // TODO: Доделать
                             props.vacancies.map(item =>
                                 <VacanciesItem openCloseVacancy={() => props.openCloseVacancyTC(item.id, item.is_open)}
-                                               deleteVacancy={() => props.deleteVacancyTC(item.id, 1)}
+                                               deleteVacancy={() => props.deleteVacancyTC(item.id, 2)}
                                                key={item.id} vacancy={item}/>)
                         }
                     </ul>

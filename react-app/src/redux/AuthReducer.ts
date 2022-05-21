@@ -66,6 +66,10 @@ export const postAuthRegisterTC = (data: RegisterType): ThunkType => async (disp
         })
 }
 
+export const putPhotoTC = (photo: any): ThunkType => async (dispatch) => {
+    await authAPI.putPhoto(photo)
+}
+
 export const removeError = () => (dispatch: any) => {
     dispatch(actions.loginError(""))
     dispatch(actions.registerError([]))

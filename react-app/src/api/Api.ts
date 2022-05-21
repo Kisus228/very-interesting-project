@@ -1,5 +1,6 @@
 import {EmployerVacancyExpendsType, LoginType, RegisterType} from "../types/types";
 import Cookies from 'js-cookie';
+import {putPhotoTC} from "../redux/AuthReducer";
 
 export const authAPI = {
     async postAuthLogin(data: LoginType) {
@@ -26,6 +27,28 @@ export const authAPI = {
     },
     async getAuthMe() {
         return await fetch('/is_authenticate/')
+            .then(response => response.json())
+            .catch(error => console.error(error))
+    },
+    async getPhoto() {
+        return await fetch('/get_photo/')
+            .then(response => response.json())
+            .catch(error => console.error(error))
+    },
+    async putPhoto(photo: any) {
+        const csrftoken = Cookies.get("csrftoken") || "";
+        const formData = new FormData();
+        formData.append("photo", photo);
+        console.log(formData)
+        console.log(formData.get("photo"))
+        return await fetch('/set_photo/', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify(formData),
+        })
             .then(response => response.json())
             .catch(error => console.error(error))
     },
