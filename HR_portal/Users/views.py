@@ -1,3 +1,5 @@
+from django.core.files.storage import default_storage
+from django.core.files.uploadedfile import UploadedFile
 from django.http import FileResponse
 from django.contrib.auth import authenticate, login, logout
 from rest_framework import status
@@ -101,3 +103,11 @@ def get_photo(request):
         return FileResponse(open(f'media\\{photo.name}', 'rb'))
     else:
         return FileResponse(open('media\\photos\\test.jpg', 'rb'))
+
+
+@api_view(['PUT'])
+def set_photo(request: Request):
+    user = CustomUser.objects.get(pk=request.user.id)
+    photo = request.FILES['photo']
+    user.photo.save(photo.name, photo)
+    return Response(status=200)

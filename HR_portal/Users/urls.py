@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import LoginApiView, user_logout, RegisterUserView, is_authenticate, get_photo
+from .views import LoginApiView, user_logout, RegisterUserView, is_authenticate, get_photo, set_photo
 
 
 urlpatterns = [
@@ -7,5 +7,6 @@ urlpatterns = [
     path('logout/', user_logout),
     path('registration/', RegisterUserView.as_view()),
     path('is_authenticate/', is_authenticate),
-    path('photo/', get_photo)
+    path('get_photo/', get_photo),
+    path('set_photo/', set_photo)
 ]
