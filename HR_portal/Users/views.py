@@ -71,3 +71,8 @@ def user_logout(request):
 @api_view()
 def is_authenticate(request):
     return Response({'is_authenticated': request.user.is_authenticated})
+
+
+@api_view(['POST'])
+def load_photo(request):
+    user = CustomUser.objects.get(request.user.id)
