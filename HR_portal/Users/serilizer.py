@@ -54,3 +54,11 @@ class LoginSerializer(Serializer):
     class Meta:
         model = CustomUser
         fields = ['username', 'password']
+
+
+class Photo(ModelSerializer):
+    model = CustomUser
+
+    class Meta:
+        model = CustomUser
+        fields = ['photo']

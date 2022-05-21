@@ -1,3 +1,4 @@
+from django.http import FileResponse
 from django.contrib.auth import authenticate, login, logout
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
@@ -11,6 +12,7 @@ from rest_framework.generics import CreateAPIView
 from .models import CustomUser
 from .serilizer import LoginSerializer, UserRegisterSerializer
 from Users.models import CustomUser
+from portal.models import Worker, Vacancy
 
 
 class RegisterUserView(CreateAPIView):
@@ -76,3 +78,26 @@ def is_authenticate(request):
 @api_view(['POST'])
 def load_photo(request):
     user = CustomUser.objects.get(request.user.id)
+
+
+@api_view(['GET'])
+def get_photo(request):
+    # param 0 - user, param 1 - работник, param 2 - работадатель
+    param = int(request.GET.get('param'))
+    photo = None
+    if param == 0:
+        user: CustomUser = CustomUser.objects.get(pk=request.user.id)
+        photo = user.photo
+    if param == 1:
+        resume_id = int(request.GET.get('resume'))
+        worker = Worker.objects.get(resume_id=resume_id)
+        photo = worker.user.photo
+    if param == 2:
+        vacancy_id = int(request.GET.get('vacancy'))
+        vac = Vacancy.objects.get(pk=vacancy_id)
+        photo = vac.author.user.photo
+
+    if photo:
+        return FileResponse(open(f'media\\{photo.name}', 'rb'))
+    else:
+        return FileResponse(open('media\\photos\\test.jpg', 'rb'))
