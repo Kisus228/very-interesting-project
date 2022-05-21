@@ -47,7 +47,7 @@ export const authAPI = {
                 'Content-Type': 'multipart/form-data',
                 'X-CSRFToken': csrftoken
             },
-            body: JSON.stringify(formData),
+            body: formData,
         })
             .then(response => response.json())
             .catch(error => console.error(error))
