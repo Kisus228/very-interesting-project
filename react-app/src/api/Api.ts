@@ -43,13 +43,9 @@ export const authAPI = {
         console.log(formData.get("photo"))
         return await fetch('/set_photo/', {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'X-CSRFToken': csrftoken
-            },
+            headers: {'X-CSRFToken': csrftoken},
             body: formData,
         })
-            .then(response => response.json())
             .catch(error => console.error(error))
     },
 }
