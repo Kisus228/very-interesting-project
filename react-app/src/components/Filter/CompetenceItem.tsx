@@ -2,6 +2,7 @@ import React from "react";
 import {onChangeFilterType} from "./Filter";
 import classes from './Filter.less';
 import {CompetenceType} from "../../types/types";
+import cn from "classnames";
 
 type PropsType = {
     item: CompetenceType,
@@ -11,7 +12,7 @@ type PropsType = {
 
 const CompetenceItem: React.FC<PropsType> = (props) => {
     return (
-        <li className={`${classes.Animation} ${props.dropdown ? classes.Opened : classes.Closed}`}>
+        <li className={cn(classes.Animation, {[classes.Closed]: !props.dropdown})}>
             <label>
                 <input type={"checkbox"} onChange={
                     (e) => props.onChangeFilter(e.target.checked, props.item.id)

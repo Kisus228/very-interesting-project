@@ -95,7 +95,7 @@ class HeadDepartment(models.Model):
 
 class Vacancy(models.Model):
     name = models.CharField(max_length=250, verbose_name='Название Вакансии')
-    salary = models.IntegerField(blank=True, verbose_name='Зарплата', null=True)
+    salary = models.TextField(blank=True, verbose_name='Зарплата', null=True)
     author = models.ForeignKey(HeadDepartment, on_delete=models.CASCADE, verbose_name='Автор вакансии')
     count = models.IntegerField(verbose_name='Нужное количество человек', default=1)
     free = models.IntegerField(verbose_name='Свободное количество мест', default=1)

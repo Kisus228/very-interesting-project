@@ -44,7 +44,7 @@ const VacanciesRequests: React.FC<Props> = (props) => {
                 <div className={classes.PageHeader}>
                     <h2>Мои заявки на вакансии</h2>
                 </div>
-                <div className={classes.Vacancies}>
+                <div className={classes.VacanciesTable}>
                     <div className={cn(classes.VacanciesWrapper, classes.VacanciesTableHeader,
                         classes.VacanciesTableWrapper)}>
                         <div className={classes.Info}>Название</div>

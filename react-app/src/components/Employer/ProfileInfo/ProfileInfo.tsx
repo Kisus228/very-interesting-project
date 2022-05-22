@@ -30,8 +30,10 @@ const ProfileInfo: React.FC<Props> = (props) => {
         <div className={classes.PageContentWrapper}>
             <div className={classes.PageContainer}>
                 <div className={classes.ProfileMenu}>
-                    <div className={classes.ProfileAvatar}>
-                        <img width={150} height={150} src={avatar} alt={"avatar"}/>
+                    <div className={classes.ProfileAvatarWrapper}>
+                        <div className={classes.ProfileAvatar}>
+                            <img width={150} height={150} src={props.photo || avatar} alt={"avatar"}/>
+                        </div>
                     </div>
                     <div className={classes.ProfileContacts}>
                         <h4>Контактные данные:</h4>
@@ -87,6 +89,7 @@ const ProfileInfo: React.FC<Props> = (props) => {
 const mapStateToProps = (state: AppStateType) => {
     return {
         resume: state.resumeData.resume,
+        photo: state.resumeData.photo
     }
 }
 

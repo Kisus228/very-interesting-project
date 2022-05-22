@@ -10,6 +10,17 @@ export const Arrow = (props: { color: string }) => {
     );
 };
 
+export const Burger = (props: { onClick: () => void }) => {
+    return (
+        <svg onClick={props.onClick} className={classes.Clickable} width="20" height="18" viewBox="0 0 20 18"
+             fill="none">
+            <line x1="2" y1="15" x2="18" y2="15" stroke="black" strokeWidth="3" strokeLinecap="round"/>
+            <line x1="2" y1="9" x2="18" y2="9" stroke="black" strokeWidth="3" strokeLinecap="round"/>
+            <line x1="2" y1="3" x2="18" y2="3" stroke="black" strokeWidth="3" strokeLinecap="round"/>
+        </svg>
+    );
+};
+
 export const Liked = () => {
     return (
         <svg width="20" height="20" viewBox="0 0 20 17.925" fill="none">
@@ -22,16 +33,11 @@ export const Liked = () => {
 
 export const Search = () => {
     return (
-        <>
-            <svg width="20" height="20" viewBox="-2 0 20 20" fill="none">
-                <path
-                    d="M17.0014 9.00071C17.0014 13.4194 13.4194 17.0014 9.00071 17.0014C4.58204 17.0014 1 13.4194 1 9.00071C1 4.58204 4.58204 1 9.00071 1C13.4194 1 17.0014 4.58204 17.0014 9.00071Z"
-                    strokeWidth="2"/>
-            </svg>
-            <svg width="20" height="20" viewBox="0 -14 20 20" fill="none">
-                <path d="M1 5L5 1" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-        </>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path strokeWidth="2"
+                  d="M19.0014 9.00071C19.0014 13.4194 15.4194 17.0014 11.0007 17.0014C6.58204 17.0014 3 13.4194 3 9.00071C3 4.58204 6.58204 1 11.0007 1C15.4194 1 19.0014 4.58204 19.0014 9.00071Z"/>
+            <path d="M1 19L5 15" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
     );
 };
 
@@ -46,14 +52,10 @@ export const Plus = () => {
 
 export const Work = () => {
     return (
-        <>
-            <svg width="20" height="20" viewBox="-5 0 20 20" fill="none">
-                <path d="M1 5C1 2.5 3 1 5 1C7 1 9 2.5 9 5" strokeWidth="2"/>
-            </svg>
-            <svg width="20" height="20" viewBox="0 -5 20 20" fill="none">
-                <rect x="1" y="1" width="18" height="13" rx="1" strokeWidth="2"/>
-            </svg>
-        </>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M6 5C6 2.5 8 1 10 1C12 1 14 2.5 14 5" strokeWidth="2" strokeLinecap="round"/>
+            <path d="M18 6H2C1.44772 6 1 6.44772 1 7V18C1 18.5523 1.44772 19 2 19H18C18.5523 19 19 18.5523 19 18V7C19 6.44772 18.5523 6 18 6Z" strokeWidth="2"/>
+        </svg>
     );
 };
 

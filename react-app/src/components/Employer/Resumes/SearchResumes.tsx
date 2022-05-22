@@ -3,7 +3,7 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {getResumesTC, likeResumeTC} from "../../../redux/ResumeReducer";
-import classes from "./ResumesItem.less";
+import classes from "./../../../ProfileVacancyStyles.less";
 import Filter from "../../Filter/Filter";
 import {getFilterTC} from "../../../redux/FilterReducer";
 import ResumesItem from "./ResumesItem";

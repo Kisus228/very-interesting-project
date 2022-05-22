@@ -3,7 +3,7 @@ import classes from "./Header.less";
 import logo from './../../assets/logo.png';
 import avatar from './../../assets/avatar.png';
 import {useNavigate} from "react-router-dom";
-import {Arrow, Exit} from "../Common/Icons/Icons";
+import {Arrow, Burger, Exit} from "../Common/Icons/Icons";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {deleteAuthLoginTC, temp} from "../../redux/AuthReducer";
@@ -33,8 +33,9 @@ const Header: React.FC<Props> = (props) => {
 
     return (
         <header className={classes.Header}>
-            <div className={classes.Logo} onClick={props.temp}>
-                <img width={110} height={28} src={logo} alt={"logo"}/>
+            <div className={classes.Logo}>
+                <Burger onClick={props.onClickNavbarToggle}/>
+                <img width={110} height={28} src={logo} alt={"logo"} onClick={props.temp}/>
             </div>
             <div className={classes.Menu}>
                 <button className={classes.Button} onClick={onClickProfileInfo} onBlur={onBlurProfileInfo}>
@@ -47,7 +48,7 @@ const Header: React.FC<Props> = (props) => {
                         </p>
                     </div>
                     <div className={classes.ProfileAvatar}>
-                        <img width={50} height={50} src={avatar} alt={"avatar"}/>
+                        <img width={40} height={40} src={props.photo || avatar} alt={"avatar"}/>
                     </div>
                     <div>
                         <Arrow color={"#C9CED6"}/>
@@ -79,6 +80,7 @@ const mapStateToProps = (state: AppStateType) => {
     return {
         auth: state.authData.auth,
         isWorker: state.authData.isWorker,
+        photo: state.authData.photo
     }
 }
 
@@ -89,6 +91,13 @@ type MapDispatchPropsType = {
     temp: () => void
 }
 
-type Props = MapStatePropsType & MapDispatchPropsType;
+type OwnProps = {
+    onClickNavbarToggle: () => void
+}
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {deleteAuthLoginTC, temp}))(Header);
+type Props = MapStatePropsType & MapDispatchPropsType & OwnProps;
+
+export default compose(connect<MapStatePropsType, MapDispatchPropsType, OwnProps, AppStateType>(mapStateToProps, {
+    deleteAuthLoginTC,
+    temp
+}))(Header);

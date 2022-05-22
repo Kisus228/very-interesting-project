@@ -43,7 +43,7 @@ export const getDataForSubmit = (values: ValuesType) => {
         duties: values.responsibilities,
         free: Number(values.count),
         id: values.id,
-        author: 1, //TODO: Сергей Кашкин: Доделать
+        author: 2, //TODO: Сергей Кашкин: Доделать
         is_open: true,
         name: values.vacancyName,
         requirements: values.requirements,

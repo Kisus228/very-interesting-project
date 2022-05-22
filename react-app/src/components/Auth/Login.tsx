@@ -31,15 +31,9 @@ const Login: React.FC<Props> = (props) => {
                 </div>
                 <Input name={"username"} label={"Username"} type={"text"}/>
                 <PassInput name={"password"} label={"Password"}/>
-                <a href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"} target={"_blank"}>
-                    Forgot Password?
-                </a>
                 <Button type={"submit"}>Sign in</Button>
                 {!!props.loginError && <div className={classes.ErrorMessage}>{props.loginError}</div>}
                 <div className={classes.RegisterArea}>
-                    <span>
-                        Don’t have an account yet?
-                    </span>
                     <Link to={""} onClick={onClickLink}>
                         Register for free
                     </Link>
