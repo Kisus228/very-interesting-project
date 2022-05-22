@@ -17,6 +17,41 @@ def get_filter(request: Request):
 
 
 @api_view(['GET'])
+def get_user_info(request: Request):
+    user_id = request.user.id
+    worker = Worker.objects.filter(user_id=user_id)
+    head_department = HeadDepartment.objects.filter(user_id=user_id)
+    user: CustomUser = CustomUser.objects.get(pk=user_id)
+    user_info = {
+        'name': user.first_name,
+        'lastName': user.last_name,
+        'patronymic': user.patronymic,
+        'email': user.email
+    }
+    try:
+        if head_department:
+            user_info.update({
+                'department': head_department[0].department.name
+            })
+        elif worker:
+            resume_info = worker[0].resume.as_dict_with_full_skills()
+            user_info.update({
+                'experience': resume_info['experience'],
+                'skills': resume_info['skills'],
+                'vk': resume_info['vk'],
+                'tg': resume_info['tg'],
+                'gitlab': resume_info['gitlab'],
+                'github': resume_info['github'],
+                'resume': resume_info['resume_text'],
+                'aboutMe': resume_info['about_me'],
+                'birthDay': user.birthday
+            })
+        return Response(user_info)
+    except:
+        return Response('Объекта не существует', status=400)
+
+
+@api_view(['GET'])
 def get_vacancy(request: Request, *args, **kwargs):
     """
     Возвращает список вакансий, с возможность их фильтровки по скиллам

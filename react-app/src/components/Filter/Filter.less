@@ -38,7 +38,7 @@
         padding: 10px;
     }
 
-    @media (max-width: 750px) {
+    @media (max-width: @small-desktop-width) {
         & > ul {
             display: flex;
             justify-content: space-between;
@@ -70,15 +70,9 @@
 }
 
 .Animation {
-    transition: height 0.5s, color 0.5s;
     overflow: hidden;
-}
-
-.Opened {
-    height: 1.35em;
 }
 
 .Closed {
     height: 0;
-    color: rgba(0, 0, 0, 0);
 }

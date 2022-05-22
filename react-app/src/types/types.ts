@@ -13,6 +13,12 @@ export type SkillType = {
     label: string,
 }
 
+export enum PhotoType {
+    'user',
+    'worker',
+    'employer'
+}
+
 export interface LoginType {
     username: string;
     password: string;

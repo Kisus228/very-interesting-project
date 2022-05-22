@@ -94,9 +94,6 @@ const Vacancy: React.FC<Props> = (props) => {
 const EmployeeItem = (props: { avatar: any, name: string }) => {
     return (
         <div className={classes.EmployeeWrapper}>
-            <div className={classes.ProfileAvatarSmall}>
-                <img width={50} height={50} src={avatar} alt={"avatar"}/>
-            </div>
             <p>{props.name}</p>
         </div>
     );

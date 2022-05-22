@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import Contacts from "../Common/Contacts/Contacts";
 import WorkerForm from "./WorkerForm";
 import EmployerForm from "./EmployerForm";
+import {putPhotoTC} from "../../redux/AuthReducer";
 
 const MyProfile: React.FC<Props> = (props) => {
     const [state] = useState({
@@ -40,6 +41,12 @@ const MyProfile: React.FC<Props> = (props) => {
         setEditForm(false);
     }
 
+    const onUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files && e.target.files[0];
+        if (file)
+            props.putPhotoTC(file);
+    }
+
     const getAge = (birthday: Date) => {
         const now = new Date();
         const age = now.getFullYear() - birthday.getFullYear();
@@ -57,7 +64,12 @@ const MyProfile: React.FC<Props> = (props) => {
                             : <EmployerForm onSubmit={onSubmit} setEditForm={setEditForm} info={state}/>
                         : <div className={classes.ProfileWrapper}>
                             <div className={classes.ProfileAvatar}>
-                                <img width={200} height={200} src={avatar} alt={"avatar"}/>
+                                <img width={200} height={200} src={props.photo || avatar} alt={"avatar"}/>
+                                <div className={classes.onHoverPhoto}>
+                                    <div className={classes.AvatarSettings}/>
+                                    <input type="file" accept="image/jpeg,image/png" className={classes.InputFile}
+                                           onChange={onUpload}/>
+                                </div>
                             </div>
                             <div>
                                 <p><b>Имя:</b> {state.firstName}</p>
@@ -104,13 +116,16 @@ const MyProfile: React.FC<Props> = (props) => {
 const mapStateToProps = (state: AppStateType) => {
     return {
         isWorker: state.authData.isWorker,
+        photo: state.authData.photo
     }
 }
 
 type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
-type MapDispatchPropsType = {}
+type MapDispatchPropsType = {
+    putPhotoTC: (file: File) => void
+}
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {}))(MyProfile);
+export default compose<React.ComponentType>(connect(mapStateToProps, {putPhotoTC}))(MyProfile);

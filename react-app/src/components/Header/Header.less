@@ -9,10 +9,25 @@
     background-color: #ffffff;
     width: 100%;
     box-sizing: border-box;
+
+    @media (max-width: @mobile-width) {
+        padding: 0 20px;
+        .Logo img {
+            display: none;
+        }
+
+        .Logo svg {
+            display: block;
+        }
+    }
 }
 
 .Logo {
+    font-family: none, serif;
+}
 
+.Logo svg {
+    display: none;
 }
 
 .Menu {
@@ -44,7 +59,6 @@
     justify-content: center;
     align-items: end;
     gap: 5px;
-    min-width: 200px;
 
     & p {
         margin: 0;
@@ -57,11 +71,15 @@
 
 .ProfileAvatar {
     position: relative;
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
 
     & img {
         border-radius: 50%;
+    }
+
+    @media (max-width: @mobile-width) {
+        display: none;
     }
 }
 
