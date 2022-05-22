@@ -19,19 +19,19 @@ const Vacancies: React.FC<Props> = (props) => {
                 <div className={classes.PageHeader}>
                     <PageHeader openedVacancies={props.openedVacancies}/>
                 </div>
-                <div className={classes.Vacancies}>
+                <div className={classes.VacanciesTable}>
                     <div className={cn(classes.VacanciesWrapper, classes.VacanciesTableHeader,
                         classes.VacanciesTableWrapper)}>
-                        <div>Название</div>
-                        <div>Кол-во откликов</div>
-                        <div>Найдено</div>
-                        <div>Статус</div>
+                        <div className={classes.Name}>Название</div>
+                        <div className={classes.Info}>Кол-во откликов</div>
+                        <div className={classes.Info}>Найдено</div>
+                        <div className={classes.Info}>Статус</div>
                     </div>
                     <ul>
-                        {
+                        { // TODO: Доделать
                             props.vacancies.map(item =>
                                 <VacanciesItem openCloseVacancy={() => props.openCloseVacancyTC(item.id, item.is_open)}
-                                               deleteVacancy={() => props.deleteVacancyTC(item.id, 1)}
+                                               deleteVacancy={() => props.deleteVacancyTC(item.id, 2)}
                                                key={item.id} vacancy={item}/>)
                         }
                     </ul>

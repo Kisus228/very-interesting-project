@@ -1,6 +1,5 @@
 import React from 'react';
-import classes from './ResumesItem.less';
-import avatar from "../../../assets/avatar.png";
+import classes from "./../../../ProfileVacancyStyles.less";
 import LikeButton from "../../Common/FormControl/LikeButton";
 import Button from "../../Common/FormControl/Button";
 import {ResumeType} from "../../../types/types";
@@ -12,9 +11,6 @@ const ResumesItem = (props: { resume: ResumeType, likeResumeTC: (id: number, res
 
     return (
         <li className={classes.ProfileItem}>
-            <div className={classes.ProfileAvatar}>
-                <img width={125} height={125} src={avatar} alt="avatar"/>
-            </div>
             <div className={classes.ProfileInfo}>
                 <h3 className={classes.ProfileName}>{props.resume.name}</h3>
                 <p>Специальность: {props.resume.specialization}</p>

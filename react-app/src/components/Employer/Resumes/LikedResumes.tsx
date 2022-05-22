@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import ResumesItem from "./ResumesItem";
-import classes from "./ResumesItem.less";
+import classes from "./../../../ProfileVacancyStyles.less";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";

@@ -7,8 +7,13 @@
 
 .AppContentWrapper {
     display: grid;
-    grid-template-columns: 80px 1fr;
+    grid-template-columns: 60px 1fr;
     height: calc(100% - @header-height);
+
+    @media (max-width: @mobile-width) {
+        position: relative;
+        grid-template-columns: 1fr;
+    }
 }
 
 .AppContentContainer {

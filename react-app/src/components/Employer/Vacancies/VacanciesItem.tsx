@@ -16,10 +16,10 @@ const VacanciesItem: React.FC<Props> = (props) => {
 
     return (
         <li className={classes.VacanciesTableWrapper}>
-            <div>{props.vacancy.name}</div>
-            <div>{props.vacancy.count_job_app}</div>
-            <div>{props.vacancy.count - props.vacancy.free} из {props.vacancy.count}</div>
-            <div>{props.vacancy.is_open ? "Открыта" : "Закрыта"}</div>
+            <div className={classes.Name}>{props.vacancy.name}</div>
+            <div className={classes.Info}>{props.vacancy.count_job_app}</div>
+            <div className={classes.Info}>{props.vacancy.count - props.vacancy.free} из {props.vacancy.count}</div>
+            <div className={classes.Info}>{props.vacancy.is_open ? "Открыта" : "Закрыта"}</div>
             <div className={classes.VacanciesButtons}>
                 <Button type={"button"} size={"small"} to={`/vacancies/${props.vacancy.id}`}>Страница вакансии</Button>
                 {

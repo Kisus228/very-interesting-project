@@ -1,6 +1,5 @@
-import React from 'react';
-import classes from './Vacancies.less';
-import avatar from "../../../assets/avatar.png"
+import React, {useState} from 'react';
+import classes from "./../../../ProfileVacancyStyles.less";
 import LikeButton from "../../Common/FormControl/LikeButton";
 import Button from "../../Common/FormControl/Button";
 import {WorkerVacancyType} from "../../../types/types";
@@ -8,9 +7,6 @@ import {WorkerVacancyType} from "../../../types/types";
 const VacancyItem = (props: { vacancy: WorkerVacancyType, likeVacancyTC: (id: number, vacancyPage: boolean) => void }) => {
     return (
         <li className={classes.ProfileItem}>
-            <div className={classes.ProfileAvatar}>
-                <img width={125} height={125} src={avatar} alt="avatar"/>
-            </div>
             <div className={classes.ProfileInfo}>
                 <h3 className={classes.ProfileName}>{props.vacancy.name}</h3>
                 <p>Описание: {props.vacancy.description}</p>
