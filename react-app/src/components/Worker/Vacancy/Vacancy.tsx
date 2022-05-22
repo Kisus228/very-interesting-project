@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import classes from './Vacancy.less';
 import avatar from "../../../assets/avatar.png";
 import Button from "../../Common/FormControl/Button";

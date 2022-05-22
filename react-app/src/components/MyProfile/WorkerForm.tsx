@@ -4,7 +4,7 @@ import classes from "./MyProfile.less";
 import FormInput from "../Common/FormControl/FormInput";
 import {FormTextarea} from "../Common/FormControl/FormTextarea";
 import Button from "../Common/FormControl/Button";
-import {CompetenceType} from "../../types/types";
+import {FullWorkerDataType} from "../../types/types";
 import {FormSelect} from "../Common/FormControl/FormSelect";
 import {AppStateType} from "../../redux/ReduxStore";
 import {compose} from "redux";
@@ -35,23 +35,23 @@ const WorkerForm: React.FC<Props> = (props) => {
 
     if (!props.skills.length) return null;
 
-    const getDate = (date?: Date) => {
+    const getDate = (date?: Date | null) => {
         if (!date) return undefined;
         const result = date.toLocaleDateString().split('.');
         return result[2] + "-" + result[1] + "-" + result[0];
     }
 
     const initialValues: ValuesType = {
-        firstName: props.info.firstName || "",
-        secondName: props.info.secondName || "",
-        middleName: props.info.middleName || "",
+        firstName: props.info.name || "",
+        secondName: props.info.lastName || "",
+        middleName: props.info.patronymic || "",
         email: props.info.email || "",
-        birthday: getDate(props.info.birthday) || "",
+        birthday: getDate(props.info.birthDay) || "",
         specialization: props.info.specialization || "",
         experience: String(props.info.experience) || "",
         skills: props.info.skills.map(skill => skill.id) || [],
-        resume: props.info.resume_text || "",
-        aboutMe: props.info.about_me || "",
+        resume: props.info.resume || "",
+        aboutMe: props.info.aboutMe || "",
         vk: props.info.vk || "",
         tg: props.info.tg || "",
         github: props.info.github || "",
@@ -144,22 +144,7 @@ type MapDispatchPropsType = {
 }
 
 type OwnProps = {
-    info: {
-        firstName: string,
-        secondName: string,
-        middleName: string,
-        email: string,
-        birthday: Date,
-        specialization: string,
-        experience: number,
-        skills: CompetenceType[],
-        resume_text: string,
-        about_me: string,
-        vk?: string,
-        tg?: string,
-        github?: string,
-        gitlab?: string,
-    },
+    info: FullWorkerDataType,
     onSubmit: (data: any) => void,
     setEditForm: (edit: boolean) => void
 }

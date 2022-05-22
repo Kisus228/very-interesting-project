@@ -25,6 +25,20 @@
     grid-template-columns: @grid-fixed-width 1fr;
     grid-template-rows: repeat(2, auto);
     gap: 25px;
+
+    @media (max-width: @mobile-width) {
+        grid-template-columns: 1fr;
+        grid-template-rows: @grid-fixed-width repeat(2, auto);
+
+        .ProfileAvatar {
+            margin: 0 auto;
+        }
+
+        .ProfileAreaWithButton {
+            grid-column-start: 1;
+            grid-column-end: 2;
+        }
+    }
 }
 
 .ProfileAvatar {
@@ -80,6 +94,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 25px;
+
+    @media (max-width: @mobile-width) {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, auto);
+    }
 }
 
 .EmployerFormWrapper {

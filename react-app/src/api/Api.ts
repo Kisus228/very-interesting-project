@@ -30,6 +30,10 @@ export const authAPI = {
             .then(response => response.json())
             .catch(error => console.error(error))
     },
+    async getFullUserData() {
+        return await fetch('/get_user_info/')
+            .catch(error => console.error(error))
+    },
     async getPhoto(type: PhotoType, id?: number) {
         let url = `/get_photo/?param=${type}`;
         if (type === PhotoType.worker)

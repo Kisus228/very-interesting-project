@@ -3,14 +3,10 @@ import {Form, Formik} from "formik";
 import classes from "./MyProfile.less";
 import FormInput from "../Common/FormControl/FormInput";
 import Button from "../Common/FormControl/Button";
+import {FullEmployerDataType} from "../../types/types";
 
 interface Props {
-    info: {
-        firstName: string,
-        secondName: string,
-        middleName: string,
-        email: string,
-    },
+    info: FullEmployerDataType,
     onSubmit: (data: any) => void,
     setEditForm: (edit: boolean) => void
 }
@@ -24,9 +20,9 @@ type ValuesType = {
 
 const EmployerForm: React.FC<Props> = (props) => {
     const initialValues: ValuesType = {
-        firstName: props.info.firstName || "",
-        secondName: props.info.secondName || "",
-        middleName: props.info.middleName || "",
+        firstName: props.info.name || "",
+        secondName: props.info.lastName || "",
+        middleName: props.info.patronymic || "",
         email: props.info.email || "",
     }
 

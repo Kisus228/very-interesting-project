@@ -1,6 +1,7 @@
 import {authAPI} from "../api/Api";
 import {BaseThunkType, InferActionsTypes} from './ReduxStore';
-import {LoginType, PhotoType, RegisterType} from "../types/types";
+import {FullEmployerDataType, FullWorkerDataType, LoginType, PhotoType, RegisterType} from "../types/types";
+import {endLoadingTC, startLoadingTC} from "./AppReducer";
 
 const initialState = {
     auth: false,
@@ -8,6 +9,7 @@ const initialState = {
     loginError: "",
     registerError: [] as [string, string][],
     photo: null as string | null,
+    userData: null as FullWorkerDataType | FullEmployerDataType | null
 }
 
 const AuthReducer = (state = initialState, action: ActionsTypes): InitialState => {
@@ -20,6 +22,10 @@ const AuthReducer = (state = initialState, action: ActionsTypes): InitialState =
             return {...state, registerError: action.error};
         case "AUTH/TEMP_SET_IS_WORKER":
             return {...state, isWorker: !state.isWorker};
+        case "AUTH/SET_FULL_USER_DATA":
+            return {...state, userData: {...action.data}};
+        case "AUTH/RESET_FULL_USER_DATA":
+            return {...state, userData: null};
         case "AUTH/SET_PHOTO":
             return {...state, photo: action.photo};
         default:
@@ -31,6 +37,11 @@ export const actions = {
     authMe: (auth: boolean) => ({type: "AUTH/SET_AUTH", auth} as const),
     loginError: (error: string) => ({type: "AUTH/SET_LOGIN_ERROR", error} as const),
     registerError: (error: [string, string][]) => ({type: "AUTH/SET_REGISTER_ERROR", error} as const),
+    setFullUserData: (data: FullEmployerDataType | FullWorkerDataType) => ({
+        type: "AUTH/SET_FULL_USER_DATA",
+        data
+    } as const),
+    resetFullUserData: () => ({type: "AUTH/RESET_FULL_USER_DATA"} as const),
     photo: (photo: string | null) => ({type: "AUTH/SET_PHOTO", photo} as const),
     temp: () => ({type: "AUTH/TEMP_SET_IS_WORKER"} as const),
 }
@@ -40,8 +51,22 @@ export const temp = actions.temp;
 export const getAuthMeTC = (): ThunkType => async (dispatch) => {
     await authAPI.getAuthMe().then(async (data) => {
         if (data.is_authenticated) {
-            await dispatch(getPhotoTC())
-            dispatch(actions.authMe(true))
+            await dispatch(getPhotoTC());
+            dispatch(actions.resetFullUserData());
+            dispatch(actions.authMe(true));
+        }
+    })
+}
+
+export const getFullUserDataTC = (): ThunkType => async (dispatch) => {
+    dispatch(startLoadingTC())
+    dispatch(actions.resetFullUserData())
+    await authAPI.getFullUserData().then(async (response: any) => {
+        if (response.ok) {
+            await response.json().then((data: any) => {
+                dispatch(actions.setFullUserData(data))
+                dispatch(endLoadingTC())
+            });
         }
     })
 }

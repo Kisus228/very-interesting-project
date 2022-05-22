@@ -113,3 +113,27 @@ export type JobAppsType = {
     job_app_id: number,
     resume_id: number
 }
+
+export interface FullUserDataType {
+    name: string,
+    lastName: string,
+    patronymic: string,
+    email: string
+}
+
+export interface FullWorkerDataType extends FullUserDataType {
+    birthDay: Date | null,
+    specialization: string,
+    experience: number,
+    skills: CompetenceType[],
+    resume: string,
+    aboutMe: string,
+    vk: string,
+    tg: string,
+    github: string,
+    gitlab: string,
+}
+
+export interface FullEmployerDataType extends FullUserDataType {
+    department: string,
+}

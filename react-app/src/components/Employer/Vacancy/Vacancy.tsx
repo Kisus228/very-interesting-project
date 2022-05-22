@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import classes from './Vacancy.less';
-import avatar from "../../../assets/avatar.png";
 import Button from "../../Common/FormControl/Button";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
