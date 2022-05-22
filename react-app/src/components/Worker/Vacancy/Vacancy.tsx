@@ -60,7 +60,7 @@ const Vacancy: React.FC<Props> = (props) => {
                     <section className={classes.VacancySection}>
                         <div className={classes.ProfileAvatarWrapper}>
                             <div className={classes.ProfileAvatarLarge}>
-                                <img width={150} height={150} src={avatar} alt={"avatar"}/>
+                                <img width={150} height={150} src={props.photo || avatar} alt={"avatar"}/>
                             </div>
                         </div>
                         <div>
@@ -94,7 +94,8 @@ const Vacancy: React.FC<Props> = (props) => {
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        vacancy: state.workerVacancyData.vacancy
+        vacancy: state.workerVacancyData.vacancy,
+        photo: state.workerVacancyData.photo
     }
 }
 

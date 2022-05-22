@@ -1,4 +1,4 @@
-import {EmployerVacancyExpendsType, LoginType, RegisterType} from "../types/types";
+import {EmployerVacancyExpendsType, LoginType, PhotoType, RegisterType} from "../types/types";
 import Cookies from 'js-cookie';
 import {putPhotoTC} from "../redux/AuthReducer";
 
@@ -30,17 +30,19 @@ export const authAPI = {
             .then(response => response.json())
             .catch(error => console.error(error))
     },
-    async getPhoto() {
-        return await fetch('/get_photo/')
-            .then(response => response.json())
+    async getPhoto(type: PhotoType, id?: number) {
+        let url = `/get_photo/?param=${type}`;
+        if (type === PhotoType.worker)
+            url = url + `&resume=${id}`;
+        if (type === PhotoType.employer)
+            url = url + `&vacancy=${id}`;
+        return await fetch(url)
             .catch(error => console.error(error))
     },
-    async putPhoto(photo: any) {
+    async putPhoto(photo: File) {
         const csrftoken = Cookies.get("csrftoken") || "";
         const formData = new FormData();
         formData.append("photo", photo);
-        console.log(formData)
-        console.log(formData.get("photo"))
         return await fetch('/set_photo/', {
             method: 'PUT',
             headers: {'X-CSRFToken': csrftoken},

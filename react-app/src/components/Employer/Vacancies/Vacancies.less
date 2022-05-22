@@ -16,7 +16,7 @@
 .VacanciesTableWrapper {
     grid-template-columns: 1.5fr repeat(3, 1fr) 210px;
 
-    @media (max-width: 730px) {
+    @media (max-width: @small-desktop-width) {
         grid-template-columns: 1.5fr 210px;
 
         & > .Info {
@@ -24,7 +24,7 @@
         }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: @mobile-width) {
         grid-template-columns: 1fr;
         grid-template-rows: repeat(2, auto);
     }

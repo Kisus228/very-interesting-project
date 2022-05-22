@@ -1,5 +1,9 @@
 @header-height: 60px;
 @grid-fixed-width: 200px;
+@small-mobile-width: 450px;
+@mobile-width: 600px;
+@small-desktop-width: 800px;
+
 
 .PageContentWrapper {
     display: flex;
@@ -13,10 +17,20 @@
 }
 
 .ProfileAvatar {
+    position: relative;
+    border-radius: 50%;
     height: 125px;
     width: 125px;
+    overflow: hidden;
 
     & img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
         border-radius: 50%;
     }
 }
@@ -32,7 +46,7 @@
 .VacanciesTableHeader {
     border-bottom: 2px solid #C9CED6;
 
-    @media (max-width: 500px) {
+    @media (max-width: @mobile-width) {
         display: none !important;
     }
 }
@@ -87,7 +101,7 @@
         gap: 10px;
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: @mobile-width) {
         & > div:first-of-type {
             text-align: center !important;
         }

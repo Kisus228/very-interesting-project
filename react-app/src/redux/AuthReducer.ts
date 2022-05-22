@@ -1,12 +1,13 @@
 import {authAPI} from "../api/Api";
 import {BaseThunkType, InferActionsTypes} from './ReduxStore';
-import {LoginType, RegisterType} from "../types/types";
+import {LoginType, PhotoType, RegisterType} from "../types/types";
 
 const initialState = {
     auth: false,
     isWorker: false,
     loginError: "",
     registerError: [] as [string, string][],
+    photo: null as string | null,
 }
 
 const AuthReducer = (state = initialState, action: ActionsTypes): InitialState => {
@@ -19,6 +20,8 @@ const AuthReducer = (state = initialState, action: ActionsTypes): InitialState =
             return {...state, registerError: action.error};
         case "AUTH/TEMP_SET_IS_WORKER":
             return {...state, isWorker: !state.isWorker};
+        case "AUTH/SET_PHOTO":
+            return {...state, photo: action.photo};
         default:
             return state;
     }
@@ -28,14 +31,16 @@ export const actions = {
     authMe: (auth: boolean) => ({type: "AUTH/SET_AUTH", auth} as const),
     loginError: (error: string) => ({type: "AUTH/SET_LOGIN_ERROR", error} as const),
     registerError: (error: [string, string][]) => ({type: "AUTH/SET_REGISTER_ERROR", error} as const),
+    photo: (photo: string | null) => ({type: "AUTH/SET_PHOTO", photo} as const),
     temp: () => ({type: "AUTH/TEMP_SET_IS_WORKER"} as const),
 }
 
 export const temp = actions.temp;
 
 export const getAuthMeTC = (): ThunkType => async (dispatch) => {
-    await authAPI.getAuthMe().then((data) => {
+    await authAPI.getAuthMe().then(async (data) => {
         if (data.is_authenticated) {
+            await dispatch(getPhotoTC())
             dispatch(actions.authMe(true))
         }
     })
@@ -66,8 +71,26 @@ export const postAuthRegisterTC = (data: RegisterType): ThunkType => async (disp
         })
 }
 
-export const putPhotoTC = (photo: any): ThunkType => async (dispatch) => {
-    await authAPI.putPhoto(photo)
+export const getPhotoTC = (): ThunkType => async (dispatch) => {
+    await authAPI.getPhoto(PhotoType.user)
+        .then(async (response: any) => {
+            if (response.ok) {
+                const binaryData = [];
+                binaryData.push(await response.blob())
+                const previewUrl = window.URL.createObjectURL(new Blob(binaryData,
+                    {type: response.headers.get("content-type") || "text"}
+                ));
+                dispatch(actions.photo(previewUrl))
+            } else {
+                dispatch(actions.photo(null))
+            }
+        })
+}
+
+export const putPhotoTC = (photo: File): ThunkType => async (dispatch) => {
+    await authAPI.putPhoto(photo).then((response: any) => {
+        if (response.ok) dispatch(getPhotoTC())
+    })
 }
 
 export const removeError = () => (dispatch: any) => {

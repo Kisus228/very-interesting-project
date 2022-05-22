@@ -18,7 +18,7 @@
         margin: 0;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: @small-desktop-width) {
         grid-template-columns: 1fr;
         grid-template-rows: repeat(2, auto);
 
@@ -26,7 +26,7 @@
             flex-direction: row;
         }
 
-        & .ProfileAvatar {
+        & .ProfileAvatarWrapper {
             height: 100%;
         }
 
@@ -35,8 +35,8 @@
         }
     }
 
-    @media (max-width: 500px) {
-        & .ProfileAvatar {
+    @media (max-width: @mobile-width) {
+        & .ProfileAvatarWrapper {
             width: 100%;
         }
 
@@ -60,13 +60,19 @@
     }
 }
 
-.ProfileAvatar {
+.ProfileAvatarWrapper {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding: 25px;
     height: @grid-fixed-width;
     width: @grid-fixed-width;
     box-sizing: border-box;
+}
+
+.ProfileAvatar {
+    height: calc(@grid-fixed-width - 50px);
+    width: calc(@grid-fixed-width - 50px);
 }
 
 .ProfileMenu, .ProfileInfo {
@@ -97,7 +103,7 @@
         text-overflow: ellipsis;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: @mobile-width) {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(2, auto);
 
@@ -114,7 +120,7 @@
         }
     }
 
-    @media (max-width: 450px) {
+    @media (max-width: @small-mobile-width) {
         grid-template-columns: 1fr;
         grid-template-rows: repeat(3, auto);
 

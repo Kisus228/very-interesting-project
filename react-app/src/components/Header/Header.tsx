@@ -48,7 +48,7 @@ const Header: React.FC<Props> = (props) => {
                         </p>
                     </div>
                     <div className={classes.ProfileAvatar}>
-                        <img width={40} height={40} src={avatar} alt={"avatar"}/>
+                        <img width={40} height={40} src={props.photo || avatar} alt={"avatar"}/>
                     </div>
                     <div>
                         <Arrow color={"#C9CED6"}/>
@@ -80,6 +80,7 @@ const mapStateToProps = (state: AppStateType) => {
     return {
         auth: state.authData.auth,
         isWorker: state.authData.isWorker,
+        photo: state.authData.photo
     }
 }
 
