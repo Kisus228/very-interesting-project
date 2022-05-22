@@ -73,6 +73,12 @@ class Resume(models.Model):     # возможно ссылки передава
         resume_full.update(resume_short)
         return resume_full
 
+    def as_dict_with_full_skills(self):
+        skills = [{'name': skill.name, 'id': skill.pk} for skill in self.skills.all()]
+        resume = self.as_dict_full()
+        resume['skills'] = skills
+        return resume
+
 
 class HeadDepartment(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Руководитель')

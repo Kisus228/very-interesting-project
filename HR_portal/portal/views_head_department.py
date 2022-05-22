@@ -5,7 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from .models import Vacancy, HeadDepartment, JobApplications, Resume, Worker, AcceptedEmployees
+from .models import Vacancy, HeadDepartment, JobApplications,\
+    Resume, Worker, AcceptedEmployees, CustomUser, Department
 from .serilizer import CreateVacancySerializer
 from .assistant import get_liked_resume, get_resume_by_filter, get_short_resume
 
