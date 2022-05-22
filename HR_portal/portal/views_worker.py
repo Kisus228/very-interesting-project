@@ -1,4 +1,4 @@
-from .assistant import get_skills, get_filter_vacancy, get_liked_vacancy
+from .assistant import get_skills, get_filter_vacancy, get_liked_vacancy, send_email
 from .views_head_department import *
 
 
@@ -86,9 +86,16 @@ def send_request(request: Request):
     worker = Worker.objects.get(user_id=request.user.id)
     vacancy_id = request.data.get('id')
     if vacancy_id:
-        vacancy = [j_a.vacancy.pk for j_a in JobApplications.objects.filter(worker_id=worker.pk)]
-        if vacancy_id in vacancy:
+        vacancies = [j_a.vacancy.pk for j_a in JobApplications.objects.filter(worker_id=worker.pk)]
+        if vacancy_id in vacancies:
             return Response({'mess': 'Заявка уже отправлена'}, status=200)
+        vacancy = Vacancy.objects.get(pk=vacancy_id)
         JobApplications.objects.create(vacancy_id=vacancy_id, worker=worker)
+        send_email(
+            f'Новая заявка на вакансию {vacancy.name}',
+            vacancy.author.user.email,
+            f'Новая заявка на вакансию {vacancy.name} от пользователя {str(worker.user)} '
+            f'посмотреть его резюме по ссылке http://localhost:3000/search/{worker.resume.pk}'
+        )
         return Response(status=200)
     return Response(status=400)

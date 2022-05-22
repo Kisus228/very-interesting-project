@@ -1,3 +1,6 @@
+import smtplib
+import os
+
 from .models import Skills, GroupSkills, Vacancy, JobApplications, Resume, HeadDepartment, Worker
 
 
@@ -85,3 +88,29 @@ def get_liked_resume(head_depart_id):
 def get_liked_vacancy(worker_id):
     worker: Worker = Worker.objects.get(pk=worker_id)
     return worker.liked_apps.all()
+
+
+def send_email(subject, to, text):
+    user = os.getenv('FROM_EMAIL')
+    passwd = os.getenv('PASSWORD_EMAIL')
+    server = os.getenv('SERVER_EMAIL')
+    port = 587
+
+    # тема письма
+    # subject = "Тестовое письмо от Python."
+    # кому
+    # to = "sukhrab2001@mail.ru"
+    # кодировка письма
+    charset = 'Content-Type: text/plain; charset=utf-8'
+    mime = 'MIME-Version: 1.0'
+    # текст письма
+    # text = "Отправкой почты управляет Python!"
+    # формируем тело письма
+    body = "\r\n".join((f"From: {user}", f"To: {to}",
+                        f"Subject: {subject}", mime, charset, "", text))
+    smtp = smtplib.SMTP(server, port)
+    smtp.starttls()
+    smtp.ehlo()
+    smtp.login(user, passwd)
+    smtp.sendmail(user, to, body.encode('utf-8'))
+

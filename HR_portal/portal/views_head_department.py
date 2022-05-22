@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 from .models import Vacancy, HeadDepartment, JobApplications, Resume, Worker, AcceptedEmployees
 from .serilizer import CreateVacancySerializer
-from .assistant import get_liked_resume, get_resume_by_filter, get_short_resume
+from .assistant import get_liked_resume, get_resume_by_filter, get_short_resume, send_email
 
 
 class VacancyApiView(CreateAPIView):
@@ -218,6 +218,12 @@ def accept_application(request: Request):
     j_a: JobApplications = JobApplications.objects.get(pk=j_a)
     if j_a:
         AcceptedEmployees.objects.create(vacancy_id=j_a.vacancy.pk, worker_id=j_a.worker.pk)
+        send_email(
+            f'Вас взяли на работу',
+            j_a.worker.user.email,
+            f'Ваша заявка на вакансию {j_a.vacancy.name} одобрена'
+            f'http://localhost:3000/search/{j_a.vacancy.pk}'
+        )
         vacancy: Vacancy = j_a.vacancy
         vacancy.free -= 1
         vacancy.save()
