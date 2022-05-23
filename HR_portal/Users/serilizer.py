@@ -12,7 +12,7 @@ class UserRegisterSerializer(ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['email', 'username', 'password', 'firstname', 'lastname']
+        fields = ['email', 'username', 'password', 'firstname', 'lastname', 'patronymic']
 
     def save(self, *args, **kwargs):
         user: CustomUser = CustomUser.objects.create_user(
