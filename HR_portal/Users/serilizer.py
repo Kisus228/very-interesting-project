@@ -20,7 +20,8 @@ class UserRegisterSerializer(ModelSerializer):
             username=self.validated_data['username'],
             password=self.validated_data['password'],
             first_name=self.validated_data['user_first_name'],
-            last_name=self.validated_data['user_last_name']
+            last_name=self.validated_data['user_last_name'],
+            patronymic=self.validated_data['patronymic']
         )
 
         resume: Resume = Resume(
