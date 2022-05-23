@@ -19,6 +19,29 @@ def get_filter(request: Request):
 @api_view(['GET'])
 def get_user_info(request: Request):
     user_id = request.user.id
+    user: CustomUser = CustomUser.objects.get(pk=user_id)
+    user_info = {
+        'name': user.first_name,
+        'lastName': user.last_name,
+        'patronymic': user.patronymic,
+        'headDepartment': False,
+        'worker': False
+    }
+    head_department = HeadDepartment.objects.filter(user_id=user_id)
+    worker = Worker.objects.filter(user_id=user_id)
+    try:
+        if head_department:
+            user_info['headDepartment'] = True
+        if worker:
+            user_info['worker'] = True
+        return Response(user_info)
+    except:
+        return Response('Объекта не существует', status=400)
+
+
+@api_view(['GET'])
+def get_full_user_info(request: Request):
+    user_id = request.user.id
     worker = Worker.objects.filter(user_id=user_id)
     head_department = HeadDepartment.objects.filter(user_id=user_id)
     user: CustomUser = CustomUser.objects.get(pk=user_id)

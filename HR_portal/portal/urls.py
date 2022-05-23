@@ -1,7 +1,7 @@
 from django.urls import path
 from .views_worker import get_filter, VacancyApiView, get_vacancy, get_resume_responding_worker, get_resume, \
     get_job_application, like_resume, get_liked_vacancy_, get_liked_resume_, send_request, open_close_vacancy, \
-    accept_application, like_vacancy, get_user_info
+    accept_application, like_vacancy, get_user_info, get_full_user_info
 
 urlpatterns = [
     path('get_filter/', get_filter),
@@ -20,5 +20,6 @@ urlpatterns = [
     path('send_request/', send_request),
     path('open_close_vacancy/', open_close_vacancy),
     path('accept_application/', accept_application),  # Приём заявки
-    path('get_user_info/', get_user_info),
+    path('get_full_user_info/', get_full_user_info),  # Возвращает ВСЮ инфу о юзере, в зависимости от должности
+    path('get_user_info/', get_user_info)
 ]
