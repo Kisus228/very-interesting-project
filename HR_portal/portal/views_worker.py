@@ -24,16 +24,16 @@ def get_user_info(request: Request):
         'name': user.first_name,
         'lastName': user.last_name,
         'patronymic': user.patronymic,
-        'headDepartment': False,
-        'worker': False
+        'isHeadDepartment': False,
     }
     head_department = HeadDepartment.objects.filter(user_id=user_id)
     worker = Worker.objects.filter(user_id=user_id)
     try:
         if head_department:
             user_info['headDepartment'] = True
-        if worker:
-            user_info['worker'] = True
+            user_info['id'] = head_department[0].pk
+        elif worker:
+            user_info['id'] = worker[0].pk
         return Response(user_info)
     except:
         return Response('Объекта не существует', status=400)
