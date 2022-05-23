@@ -59,6 +59,7 @@ def get_full_user_info(request: Request):
         elif worker:
             resume_info = worker[0].resume.as_dict_with_full_skills()
             user_info.update({
+                'specialization': resume_info['specialization'],
                 'experience': resume_info['experience'],
                 'skills': resume_info['skills'],
                 'vk': resume_info['vk'],
