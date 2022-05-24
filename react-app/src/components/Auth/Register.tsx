@@ -16,6 +16,7 @@ const Register: React.FC<Props> = (props) => {
         username: "",
         firstname: "",
         lastname: "",
+        patronymic: "",
         email: "",
         password: "",
         retryPassword: "",
@@ -26,6 +27,7 @@ const Register: React.FC<Props> = (props) => {
             username: values.username,
             firstname: values.firstname,
             lastname: values.lastname,
+            patronymic: values.patronymic,
             email: values.email,
             password: values.password,
         });
@@ -47,8 +49,9 @@ const Register: React.FC<Props> = (props) => {
                     <h1>Register</h1>
                 </div>
                 <Input name={"username"} label={"Username"} type={"text"}/>
-                <Input name={"firstname"} label={"Firstname"} type={"text"}/>
-                <Input name={"lastname"} label={"Lastname"} type={"text"}/>
+                <Input name={"firstname"} label={"Имя"} type={"text"}/>
+                <Input name={"lastname"} label={"Фамилия"} type={"text"}/>
+                <Input name={"patronymic"} label={"Отчество"} type={"text"}/>
                 <Input name={"email"} label={"Email"} type={"email"}/>
                 <PassInput name={"password"} label={"Password"}/>
                 <PassInput name={"retryPassword"} label={"Retry password"}/>

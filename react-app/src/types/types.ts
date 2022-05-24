@@ -28,6 +28,7 @@ export interface RegisterType extends LoginType {
     email: string;
     firstname: string;
     lastname: string;
+    patronymic: string;
 }
 
 export interface ResumeType {
@@ -112,6 +113,14 @@ export type JobAppsType = {
     username: string,
     job_app_id: number,
     resume_id: number
+}
+
+export interface UserDataType {
+    name: string,
+    lastName: string,
+    patronymic: string,
+    isHeadDepartment: boolean,
+    id: number
 }
 
 export interface FullUserDataType {

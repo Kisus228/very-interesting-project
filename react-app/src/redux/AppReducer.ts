@@ -24,7 +24,9 @@ export const actions = {
 
 export const initializeApp = () => (dispatch: any) => {
     const authMe = dispatch(getAuthMeTC());
-    Promise.all([authMe]).then(() => dispatch(actions.initializedSuccess()));
+    Promise.all([authMe]).then(() => {
+        dispatch(actions.initializedSuccess())
+    });
 }
 
 export const startLoadingTC = () => (dispatch: any) => {

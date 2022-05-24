@@ -61,6 +61,19 @@
     position: relative;
 }
 
+.Select * {
+    font-size: 12pt;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.Select .React-select__placeholder {
+    margin: 0;
+}
+
+.Select .React-select__multi-value__remove {
+    cursor: pointer;
+}
+
 .Select .React-select__control {
     border: 0;
     background-color: #f4f4f4;

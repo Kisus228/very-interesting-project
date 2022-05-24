@@ -51,16 +51,16 @@ const App: React.FC<Props> = (props) => {
     }, [props.auth, props.initialized]);
 
     return props.initialized
-        ? props.isWorker
-            ? <WorkerRoutes/>
-            : <EmployerRoutes/>
+        ? props.isHeadDepartment
+            ? <EmployerRoutes/>
+            : <WorkerRoutes/>
         : null;
 }
 
 const mapStateToProps = (state: AppStateType) => {
     return {
         auth: state.authData.auth,
-        isWorker: state.authData.isWorker,
+        isHeadDepartment: state.authData.isHeadDepartment,
         initialized: state.appData.initialized
     }
 }

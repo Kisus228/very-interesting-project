@@ -1,11 +1,22 @@
 import {authAPI} from "../api/Api";
 import {BaseThunkType, InferActionsTypes} from './ReduxStore';
-import {FullEmployerDataType, FullWorkerDataType, LoginType, PhotoType, RegisterType} from "../types/types";
+import {
+    FullEmployerDataType,
+    FullWorkerDataType,
+    LoginType,
+    PhotoType,
+    RegisterType,
+    UserDataType
+} from "../types/types";
 import {endLoadingTC, startLoadingTC} from "./AppReducer";
 
 const initialState = {
     auth: false,
-    isWorker: false,
+    name: "",
+    lastName: "",
+    patronymic: "",
+    isHeadDepartment: false,
+    id: 0,
     loginError: "",
     registerError: [] as [string, string][],
     photo: null as string | null,
@@ -20,8 +31,8 @@ const AuthReducer = (state = initialState, action: ActionsTypes): InitialState =
             return {...state, loginError: action.error};
         case "AUTH/SET_REGISTER_ERROR":
             return {...state, registerError: action.error};
-        case "AUTH/TEMP_SET_IS_WORKER":
-            return {...state, isWorker: !state.isWorker};
+        case "AUTH/SET_USER_DATA":
+            return {...state, ...action.data};
         case "AUTH/SET_FULL_USER_DATA":
             return {...state, userData: {...action.data}};
         case "AUTH/RESET_FULL_USER_DATA":
@@ -37,23 +48,36 @@ export const actions = {
     authMe: (auth: boolean) => ({type: "AUTH/SET_AUTH", auth} as const),
     loginError: (error: string) => ({type: "AUTH/SET_LOGIN_ERROR", error} as const),
     registerError: (error: [string, string][]) => ({type: "AUTH/SET_REGISTER_ERROR", error} as const),
+    setUserData: (data: UserDataType) => ({type: "AUTH/SET_USER_DATA", data} as const),
     setFullUserData: (data: FullEmployerDataType | FullWorkerDataType) => ({
         type: "AUTH/SET_FULL_USER_DATA",
         data
     } as const),
     resetFullUserData: () => ({type: "AUTH/RESET_FULL_USER_DATA"} as const),
     photo: (photo: string | null) => ({type: "AUTH/SET_PHOTO", photo} as const),
-    temp: () => ({type: "AUTH/TEMP_SET_IS_WORKER"} as const),
 }
-
-export const temp = actions.temp;
 
 export const getAuthMeTC = (): ThunkType => async (dispatch) => {
     await authAPI.getAuthMe().then(async (data) => {
         if (data.is_authenticated) {
-            await dispatch(getPhotoTC());
-            dispatch(actions.resetFullUserData());
-            dispatch(actions.authMe(true));
+            const getPhoto = dispatch(getPhotoTC());
+            const getUserData = dispatch(getUserDataTC());
+            return Promise.all([getPhoto, getUserData]).then(() => {
+                dispatch(actions.resetFullUserData());
+                dispatch(actions.authMe(true));
+            })
+        } else {
+            dispatch(actions.authMe(false));
+        }
+    })
+}
+
+export const getUserDataTC = (): ThunkType => async (dispatch) => {
+    await authAPI.getUserData().then(async (response: any) => {
+        if (response.ok) {
+            await response.json().then((data: UserDataType) => {
+                dispatch(actions.setUserData(data))
+            });
         }
     })
 }
@@ -63,7 +87,7 @@ export const getFullUserDataTC = (): ThunkType => async (dispatch) => {
     dispatch(actions.resetFullUserData())
     await authAPI.getFullUserData().then(async (response: any) => {
         if (response.ok) {
-            await response.json().then((data: any) => {
+            await response.json().then((data: FullEmployerDataType | FullWorkerDataType) => {
                 dispatch(actions.setFullUserData(data))
                 dispatch(endLoadingTC())
             });

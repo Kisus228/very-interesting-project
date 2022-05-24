@@ -30,8 +30,12 @@ export const authAPI = {
             .then(response => response.json())
             .catch(error => console.error(error))
     },
-    async getFullUserData() {
+    async getUserData() {
         return await fetch('/get_user_info/')
+            .catch(error => console.error(error))
+    },
+    async getFullUserData() {
+        return await fetch('/get_full_user_info/')
             .catch(error => console.error(error))
     },
     async getPhoto(type: PhotoType, id?: number) {

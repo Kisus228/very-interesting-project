@@ -30,11 +30,11 @@ export const getInitialValuesForEdit = (vacancy: EmployerVacancyExpendsType) => 
         salary: vacancy.salary,
         count: String(vacancy.count),
         additionally: vacancy.additionally,
-        id: vacancy.id,
+        id: vacancy.id
     }
 }
 
-export const getDataForSubmit = (values: ValuesType) => {
+export const getDataForSubmit = (values: ValuesType, author: number) => {
     return {
         additionally: values.additionally,
         conditions: values.conditions,
@@ -43,7 +43,7 @@ export const getDataForSubmit = (values: ValuesType) => {
         duties: values.responsibilities,
         free: Number(values.count),
         id: values.id,
-        author: 2, //TODO: Сергей Кашкин: Доделать
+        author: author,
         is_open: true,
         name: values.vacancyName,
         requirements: values.requirements,

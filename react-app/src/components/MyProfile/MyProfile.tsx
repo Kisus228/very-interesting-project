@@ -34,13 +34,13 @@ const MyProfile: React.FC<Props> = (props) => {
             <div className={classes.PageContainer}>
                 <h2>Мой профиль</h2>
                 {
-                    props.isWorker
-                        ? <WorkerProfile setEditForm={setEditForm} editForm={editForm} photo={props.photo}
-                                         onSubmit={onSubmit} userData={userData as FullWorkerDataType}
-                                         onUpload={onUpload}/>
-                        : <EmployerProfile setEditForm={setEditForm} editForm={editForm} photo={props.photo}
+                    props.isHeadDepartment
+                        ? <EmployerProfile setEditForm={setEditForm} editForm={editForm} photo={props.photo}
                                            onSubmit={onSubmit} userData={userData as FullEmployerDataType}
                                            onUpload={onUpload}/>
+                        : <WorkerProfile setEditForm={setEditForm} editForm={editForm} photo={props.photo}
+                                         onSubmit={onSubmit} userData={userData as FullWorkerDataType}
+                                         onUpload={onUpload}/>
                 }
             </div>
         </div>
@@ -50,7 +50,7 @@ const MyProfile: React.FC<Props> = (props) => {
 const mapStateToProps = (state: AppStateType) => {
     return {
         userData: state.authData.userData,
-        isWorker: state.authData.isWorker,
+        isHeadDepartment: state.authData.isHeadDepartment,
         photo: state.authData.photo
     }
 }

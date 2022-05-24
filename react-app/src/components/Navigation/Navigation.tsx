@@ -27,7 +27,7 @@ const Navigation: React.FC<Props> = (props) => {
                 </li>
                 <li>
                     <NavLink to={"/vacancies"} className={({isActive}) => isActive ? classes.active : undefined}>
-                        {props.isWorker ? <Work/> : <Plus/>}
+                        {props.isHeadDepartment ? <Plus/> : <Work/>}
                         <span>Вакансии</span>
                     </NavLink>
                 </li>
@@ -42,7 +42,7 @@ const Navigation: React.FC<Props> = (props) => {
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        isWorker: state.authData.isWorker,
+        isHeadDepartment: state.authData.isHeadDepartment,
     }
 }
 

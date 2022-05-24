@@ -6,12 +6,8 @@ import {useNavigate} from "react-router-dom";
 import {Arrow, Burger, Exit} from "../Common/Icons/Icons";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {deleteAuthLoginTC, temp} from "../../redux/AuthReducer";
+import {deleteAuthLoginTC} from "../../redux/AuthReducer";
 import {AppStateType} from "../../redux/ReduxStore";
-
-// TODO: Сергей Кашкин | Верстка: Сделать отцентровку изображения в квадрат без сжатия.
-// TODO: Сергей Кашкин | Верстка: Подумать над шрифтами.
-// TODO: Сергей Кашкин | Верстка: Добавить медиа запросы для адаптива.
 
 const Header: React.FC<Props> = (props) => {
     const [openedProfileMenu, setOpenedProfileMenu] = useState(false);
@@ -35,15 +31,15 @@ const Header: React.FC<Props> = (props) => {
         <header className={classes.Header}>
             <div className={classes.Logo}>
                 <Burger onClick={props.onClickNavbarToggle}/>
-                <img width={110} height={28} src={logo} alt={"logo"} onClick={props.temp}/>
+                <img width={110} height={28} src={logo} alt={"logo"}/>
             </div>
             <div className={classes.Menu}>
                 <button className={classes.Button} onClick={onClickProfileInfo} onBlur={onBlurProfileInfo}>
                     <div className={classes.ProfileInfo}>
-                        <p>Сергей Сергеич</p>
+                        <p>{props.name + " " + props.lastName}</p>
                         <p className={classes.Description}>
                             {
-                                props.isWorker ? "Сотрудник" : "Руководитель направления"
+                                props.isHeadDepartment ? "Руководитель направления" : "Сотрудник"
                             }
                         </p>
                     </div>
@@ -79,7 +75,9 @@ const Header: React.FC<Props> = (props) => {
 const mapStateToProps = (state: AppStateType) => {
     return {
         auth: state.authData.auth,
-        isWorker: state.authData.isWorker,
+        name: state.authData.name,
+        lastName: state.authData.lastName,
+        isHeadDepartment: state.authData.isHeadDepartment,
         photo: state.authData.photo
     }
 }
@@ -88,7 +86,6 @@ type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
     deleteAuthLoginTC: () => void
-    temp: () => void
 }
 
 type OwnProps = {
@@ -98,6 +95,5 @@ type OwnProps = {
 type Props = MapStatePropsType & MapDispatchPropsType & OwnProps;
 
 export default compose(connect<MapStatePropsType, MapDispatchPropsType, OwnProps, AppStateType>(mapStateToProps, {
-    deleteAuthLoginTC,
-    temp
+    deleteAuthLoginTC
 }))(Header);

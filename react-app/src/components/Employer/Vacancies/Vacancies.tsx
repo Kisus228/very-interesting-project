@@ -28,10 +28,10 @@ const Vacancies: React.FC<Props> = (props) => {
                         <div className={classes.Info}>Статус</div>
                     </div>
                     <ul>
-                        { // TODO: Доделать
+                        {
                             props.vacancies.map(item =>
                                 <VacanciesItem openCloseVacancy={() => props.openCloseVacancyTC(item.id, item.is_open)}
-                                               deleteVacancy={() => props.deleteVacancyTC(item.id, 2)}
+                                               deleteVacancy={() => props.deleteVacancyTC(item.id, props.author)}
                                                key={item.id} vacancy={item}/>)
                         }
                     </ul>
@@ -59,6 +59,7 @@ const PageHeader = (props: { openedVacancies: boolean }) => {
 const mapStateToProps = (state: AppStateType) => {
     return {
         vacancies: state.employerVacancyData.vacancies,
+        author: state.authData.id
     }
 }
 

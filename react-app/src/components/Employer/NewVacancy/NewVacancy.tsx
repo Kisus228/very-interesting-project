@@ -32,7 +32,7 @@ const NewVacancy: React.FC<Props> = (props) => {
     const navigate = useNavigate();
 
     const onSubmit = (values: ValuesType) => {
-        props.postVacancyTC(getDataForSubmit(values))
+        props.postVacancyTC(getDataForSubmit(values, props.author))
         navigate("/vacancies");
     }
 
@@ -42,7 +42,8 @@ const NewVacancy: React.FC<Props> = (props) => {
 const mapStateToProps = (state: AppStateType) => {
     return {
         skills: state.filterData.skills,
-        vacancy: state.employerVacancyData.vacancy
+        vacancy: state.employerVacancyData.vacancy,
+        author: state.authData.id
     }
 }
 
