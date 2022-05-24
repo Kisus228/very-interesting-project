@@ -30,6 +30,7 @@ def get_user_info(request: Request):
     worker = Worker.objects.filter(user_id=user_id)
     try:
         if head_department:
+            user_info['isHeadDepartment'] = True
             user_info['id'] = head_department[0].pk
         elif worker:
             user_info['id'] = worker[0].pk
