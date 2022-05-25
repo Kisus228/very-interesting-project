@@ -150,11 +150,14 @@ def send_request(request: Request):
             return Response({'mess': 'Заявка уже отправлена'}, status=200)
         vacancy = Vacancy.objects.get(pk=vacancy_id)
         JobApplications.objects.create(vacancy_id=vacancy_id, worker=worker)
-        send_email(
-            f'Новая заявка на вакансию {vacancy.name}',
-            vacancy.author.user.email,
-            f'Новая заявка на вакансию {vacancy.name} от пользователя {str(worker.user)} '
-            f'посмотреть его резюме по ссылке http://localhost:3000/search/{worker.resume.pk}'
-        )
+        try:
+            send_email(
+                f'Новая заявка на вакансию {vacancy.name}',
+                vacancy.author.user.email,
+                f'Новая заявка на вакансию {vacancy.name} от пользователя {str(worker.user)} '
+                f'посмотреть его резюме по ссылке http://localhost:3000/search/{worker.resume.pk}'
+            )
+        except:
+            print('Письмо не настроено')
         return Response(status=200)
     return Response(status=400)

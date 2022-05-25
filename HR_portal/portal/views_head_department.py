@@ -219,12 +219,15 @@ def accept_application(request: Request):
     j_a: JobApplications = JobApplications.objects.get(pk=j_a)
     if j_a:
         AcceptedEmployees.objects.create(vacancy_id=j_a.vacancy.pk, worker_id=j_a.worker.pk)
-        send_email(
-            f'Вас взяли на работу',
-            j_a.worker.user.email,
-            f'Ваша заявка на вакансию {j_a.vacancy.name} одобрена'
-            f'http://localhost:3000/search/{j_a.vacancy.pk}'
-        )
+        try:
+            send_email(
+                f'Вас взяли на работу',
+                j_a.worker.user.email,
+                f'Ваша заявка на вакансию {j_a.vacancy.name} одобрена'
+                f'http://localhost:3000/search/{j_a.vacancy.pk}'
+            )
+        except:
+            print('Письмо не настроено')
         vacancy: Vacancy = j_a.vacancy
         vacancy.free -= 1
         vacancy.save()
