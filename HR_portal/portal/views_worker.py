@@ -75,6 +75,26 @@ def get_full_user_info(request: Request):
         return Response('Объекта не существует', status=400)
 
 
+@api_view(['PUT'])
+def change_worker_info(request: Request):
+    user_id = request.user.id
+    try:
+        worker = Worker.objects.get(user_id=user_id)
+    except:
+        return Response('Объекта не существует', status=400)
+    print('######################################################')
+    print(request.data)
+    print('######################################################')
+    resume_serializer = CreateResumeSerializer(data=request.data['resume'], instance=worker.resume)
+    worker_serializer = CreateWorkerSerializer(data=request.data['userdata'], instance=worker)
+    if worker_serializer.is_valid() and resume_serializer.is_valid():
+        resume_serializer.save()
+        worker_serializer.save()
+        return Response(worker_serializer.data)
+    else:
+        Response(status=400, data='Данные не валидны')
+
+
 @api_view(['GET'])
 def get_vacancy(request: Request, *args, **kwargs):
     """
