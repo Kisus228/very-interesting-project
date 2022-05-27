@@ -9,7 +9,7 @@ from .models import (
     Vacancy, HeadDepartment, JobApplications,
     Resume, Worker, AcceptedEmployees, CustomUser, Department
 )
-from .serilizer import CreateVacancySerializer, CreateWorkerSerializer, CreateResumeSerializer
+from .serilizer import CreateVacancySerializer, CreateWorkerSerializer, CreateResumeSerializer, UserChangeSerializer
 from .assistant import get_liked_resume, get_resume_by_filter, get_short_resume, send_email
 
 

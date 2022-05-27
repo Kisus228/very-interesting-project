@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from .models import Vacancy, Worker, Resume
+from .models import Vacancy, Worker, Resume, CustomUser
 
 
 class CreateVacancySerializer(ModelSerializer):
@@ -25,3 +25,11 @@ class CreateResumeSerializer(ModelSerializer):
     class Meta:
         model = Resume
         fields = '__all__'
+
+
+class UserChangeSerializer(ModelSerializer):
+
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'first_name', 'last_name', 'patronymic', 'phone', 'birthday']
+
