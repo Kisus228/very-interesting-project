@@ -83,16 +83,13 @@ def change_worker_info(request: Request):
         worker = Worker.objects.get(user_id=user_id)
     except:
         return Response('Объекта не существует', status=400)
-    print(request.data)
     resume_serializer = CreateResumeSerializer(data=request.data['resume'], instance=worker.resume)
-    print(resume_serializer)
     user_serializer = UserChangeSerializer(data=request.data['userdata'], instance=user)
     if resume_serializer.is_valid() and user_serializer.is_valid():
         resume_serializer.save()
         user_serializer.save()
         return Response(status=200, data='норм')
     else:
-        print(user_serializer.validated_data)
         return Response(status=400, data='Данные не валидны')
 
 

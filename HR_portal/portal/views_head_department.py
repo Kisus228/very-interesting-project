@@ -235,3 +235,18 @@ def accept_application(request: Request):
         j_a.delete()
         return Response(status=200)
     return Response(status=400)
+
+
+@api_view(['PUT'])
+def change_headdepartment_info(request: Request):
+    user_id = request.user.id
+    try:
+        user = CustomUser.objects.get(pk=user_id)
+    except:
+        return Response('Объекта не существует', status=400)
+    user_serializer = UserChangeSerializer(data=request.data['userdata'], instance=user)
+    if user_serializer.is_valid():
+        user_serializer.save()
+        return Response(status=200, data='норм')
+    else:
+        return Response(status=400, data='Данные не валидны')
