@@ -75,6 +75,21 @@ def get_full_user_info(request: Request):
         return Response('Объекта не существует', status=400)
 
 
+@api_view(['GET'])
+def get_worker_applications(request: Request):
+    user_id = request.user.id
+    try:
+        worker = Worker.objects.get(user_id=user_id)
+    except:
+        return Response('Сотрудник не найден', status=400)
+    job_applications = JobApplications.objects.filter(worker_id=worker.pk)
+    if job_applications:
+        result = [(app.vacancy.pk, app.vacancy.name, app.vacancy.description) for app in job_applications]
+        return Response(result)
+    else:
+        return Response('Заявки не найдены', status=400)
+
+
 @api_view(['PUT'])
 def change_worker_info(request: Request):
     user_id = request.user.id
