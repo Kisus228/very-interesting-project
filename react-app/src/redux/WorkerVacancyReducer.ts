@@ -77,9 +77,9 @@ export const likeVacancyTC = (id: number, vacancyPage: boolean): ThunkType => as
 
 export const sendRequestTC = (id: number): ThunkType => async (dispatch) => {
     await workerVacancyAPI.sendRequest(id)
-        .then(result => {
+        .then(response => {
             // @ts-ignore
-            if (result.status === 200 && !result.json().mess) {
+            if (response.ok) {
                 dispatch(actions.sendRequest())
             }
         })

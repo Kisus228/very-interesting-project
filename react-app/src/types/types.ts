@@ -131,7 +131,7 @@ export interface FullUserDataType {
 }
 
 export interface FullWorkerDataType extends FullUserDataType {
-    birthDay: Date | null,
+    birthDay: string | null,
     specialization: string,
     experience: number,
     skills: CompetenceType[],
@@ -145,4 +145,27 @@ export interface FullWorkerDataType extends FullUserDataType {
 
 export interface FullEmployerDataType extends FullUserDataType {
     department: string,
+}
+
+export type UserdataType = {
+    first_name: string,
+    patronymic: string,
+    last_name: string,
+    email: string
+}
+
+export type WorkerEditDataType = {
+    userdata: UserdataType,
+    resume: {
+        birthday: string,
+        about_me: string,
+        experience: number,
+        github_link: string,
+        gitlab_link: string,
+        resume_text: string,
+        skills: number[],
+        specialization: string,
+        tg_link: string,
+        vk_link: string
+    }
 }

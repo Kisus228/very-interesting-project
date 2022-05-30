@@ -3,13 +3,11 @@ import {Form, Formik} from "formik";
 import classes from "./MyProfile.less";
 import FormInput from "../Common/FormControl/FormInput";
 import Button from "../Common/FormControl/Button";
-import {FullEmployerDataType} from "../../types/types";
-
-interface Props {
-    info: FullEmployerDataType,
-    onSubmit: (data: any) => void,
-    setEditForm: (edit: boolean) => void
-}
+import {FullEmployerDataType, FullWorkerDataType, UserdataType} from "../../types/types";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {AppStateType} from "../../redux/ReduxStore";
+import {putFullUserDataTC} from "../../redux/AuthReducer";
 
 type ValuesType = {
     firstName: string,
@@ -26,17 +24,20 @@ const EmployerForm: React.FC<Props> = (props) => {
         email: props.info.email || "",
     }
 
-    const getDataForSubmit = (values: ValuesType) => {
+    const getDataForSubmit = (values: ValuesType): {userdata: UserdataType} => {
         return {
-            firstName: values.firstName,
-            secondName: values.secondName,
-            middleName: values.middleName,
-            email: values.email,
+            userdata: {
+                first_name: values.firstName,
+                last_name: values.secondName,
+                patronymic: values.middleName,
+                email: values.email,
+            }
         }
     }
 
     const onSubmit = (values: ValuesType) => {
-        props.onSubmit(getDataForSubmit(values));
+        props.putFullUserDataTC(getDataForSubmit(values));
+        props.setEditForm(false);
     }
 
     return (
@@ -67,4 +68,21 @@ const EmployerForm: React.FC<Props> = (props) => {
     );
 };
 
-export default EmployerForm;
+const mapStateToProps = () => {
+    return {}
+}
+
+type MapStatePropsType = ReturnType<typeof mapStateToProps>
+
+type MapDispatchPropsType = {
+    putFullUserDataTC: (data: {userdata: UserdataType}) => void
+}
+
+type OwnProps = {
+    info: FullEmployerDataType,
+    setEditForm: (edit: boolean) => void
+}
+
+type Props = MapDispatchPropsType & OwnProps;
+
+export default compose(connect<MapStatePropsType, MapDispatchPropsType, OwnProps, AppStateType>(mapStateToProps,{putFullUserDataTC}))(EmployerForm);
