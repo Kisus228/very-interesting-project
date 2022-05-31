@@ -9,7 +9,6 @@ type Props = {
     userData: FullEmployerDataType
     editForm: boolean
     setEditForm: (edit: boolean) => void
-    onSubmit: (values: any) => void
     onUpload: (e: React.ChangeEvent<HTMLInputElement>) => void
     photo: string | null
 }
@@ -19,7 +18,7 @@ const EmployerProfile: React.FC<Props> = (props) => {
 
     return (
         props.editForm
-            ? <EmployerForm onSubmit={props.onSubmit} setEditForm={props.setEditForm} info={props.userData}/>
+            ? <EmployerForm setEditForm={props.setEditForm} info={props.userData}/>
             : <div className={classes.ProfileWrapper}>
                 <div className={classes.ProfileAvatar}>
                     <img width={200} height={200} src={props.photo || avatar} alt={"avatar"}/>

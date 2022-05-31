@@ -36,10 +36,10 @@ const MyProfile: React.FC<Props> = (props) => {
                 {
                     props.isHeadDepartment
                         ? <EmployerProfile setEditForm={setEditForm} editForm={editForm} photo={props.photo}
-                                           onSubmit={onSubmit} userData={userData as FullEmployerDataType}
+                                           userData={userData as FullEmployerDataType}
                                            onUpload={onUpload}/>
                         : <WorkerProfile setEditForm={setEditForm} editForm={editForm} photo={props.photo}
-                                         onSubmit={onSubmit} userData={userData as FullWorkerDataType}
+                                         userData={userData as FullWorkerDataType}
                                          onUpload={onUpload}/>
                 }
             </div>

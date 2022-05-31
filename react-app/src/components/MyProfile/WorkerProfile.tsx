@@ -10,7 +10,6 @@ type Props = {
     userData: FullWorkerDataType
     editForm: boolean
     setEditForm: (edit: boolean) => void
-    onSubmit: (values: any) => void
     onUpload: (e: React.ChangeEvent<HTMLInputElement>) => void
     photo: string | null
 }
@@ -18,16 +17,17 @@ type Props = {
 const WorkerProfile: React.FC<Props> = (props) => {
     const userData = props.userData;
 
-    const getAge = (birthday: Date | null) => {
+    const getAge = (birthday: string | null) => {
         if (!birthday) return "Не указан";
+        const parseBirthday = birthday.split('-');
         const now = new Date();
-        const age = now.getFullYear() - birthday.getFullYear();
-        return now < new Date(now.getFullYear(), birthday.getMonth(), birthday.getDate()) ? age - 1 : age;
+        const age = now.getFullYear() - Number(parseBirthday[0]);
+        return now < new Date(now.getFullYear(), Number(parseBirthday[1]), Number(parseBirthday[2])) ? age - 1 : age;
     }
 
     return (
         props.editForm
-            ? <WorkerForm onSubmit={props.onSubmit} setEditForm={props.setEditForm} info={props.userData}/>
+            ? <WorkerForm setEditForm={props.setEditForm} info={props.userData}/>
             : <div className={classes.ProfileWrapper}>
                 <div className={classes.ProfileAvatar}>
                     <img width={200} height={200} src={props.photo || avatar} alt={"avatar"}/>

@@ -2,6 +2,8 @@ import {EmployerVacancyExpendsType, LoginType, PhotoType, RegisterType} from "..
 import Cookies from 'js-cookie';
 import {putPhotoTC} from "../redux/AuthReducer";
 
+const csrftoken = Cookies.get("csrftoken") || "";
+
 export const authAPI = {
     async postAuthLogin(data: LoginType) {
         return await fetch(`/login/`, {
@@ -38,6 +40,14 @@ export const authAPI = {
         return await fetch('/get_full_user_info/')
             .catch(error => console.error(error))
     },
+    async putFullUserData(data: any) {
+        return await fetch(!!data.resume ? '/change_worker_info/' : '/change_headdepartment_info/', {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
+            body: JSON.stringify(data),
+        })
+            .catch(error => console.error(error))
+    },
     async getPhoto(type: PhotoType, id?: number) {
         let url = `/get_photo/?param=${type}`;
         if (type === PhotoType.worker)
@@ -48,7 +58,6 @@ export const authAPI = {
             .catch(error => console.error(error))
     },
     async putPhoto(photo: File) {
-        const csrftoken = Cookies.get("csrftoken") || "";
         const formData = new FormData();
         formData.append("photo", photo);
         return await fetch('/set_photo/', {
@@ -75,7 +84,6 @@ export const employerVacancyAPI = {
             .catch(error => console.error(error))
     },
     async postVacancy(data: EmployerVacancyExpendsType) {
-        const csrftoken = Cookies.get("csrftoken") || "";
         return await fetch('/authorvacancy/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
@@ -85,7 +93,6 @@ export const employerVacancyAPI = {
             .catch(error => console.error(error))
     },
     async putVacancy(id: number, data: EmployerVacancyExpendsType) {
-        const csrftoken = Cookies.get("csrftoken") || "";
         return await fetch('/authorvacancy/' + id + "/", {
             method: 'PUT',
             headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
@@ -94,7 +101,6 @@ export const employerVacancyAPI = {
             .catch(error => console.error(error))
     },
     async deleteVacancy(id: number, authorId: number) {
-        const csrftoken = Cookies.get("csrftoken") || "";
         return await fetch('/authorvacancy/' + id + "/", {
             method: 'DELETE',
             headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
@@ -117,7 +123,6 @@ export const employerVacancyAPI = {
             .catch(error => console.error(error))
     },
     async acceptApplication(id: number) {
-        const csrftoken = Cookies.get("csrftoken") || "";
         return await fetch('/accept_application/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
@@ -144,7 +149,6 @@ export const workerVacancyAPI = {
             .catch(error => console.error(error))
     },
     async likeVacancy(id: number) {
-        const csrftoken = Cookies.get("csrftoken") || "";
         return await fetch('/like_vacancy/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
@@ -153,7 +157,6 @@ export const workerVacancyAPI = {
             .catch(error => console.error(error))
     },
     async sendRequest(id: number) {
-        const csrftoken = Cookies.get("csrftoken") || "";
         return await fetch('/send_request/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json; charset=utf-8', 'X-CSRFToken': csrftoken},
@@ -180,7 +183,6 @@ export const resumeAPI = {
             .catch(error => console.error(error))
     },
     async likeResume(id: number) {
-        const csrftoken = Cookies.get("csrftoken") || "";
         const data = {id: id}
         return await fetch('/like_resume/', {
             method: 'POST',

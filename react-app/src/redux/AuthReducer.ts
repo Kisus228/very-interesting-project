@@ -95,6 +95,23 @@ export const getFullUserDataTC = (): ThunkType => async (dispatch) => {
     })
 }
 
+export const putFullUserDataTC = (data: any): ThunkType => async (dispatch) => {
+    dispatch(startLoadingTC())
+    dispatch(actions.resetFullUserData())
+    await authAPI.putFullUserData(data).then(async (response: any) => {
+        if (response.ok) {
+            await authAPI.getFullUserData().then(async (response: any) => {
+                if (response.ok) {
+                    await response.json().then((data: FullEmployerDataType | FullWorkerDataType) => {
+                        dispatch(actions.setFullUserData(data))
+                        dispatch(endLoadingTC())
+                    });
+                }
+            })
+        }
+    })
+}
+
 export const postAuthLoginTC = (data: LoginType): ThunkType => async (dispatch) => {
     await authAPI.postAuthLogin(data)
         .then(response => {
