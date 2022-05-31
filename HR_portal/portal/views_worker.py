@@ -84,7 +84,12 @@ def get_worker_applications(request: Request):
         return Response('Сотрудник не найден', status=400)
     job_applications = JobApplications.objects.filter(worker_id=worker.pk)
     if job_applications:
-        result = [(app.vacancy.pk, app.vacancy.name, app.vacancy.description) for app in job_applications]
+        result = [
+            {
+                'id': app.vacancy.pk, 'name': app.vacancy.name, 'description': app.vacancy.description
+            }
+            for app in job_applications
+        ]
         return Response(result)
     else:
         return Response('Заявки не найдены', status=400)
