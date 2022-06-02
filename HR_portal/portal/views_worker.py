@@ -83,12 +83,17 @@ def get_worker_applications(request: Request):
     except:
         return Response('Сотрудник не найден', status=400)
     job_applications = JobApplications.objects.filter(worker_id=worker.pk)
-    if job_applications:
+    accepted_vacancy = AcceptedEmployees.objects.filter(worker_id=worker.pk)
+    all_apps = job_applications.extend(accepted_vacancy)
+    if all_apps:
         result = [
             {
-                'id': app.vacancy.pk, 'name': app.vacancy.name, 'description': app.vacancy.description
+                'id': app.vacancy.pk,
+                'name': app.vacancy.name,
+                'description': app.vacancy.description,
+                'status': isinstance(app, AcceptedEmployees)
             }
-            for app in job_applications
+            for app in all_apps
         ]
         return Response(result)
     else:
