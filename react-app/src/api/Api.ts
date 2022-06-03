@@ -164,6 +164,11 @@ export const workerVacancyAPI = {
         })
             .catch(error => console.error(error))
     },
+    async getApplications() {
+        return await fetch('/get_worker_applications/')
+            .then(response => response.json())
+            .catch(error => console.error(error))
+    },
 }
 
 export const resumeAPI = {

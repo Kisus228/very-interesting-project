@@ -1,9 +1,10 @@
 import React from 'react';
 import classes from './VacanciesRequests.less';
 import Button from "../../Common/FormControl/Button";
+import {ApplicationsType} from "../../../types/types";
 
 interface Props {
-    vacancy: any
+    vacancy: ApplicationsType
 }
 
 const VacanciesItem: React.FC<Props> = (props) => {

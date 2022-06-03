@@ -1,42 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import classes from './VacanciesRequests.less';
 import VacanciesItem from "./VacanciesItem";
 import {AppStateType} from "../../../redux/ReduxStore";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import cn from "classnames";
+import {getApplicationsTC} from "../../../redux/WorkerVacancyReducer";
 
 const VacanciesRequests: React.FC<Props> = (props) => {
-    const [state] = useState([
-        {
-            name: "Back-end разработчик",
-            id: 1,
-            description: "ОченьДлинныйИНеПрерывныйТекстКоторыйДажеНеПомещаетсяПолностьюВЭтотЭкранЕслиТыЭтоЧитаешьЗначитЧтоТоСломалось",
-            status: true,
-        },
-        {
-            name: "Front-end разработчик",
-            id: 2,
-            description: "Тоже большой текст, но теперь с пробелами, но это не должно играть роли, так как если ты видишь и этот текст, то что-то сломалось",
-            status: false,
-        },
-        {
-            name: "Аналитик",
-            id: 3,
-            description: "А это текст поменьше, средненький, самый норм",
-            status: false,
-        },
-        {
-            name: "Дизайнер",
-            id: 4,
-            description: "Вообще маленький текст жесть",
-            status: false,
-        },
-    ])
-
-    /*useEffect(() => {
-        props.getVacanciesTC(props.openedVacancies);
-    }, [props.openedVacancies])*/
+    useEffect(() => {
+        props.getApplicationsTC();
+    }, [])
 
     return (
         <div className={classes.PageContentWrapper}>
@@ -53,7 +27,7 @@ const VacanciesRequests: React.FC<Props> = (props) => {
                     </div>
                     <ul>
                         {
-                            state.map(item =>
+                            props.applications.map(item =>
                                 <VacanciesItem key={item.id} vacancy={item}/>)
                         }
                     </ul>
@@ -65,22 +39,18 @@ const VacanciesRequests: React.FC<Props> = (props) => {
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        //vacancies: state.employerVacancyData.vacancies,
+        applications: state.workerVacancyData.applications,
     }
 }
 
 type MapStatePropsType = ReturnType<typeof mapStateToProps>
 
 type MapDispatchPropsType = {
-    //getVacanciesTC: (isOpen: boolean) => void
-    //closeVacancyTC: (vacancyId: number, authorId: number) => void
-    //deleteVacancyTC: (vacancyId: number, authorId: number) => void
+    getApplicationsTC: () => void
 }
 
 type Props = MapStatePropsType & MapDispatchPropsType;
 
 export default compose<React.ComponentType>(connect(mapStateToProps, {
-    /*getVacanciesTC,*/
-    /*closeVacancyTC,*/
-    /*deleteVacancyTC*/
+    getApplicationsTC
 }))(VacanciesRequests);

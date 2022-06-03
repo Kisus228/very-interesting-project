@@ -1,11 +1,12 @@
 import {authAPI, workerVacancyAPI} from "../api/Api";
 import {BaseThunkType, InferActionsTypes} from './ReduxStore';
-import {PhotoType, WorkerVacancyExpendsType, WorkerVacancyType} from "../types/types";
+import {ApplicationsType, PhotoType, WorkerVacancyExpendsType, WorkerVacancyType} from "../types/types";
 import {endLoadingTC, startLoadingTC} from "./AppReducer";
 
 const initialState = {
     vacancies: [] as WorkerVacancyType[],
     vacancy: null as WorkerVacancyExpendsType | null,
+    applications: [] as ApplicationsType[],
     photo: null as string | null,
 }
 
@@ -13,6 +14,8 @@ const VacancyReducer = (state = initialState, action: ActionsTypes): InitialStat
     switch (action.type) {
         case "WORKER_VACANCY/SET_VACANCIES":
             return {...state, vacancies: [...action.vacancies]};
+        case "WORKER_VACANCY/SET_APPLICATIONS":
+            return {...state, applications: [...action.applications]};
         case "WORKER_VACANCY/SET_VACANCY":
             return {...state, vacancy: {...action.vacancy}};
         case "WORKER_VACANCY/RESET_VACANCY":
@@ -35,6 +38,10 @@ const VacancyReducer = (state = initialState, action: ActionsTypes): InitialStat
 
 export const actions = {
     setVacancies: (vacancies: WorkerVacancyType[]) => ({type: "WORKER_VACANCY/SET_VACANCIES", vacancies} as const),
+    setApplications: (applications: ApplicationsType[]) => ({
+        type: "WORKER_VACANCY/SET_APPLICATIONS",
+        applications
+    } as const),
     setVacancy: (vacancy: WorkerVacancyExpendsType) => ({type: "WORKER_VACANCY/SET_VACANCY", vacancy} as const),
     likeVacancy: (id: number) => ({type: "WORKER_VACANCY/LIKE_VACANCY", id} as const),
     sendRequest: () => ({type: "WORKER_VACANCY/SEND_REQUEST"} as const),
@@ -83,6 +90,11 @@ export const sendRequestTC = (id: number): ThunkType => async (dispatch) => {
                 dispatch(actions.sendRequest())
             }
         })
+}
+
+export const getApplicationsTC = (): ThunkType => async (dispatch) => {
+    await workerVacancyAPI.getApplications()
+        .then(result => dispatch(actions.setApplications(result)));
 }
 
 export const getPhotoTC = (vacancy: number): ThunkType => async (dispatch) => {

@@ -169,3 +169,10 @@ export type WorkerEditDataType = {
         vk_link: string
     }
 }
+
+export type ApplicationsType = {
+    id: number,
+    name: string,
+    description: string,
+    status: boolean
+}
