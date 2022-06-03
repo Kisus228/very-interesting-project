@@ -1,0 +1,91 @@
+@import "../../../GlobalStyles";
+
+.PageContainer {
+    max-width: 1000px;
+}
+
+.Vacancy {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 25px;
+    padding: 25px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    word-break: break-word;
+
+    & h3, h4 {
+        margin: 0;
+    }
+
+    & p {
+        white-space: pre-wrap;
+        margin: 0;
+        color: #000000;
+    }
+
+    & .Description {
+        color: #5f5f5f;
+    }
+
+    @media (max-width: @small-desktop-width) {
+        grid-template-columns: 1fr 25px;
+        grid-template-rows: repeat(3, auto);
+
+        & > .VacancySection:nth-of-type(3), .VacancySection:nth-of-type(4) {
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+    }
+}
+
+.VacancySection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+
+    .LikeButton {
+        align-self: flex-end;
+    }
+
+    .ProfileAvatarWrapper, .Name {
+        align-self: center;
+    }
+
+    & > div {
+        display: flex;
+        gap: 0.5em;
+        flex-direction: column;
+    }
+
+    & .EmployeeWrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .ButtonWrapper {
+        justify-content: flex-end;
+        align-self: flex-end;
+        flex-grow: 1;
+    }
+}
+
+.ProfileAvatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.ProfileAvatarLarge {
+    .ProfileAvatar();
+    width: 150px;
+    height: 150px;
+}
+
+.ProfileAvatarSmall {
+    .ProfileAvatar();
+    width: 50px;
+    height: 50px;
+}

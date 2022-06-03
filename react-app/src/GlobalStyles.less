@@ -1,0 +1,113 @@
+@header-height: 60px;
+@grid-fixed-width: 200px;
+@small-mobile-width: 450px;
+@mobile-width: 600px;
+@small-desktop-width: 800px;
+
+
+.PageContentWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.PageContainer {
+    width: 100%;
+    max-width: 1500px;
+}
+
+.ProfileAvatar {
+    position: relative;
+    border-radius: 50%;
+    height: 125px;
+    width: 125px;
+    overflow: hidden;
+
+    & img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+    }
+}
+
+.SvgContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+}
+
+.VacanciesTableHeader {
+    border-bottom: 2px solid #C9CED6;
+
+    @media (max-width: @mobile-width) {
+        display: none !important;
+    }
+}
+
+.VacanciesTable {
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    & ul {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin: 0;
+        padding: 15px;
+    }
+
+    & li {
+        padding: 10px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        min-height: 80px;
+        background-color: #EDEDED;
+        text-decoration: none;
+    }
+
+    & .VacanciesWrapper {
+        padding: 5px 25px;
+    }
+}
+
+.VacanciesTableWrapper {
+    display: grid;
+    gap: 5px;
+    text-align: center;
+    min-width: 230px;
+
+    & > div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: auto 0;
+    }
+
+    & > div:first-of-type {
+        text-align: start;
+    }
+
+    & .VacanciesButtons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    @media (max-width: @mobile-width) {
+        & > div:first-of-type {
+            text-align: center !important;
+        }
+
+        & .VacanciesButtons {
+            justify-content: center;
+        }
+    }
+}
