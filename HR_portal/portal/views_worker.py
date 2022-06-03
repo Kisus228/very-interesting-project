@@ -1,3 +1,5 @@
+from itertools import chain
+
 from .assistant import get_skills, get_filter_vacancy, get_liked_vacancy, send_email
 from .views_head_department import *
 
@@ -84,7 +86,7 @@ def get_worker_applications(request: Request):
         return Response('Сотрудник не найден', status=400)
     job_applications = JobApplications.objects.filter(worker_id=worker.pk)
     accepted_vacancy = AcceptedEmployees.objects.filter(worker_id=worker.pk)
-    all_apps = job_applications.extend(accepted_vacancy)
+    all_apps = list(chain(job_applications, accepted_vacancy))
     if all_apps:
         result = [
             {
