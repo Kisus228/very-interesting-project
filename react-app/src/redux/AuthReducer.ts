@@ -100,13 +100,16 @@ export const putFullUserDataTC = (data: any): ThunkType => async (dispatch) => {
     dispatch(actions.resetFullUserData())
     await authAPI.putFullUserData(data).then(async (response: any) => {
         if (response.ok) {
-            await authAPI.getFullUserData().then(async (response: any) => {
+            const getFullUserData = await authAPI.getFullUserData().then(async (response: any) => {
                 if (response.ok) {
                     await response.json().then((data: FullEmployerDataType | FullWorkerDataType) => {
                         dispatch(actions.setFullUserData(data))
-                        dispatch(endLoadingTC())
                     });
                 }
+            })
+            const getUserData = dispatch(getUserDataTC());
+            return Promise.all([getFullUserData, getUserData]).then(() => {
+                dispatch(endLoadingTC());
             })
         }
     })
