@@ -99,7 +99,7 @@ def get_worker_applications(request: Request):
         ]
         return Response(result)
     else:
-        return Response('Заявки не найдены', status=400)
+        return Response([])
 
 
 @api_view(['PUT'])
